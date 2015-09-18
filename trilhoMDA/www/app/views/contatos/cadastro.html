@@ -1,17 +1,21 @@
-<ion-view view-title="Contato">
+<div class="modal">
+    <ion-header-bar>
+        <h1 class="title">Contato</h1>
+    </ion-header-bar>
     <ion-content>
-        <form ng-submit="saveContato(contato)">
+        <form ng-submit="saveContato(selection)">
             <div class="list card">
                 <label class="item item-input">
-                    <input type="text" placeholder="Nome" ng-model="contato.nome">
+                    <input type="text" placeholder="Nome" ng-model="selection.nome">
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Telefone" ng-model="contato.telefone">
+                    <input type="text" placeholder="Telefone" ng-model="selection.telefone">
                 </label>
             </div>
             <div class="padding">
                 <button type="submit" class="button button-positive">Confirmar</button>
+                <button type="reset" class="button button-stable" ng-click="hideModal()">Cancelar</button>
             </div>
         </form>        
     </ion-content>
-</ion-view>
+</div>

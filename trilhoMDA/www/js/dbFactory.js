@@ -227,13 +227,6 @@ DataSet.prototype.post = function(callback) {
         partial--;
     }
     
-//    timer = setInterval(function() {
-//        if (finished) {
-//            clearInterval(timer);
-//            cb();
-//        }
-//    }, 100);
-
     for (i = 0; i < toSave.length; i++) {
         self.getProxy().save(self.getTable(), toSave[i], progress);
     }

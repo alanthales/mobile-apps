@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 var db = new DbFactory('trilhoMDA', DbProxies.LOCALSTORAGE);
 
-angular.module('trilhoMDA', ['ionic', 'controllers.home'])
+angular.module('trilhoMDA', ['ionic', 'ionutils.views', 'controllers.home', 'controllers.contato'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

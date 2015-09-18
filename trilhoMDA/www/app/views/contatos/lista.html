@@ -1,15 +1,11 @@
-<ion-view view-title="Contatos">
-    <ion-nav-buttons side="right">
-        <a class="right button button-icon ion-plus" href="#/app/contato/1"></a>
-    </ion-nav-buttons>
-    <ion-content>
-        <ion-list>
-            <ion-item collection-repeat="contato in dataset.data" href="#/app/contato/{{contato.id}}">
-                {{contato.nome}}
-            </ion-item>
-        </ion-list>
-        <div ng-if="(dataset.data.length === 0)">
-            <p>Lista Vazia</p>
-        </div>
-    </ion-content>
-</ion-view>
+<ojs-view>
+    <ion-item collection-repeat="contato in contatos.data">
+        {{contato.nome}}
+        <ion-option-button class="button-positive" ng-click="editItem(contato)">
+            Editar
+        </ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="deleteItem(contato)">
+            Excluir
+        </ion-option-button>
+    </ion-item>
+</ojs-view>

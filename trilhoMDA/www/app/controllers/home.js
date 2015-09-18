@@ -1,4 +1,4 @@
-angular.module('controllers.home', ['controllers.contato'])
+angular.module('controllers.home', ['ionic'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
