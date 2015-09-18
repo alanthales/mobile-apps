@@ -1,0 +1,17 @@
+<ion-view view-title="Contato">
+    <ion-content>
+        <form ng-submit="saveContato(contato)">
+            <div class="list card">
+                <label class="item item-input">
+                    <input type="text" placeholder="Nome" ng-model="contato.nome">
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="Telefone" ng-model="contato.telefone">
+                </label>
+            </div>
+            <div class="padding">
+                <button type="submit" class="button button-positive">Confirmar</button>
+            </div>
+        </form>        
+    </ion-content>
+</ion-view>
