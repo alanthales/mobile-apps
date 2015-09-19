@@ -1,11 +1,11 @@
-angular.module('controllers.contato', ['ionic'])
+angular.module('controllers.celula', ['ionic'])
 
-.controller('ContatoCtrl', function($scope,  $ionicModal) {
-    $scope.contatos = db.createDataSet('contatos');
+.controller('CelulaCtrl', function($scope,  $ionicModal) {
+    $scope.celulas = db.createDataSet('celulas');
     
-    $scope.contatos.open();
+    $scope.celulas.open();
     
-    $ionicModal.fromTemplateUrl('app/views/contatos/cadastro.html', function(modal) {
+    $ionicModal.fromTemplateUrl('app/views/celulas/cadastro.html', function(modal) {
         $scope.formModal = modal;
     }, {
         scope: $scope,
@@ -23,8 +23,8 @@ angular.module('controllers.contato', ['ionic'])
     }
     
     $scope.deleteItem = function(item) {
-        if (confirm('Deseja realmente excluir este contato?')) {
-            $scope.contatos.delete(item);
+        if (confirm('Deseja realmente excluir esta célula?')) {
+            $scope.celulas.delete(item);
         }
     }
     
@@ -34,11 +34,11 @@ angular.module('controllers.contato', ['ionic'])
     
     $scope.saveItem = function(item) {
         if (item.id) {
-            $scope.contatos.update(item);
+            $scope.celulas.update(item);
         } else {
-            $scope.contatos.insert(item);
+            $scope.celulas.insert(item);
         }
-        $scope.contatos.post(function() {
+        $scope.celulas.post(function() {
             $scope.hideModal();
         });
     }

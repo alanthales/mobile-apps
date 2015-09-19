@@ -5,7 +5,10 @@ var db = new DbFactory('trilhoMDA', DbProxies.LOCALSTORAGE);
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('trilhoMDA', ['ionic', 'ojs.directives', 'controllers.home', 'controllers.contato'])
+angular.module('trilhoMDA', [
+    'ionic', 'ojs.directives', 'controllers.home', 'controllers.contato',
+    'controllers.celula'
+])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -54,12 +57,12 @@ angular.module('trilhoMDA', ['ionic', 'ojs.directives', 'controllers.home', 'con
         }
     })
     
-    .state('app.contato', {
-        url: '/contato/:id',
+    .state('app.celulas', {
+        url: '/celulas',
         views: {
             'menuContent': {
-                templateUrl: 'app/views/contatos/cadastro.html',
-                controller: 'ContatoCtrl'
+                templateUrl: 'app/views/celulas/lista.html',
+                controller: 'CelulaCtrl'
             }
         }
     });
