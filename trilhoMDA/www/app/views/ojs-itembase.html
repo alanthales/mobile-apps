@@ -1,8 +1,9 @@
-<div class="item" collection-repeat="item in dataset.data">
-    <button class="option-button button-positive" ng-click="editItem(item)">
+<ion-item>
+    <span ng-transclude></span>
+    <ion-option-button class="button-positive" ng-click="editItem(item)">
         Editar
-    </button>
-    <button class="option-button button-assertive" ng-click="deleteItem(item)">
+    </ion-option-button>
+    <ion-option-button class="button-assertive" ng-click="deleteItem(item)">
         Excluir
-    </button>
-</div>
+    </ion-option-button>
+</ion-item>

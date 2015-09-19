@@ -1,7 +1,7 @@
 angular.module('controllers.contato', ['ionic'])
 
 .controller('ContatoCtrl', function($scope,  $ionicModal) {
-    $scope.contatos = db.getDataSet('contato');
+    $scope.contatos = db.getDataSet('contatos');
     
     $scope.contatos.open();
     
@@ -39,7 +39,7 @@ angular.module('controllers.contato', ['ionic'])
             $scope.contatos.insert(contato);
         }
         $scope.contatos.post(function() {
-            $ionicHistory.goBack();
+            $scope.hideModal();
         });
     }
 });

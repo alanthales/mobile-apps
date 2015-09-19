@@ -1,11 +1,10 @@
-<ojs-view>
-    <ion-item collection-repeat="contato in contatos.data">
-        {{contato.nome}}
-        <ion-option-button class="button-positive" ng-click="editItem(contato)">
-            Editar
-        </ion-option-button>
-        <ion-option-button class="button-assertive" ng-click="deleteItem(contato)">
-            Excluir
-        </ion-option-button>
-    </ion-item>
-</ojs-view>
+<ion-view view-title="Contatos">
+    <ojs-nav-bar></ojs-nav-bar>
+    <ion-content>
+        <ojs-list is-empty="contatos.data.length === 0">
+            <ojs-item collection-repeat="item in contatos.data">
+                {{item.nome}}
+            </ojs-item>
+        </ojs-list>
+    </ion-content>
+</ion-view>
