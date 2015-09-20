@@ -60,6 +60,10 @@ angular.module('ojs.directives', ['ionic'])
                         backdropClickToClose: false,
                         hardwareBackButtonClose: false
                     });
+                },
+                
+                closeModal: function() {
+                    parentScope.$ojsModal.remove();
                 }
             }
 		}
@@ -81,13 +85,13 @@ angular.module('ojs.directives', ['ionic'])
                         backdropClickToClose: false,
                         hardwareBackButtonClose: false
                     }).then(function(popover) {
-                        parentScope.popover = popover;
-                        parentScope.popover.show(e);
+                        parentScope.$ojsPopMenu = popover;
+                        parentScope.$ojsPopMenu.show(e);
                     });
                 },
 
                 closeMenu: function() {
-                    parentScope.popover.remove();
+                    parentScope.$ojsPopMenu.remove();
                 }
             }
         }
@@ -100,7 +104,9 @@ angular.module('ojs.directives', ['ionic'])
         require: 'ngModel',
         link: function(scope, elem, attr, modelCtrl) {
             modelCtrl.$formatters.push(function(modelValue) {
-                return new Date(modelValue);
+                if (modelValue) {
+                    return new Date(modelValue);
+                }
             });
         }
     }

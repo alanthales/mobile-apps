@@ -1,11 +1,14 @@
 <ojs-form title="Cadastrar Célula" save-record="saveCelula(celula)" close-form="$ojsModal.remove()">
-    <label class="item item-input">
-        <input type="text" placeholder="Nome" ng-model="celula.nome">
+    <label class="item item-input item-stacked-label">
+        <span class="input-label">Nome da célula</span>
+        <input type="text" placeholder="Te vejo lá" ng-model="celula.nome">
+    </label>
+    <label class="item item-input item-stacked-label">
+        <span class="input-label">Data de início</span>
+        <input type="date" ng-model="celula.datainicio" format-date>
     </label>
     <label class="item item-input item-select">
-        <div class="input-label">
-            Dia
-        </div>
+        <div class="input-label">Dia da célula</div>
         <select ng-model="celula.dia">
             <option ng-repeat="dia in dias" ng-value="dia.id" ng-selected="dia.id == celula.dia">
                 {{dia.nome}}
@@ -13,9 +16,7 @@
         </select>
     </label>
     <label class="item item-input item-select">
-        <div class="input-label">
-            Líder
-        </div>
+        <div class="input-label">Selecione o líder</div>
         <select ng-model="celula.lider">
             <option ng-repeat="contato in contatos" ng-value="contato.id" ng-selected="contato.id == celula.lider">
                 {{contato.nome}}
@@ -23,13 +24,15 @@
         </select>
     </label>
     <label class="item item-input item-select">
-        <div class="input-label">
-            Anfitrião
-        </div>
+        <div class="input-label">Selecione o anfitrião</div>
         <select ng-model="celula.anfitriao">
             <option ng-repeat="contato in contatos" ng-value="contato.id" ng-selected="contato.id == celula.anfitriao">
                 {{contato.nome}}
             </option>
         </select>
+    </label>
+    <label class="item item-input item-stacked-label">
+        <span class="input-label">Data da multiplicação</span>
+        <input type="date" ng-model="celula.datamulti" format-date>
     </label>
 </ojs-form>

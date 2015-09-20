@@ -1,10 +1,18 @@
-<ion-view view-title="Célula">
+<ion-view cache-view="false" view-title="Célula">
+    <ion-nav-buttons side="right">
+        <button class="right button button-icon {{celula.id ? 'ion-edit' : 'ion-android-add'}}" ng-click="frmCelula.openModal()"></button>
+    </ion-nav-buttons>
     <ion-content>
         <div ng-if="celula.id">
             <div class="list card">
-                <div class="item item-avatar">
-                    <img src="img/ionic.png">
+                <div class="item">
                     <h2>{{celula.nome}}</h2>
+                    <p>
+                        {{getContatosById(celula.lider).nome}}
+                    </p>
+                    <p>
+                        {{getContatosById(celula.anfitriao).endereco}}
+                    </p>
                     <p>
                         <button class="button button-outline button-small button-positive" ng-click="frmCelula.openModal()">
                             Editar
@@ -20,12 +28,15 @@
             </div>
 
             <div class="list card">
-                <div class="item item-divider" ng-if="membros.data > 0">
+                <div class="item item-divider" ng-if="celula.membros.length > 0">
                     Membros
                 </div>
 
-                <div class="item" collection-repeat="item in celula.membros">
-                    {{contatos[item.id]}}
+                <div class="item item-button-right" ng-repeat="membro in celula.membros">
+                    {{getContatosById(membro).nome}}
+                    <button class="button button-clear button-assertive" ng-click="deleteMembro(membro)">
+                        <i class="icon ion-android-remove-circle"></i>
+                    </button>
                 </div>
 
                 <a class="item item-icon-left positive" href="#" ng-click="frmMembro.openModal()">

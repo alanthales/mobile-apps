@@ -198,10 +198,14 @@ SQLiteProxy.prototype.insert = function(key, record, transaction, callback) {
     var params = [],
         fields = "",
         values = "",
-        sql, prop;
+        sql, prop, value;
 
     for (prop in record) {
-        params.push(record[prop]);
+        value = record[prop];
+        if (typeof value === "object") {
+            value = JSON.stringify(value);
+        }
+        params.push(value);
         fields += prop + ",";
         values += "?,";
     }
@@ -218,11 +222,15 @@ SQLiteProxy.prototype.update = function(key, record, transaction, callback) {
     var params = [],
         where = "id = " + record.id,
         sets = "",
-        sql, prop;
+        sql, prop, value;
         
     for (prop in record) {
         if (prop != "id") {
-            params.push(record[prop]);
+            value = record[prop];
+            if (typeof value === "object") {
+                value = JSON.stringify(value);
+            }
+            params.push(value);
             sets += prop + " = ?,"
         }
     }

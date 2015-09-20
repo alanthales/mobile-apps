@@ -6,12 +6,12 @@
     <ion-header-bar class="bar-subheader item-input-inset">
         <label class="item-input-wrapper">
             <i class="icon ion-android-search placeholder-icon"></i>
-            <input type="search" placeholder="Pesquisar...">
+            <input type="search" placeholder="Pesquisar..." ng-model="search">
         </label>
     </ion-header-bar>
     <ion-content>
         <div class="list">
-            <div class="item" collection-repeat="item in contatos" ng-click="addMembro(item)">
+            <div class="item" collection-repeat="item in contatos | filter:search" ng-click="addMembro(item)">
                 {{item.nome}}
                 <span class="item-note">{{item.telefone}}</span>
             </div>

@@ -4,11 +4,22 @@ angular.module('controllers.celula', ['ionic'])
     $scope.celulas = db.createDataSet('celulas');
     
     $scope.celulas.open(function(results) {
-        $scope.celula = results[0] || { membros: [] };
+        var celula = results[0] || {};
+        if (!celula.membros) {
+            celula.membros = [];
+        }
+        $scope.celula = celula;
     });
     
     db.select("contatos", null, function(results) {
         $scope.contatos = results;
+        $scope.getContatosById = function(uid) {
+            var hashtable = $scope.contatos.map(function(record) {
+                    return record.id;
+                }),
+                index = hashtable.indexOf(parseInt(uid));
+            return $scope.contatos[index];
+        }
     });
     
     $scope.dias = [
@@ -39,8 +50,9 @@ angular.module('controllers.celula', ['ionic'])
     
     $scope.deleteMembro = function(membro) {
         if (confirm('Deseja realmente excluir este membro?')) {
-            $scope.celulas.delete(membro);
-            $scope.celulas.post();
+            var index = $scope.celula.membros.indexOf(membro);
+            $scope.celula.membros.splice(index, 1);
+            $scope.postCelula();
         }
     }
     

@@ -7,3 +7,7 @@
 .my-menu .item, .my-menu .item-content, .my-menu .item-complex {
     background-color: rgba(0,0,0,0);
 }
+
+.icon-small {
+    font-size: 18px !important;
+}

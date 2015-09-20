@@ -11,6 +11,15 @@
             </div>
         </ojs-list>
         
+        <div class="padding">
+            <div class="item item-icon-left" ng-if="contatos.data.length > 0">
+                <p>
+                    <i class="icon icon-small ion-information-circled positive"></i>
+                    <span class="positive">Toque e segure para editar, excluir...</span>
+                </p>
+            </div>
+        </div>
+        
         <ojs-modal name="form" template="app/views/contatos/cadastro.html"></ojs-modal>
         <ojs-pop-menu name="menu" template="app/views/ojs-popmenu.html"></ojs-pop-menu>
     </ion-content>
