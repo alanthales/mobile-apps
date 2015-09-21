@@ -1,7 +1,7 @@
 angular.module('controllers.contato', ['ionic'])
 
 .controller('ContatoCtrl', function($scope,  $ionicModal) {
-    $scope.contatos = db.getDataSet('contatos');
+    $scope.contatos = db.createDataSet('contatos');
     
     $scope.contatos.open();
     

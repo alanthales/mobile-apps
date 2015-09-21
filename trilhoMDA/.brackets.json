@@ -2,6 +2,7 @@
     "jscodehints.detectedExclusions": [
         "D:/User/workspace/trilhoMDA/www/app/services/localStorage.js",
         "D:/User/workspace/trilhoMDA/www/js/controllers.js",
-        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/contato.js"
+        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/contato.js",
+        "D:/User/workspace/mobile-apps/trilhoMDA/www/js/dbFactory.js"
     ]
 }
