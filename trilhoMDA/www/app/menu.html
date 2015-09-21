@@ -4,7 +4,7 @@
             <ion-nav-back-button></ion-nav-back-button>
 
             <ion-nav-buttons side="left">
-                <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+                <button class="button button-icon button-clear ion-android-menu" menu-toggle="left"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="menuContent"></ion-nav-view>
@@ -13,15 +13,23 @@
     <ion-side-menu side="left">
         <ion-content class="dark-bg">
             <h3 style="color:#f0f0f0">
-                <i class="icon ion-person"></i>
+                <i class="icon ion-heart"></i>
                 Project
             </h3>
-            <ion-list>
-                <ion-item class="dark" menu-close ng-click="login()">Login</ion-item>
-                <ion-item menu-close href="#/app/search">Search</ion-item>
-                <ion-item menu-close href="#/app/browse">Browse</ion-item>
-                <ion-item menu-close href="#/app/playlists">Playlists</ion-item>
-            </ion-list>
+            <div class="list">
+                <a class="item item-icon-left" menu-close href="#/app/contatos">
+                    <i class="icon ion-android-people"></i>
+                    Contatos
+                </a>
+                <a class="item item-icon-left" menu-close href="#/app/celulas">
+                    <i class="icon ion-android-share-alt"></i>
+                    Células
+                </a>
+                <a class="item item-icon-left" menu-close ng-click="login()">
+                    <i class="icon ion-android-settings"></i>
+                    Configuração
+                </a>
+            </div>
         </ion-content>
     </ion-side-menu>
 </ion-side-menus>

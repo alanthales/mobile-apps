@@ -4,7 +4,7 @@ angular.module('ojs.directives', ['ionic'])
     return {
         restrict: 'E',
         replace: true,
-        template: '<ion-nav-buttons side="right"><button class="right button button-icon ion-plus" ng-click="newItem()"></button></ion-nav-buttons>'
+        template: '<ion-nav-buttons side="right"><button class="right button button-icon ion-android-add" ng-click="newItem()"></button></ion-nav-buttons>'
     }
 })
 

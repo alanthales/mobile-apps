@@ -1,0 +1,10 @@
+<ion-view view-title="Células">
+    <ojs-nav-bar></ojs-nav-bar>
+    <ion-content>
+        <ojs-list is-empty="celulas.data.length === 0">
+            <ojs-item collection-repeat="item in celulas.data">
+                {{item.nome}}
+            </ojs-item>
+        </ojs-list>
+    </ion-content>
+</ion-view>
