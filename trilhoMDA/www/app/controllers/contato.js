@@ -25,6 +25,7 @@ angular.module('controllers.contato', ['ionic'])
     $scope.deleteItem = function(item) {
         if (confirm('Deseja realmente excluir este contato?')) {
             $scope.contatos.delete(item);
+            $scope.contatos.post();
         }
     }
     

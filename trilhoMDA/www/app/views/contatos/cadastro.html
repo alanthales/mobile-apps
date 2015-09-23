@@ -1,36 +1,23 @@
-<div class="modal">
-    <ion-header-bar class="bar-dark">
-        <h1 class="title">Cadastrar Contato</h1>
-    </ion-header-bar>
-    <ion-content>
-        <form ng-submit="saveItem(selection)">
-            <div class="list card">
-                <label class="item item-input">
-                    <input type="text" placeholder="Nome completo" ng-model="selection.nome">
-                </label>
-                <label class="item item-input">
-                    <input type="text" placeholder="Endereço" ng-model="selection.endereco">
-                </label>
-                <label class="item item-input">
-                    <input type="number" placeholder="Número" ng-model="selection.numero">
-                </label>
-                <label class="item item-input">
-                    <input type="text" placeholder="Bairro" ng-model="selection.bairro">
-                </label>
-                <label class="item item-input">
-                    <input type="text" placeholder="Cidade" ng-model="selection.cidade">
-                </label>
-                <label class="item item-input">
-                    <input type="tel" placeholder="Telefone" ng-model="selection.telefone">
-                </label>
-                <label class="item item-input">
-                    <input type="date" placeholder="Data nascimento" ng-model="selection.datanasc">
-                </label>
-            </div>
-            <div class="padding">
-                <button type="submit" class="button button-positive">Confirmar</button>
-                <button type="reset" class="button button-stable" ng-click="hideModal()">Cancelar</button>
-            </div>
-        </form>        
-    </ion-content>
+<ojs-form title="Cadastrar Contato" hide-modal="hideModal()" save-record="saveItem(selection)">
+    <label class="item item-input">
+        <input type="text" placeholder="Nome completo" ng-model="selection.nome">
+    </label>
+    <label class="item item-input">
+        <input type="text" placeholder="Endereço" ng-model="selection.endereco">
+    </label>
+    <label class="item item-input">
+        <input type="number" placeholder="Número" ng-model="selection.numero">
+    </label>
+    <label class="item item-input">
+        <input type="text" placeholder="Bairro" ng-model="selection.bairro">
+    </label>
+    <label class="item item-input">
+        <input type="text" placeholder="Cidade" ng-model="selection.cidade">
+    </label>
+    <label class="item item-input">
+        <input type="tel" placeholder="Telefone" ng-model="selection.telefone">
+    </label>
+    <label class="item item-input">
+        <input type="date" placeholder="Data nascimento" ng-model="selection.datanasc">
+    </label>
 </div>

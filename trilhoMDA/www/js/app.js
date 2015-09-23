@@ -6,7 +6,7 @@ var db = new DbFactory('trilhoMDA', DbProxies.LOCALSTORAGE);
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('trilhoMDA', [
-    'ionic', 'ojs.directives', 'controllers.home', 'controllers.contato',
+    'ionic', 'ojs.directives', 'tabs.swipable', 'controllers.home', 'controllers.contato',
     'controllers.celula'
 ])
 
@@ -43,24 +43,24 @@ angular.module('trilhoMDA', [
     .state('app', {
         url: '/app',
         abstract: true,
-        templateUrl: 'app/menu.html',
+        templateUrl: 'app/tabs.html',
         controller: 'AppCtrl'
     })
 
     .state('app.contatos', {
         url: '/contatos',
         views: {
-            'menuContent': {
+            'tab-contatos': {
                 templateUrl: 'app/views/contatos/lista.html',
                 controller: 'ContatoCtrl'
             }
         }
     })
     
-    .state('app.celulas', {
-        url: '/celulas',
+    .state('app.celula', {
+        url: '/celula',
         views: {
-            'menuContent': {
+            'tab-celula': {
                 templateUrl: 'app/views/celulas/lista.html',
                 controller: 'CelulaCtrl'
             }

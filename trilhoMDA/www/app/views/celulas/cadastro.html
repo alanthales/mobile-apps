@@ -1,51 +1,35 @@
-<div class="modal">
-    <ion-header-bar class="bar-dark">
-        <h1 class="title">Cadastrar Célula</h1>
-    </ion-header-bar>
-    <ion-content>
-        <form ng-submit="saveItem(selection)">
-            <div class="list card">
-                <label class="item item-input">
-                    <input type="text" placeholder="Nome" ng-model="selection.nome">
-                </label>
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Dia
-                    </div>
-                    <select>
-                        <option selected>Segunda</option>
-                        <option>Terça</option>
-                        <option>Quarta</option>
-                        <option>Quinta</option>
-                        <option>Sexta</option>
-                        <option>Sábado</option>
-                    </select>
-                </label>
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Líder
-                    </div>
-                    <select ng-model="selection.lider">
-                        <option ng-repeat="contato in contatos" value="contato.id">
-                            {{contato.nome}}
-                        </option>
-                    </select>
-                </label>
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        Anfitrião
-                    </div>
-                    <select ng-model="selection.anfitriao">
-                        <option ng-repeat="contato in contatos" value="contato.id">
-                            {{contato.nome}}
-                        </option>
-                    </select>
-                </label>
-            </div>
-            <div class="padding">
-                <button type="submit" class="button button-positive">Confirmar</button>
-                <button type="reset" class="button button-stable" ng-click="hideModal()">Cancelar</button>
-            </div>
-        </form>        
-    </ion-content>
-</div>
+<ojs-form title="Cadastrar Célula" hide-modal="hideModal()" save-record="saveItem(selection)">
+    <label class="item item-input">
+        <input type="text" placeholder="Nome" ng-model="selection.nome">
+    </label>
+    <label class="item item-input item-select">
+        <div class="input-label">
+            Dia
+        </div>
+        <select ng-model="selection.dia">
+            <option ng-repeat="dia in dias" ng-value="dia.id" ng-selected="dia.id == selection.dia">
+                {{dia.nome}}
+            </option>
+        </select>
+    </label>
+    <label class="item item-input item-select">
+        <div class="input-label">
+            Líder
+        </div>
+        <select ng-model="selection.lider">
+            <option ng-repeat="contato in contatos" ng-value="contato.id" ng-selected="contato.id == selection.lider">
+                {{contato.nome}}
+            </option>
+        </select>
+    </label>
+    <label class="item item-input item-select">
+        <div class="input-label">
+            Anfitrião
+        </div>
+        <select ng-model="selection.anfitriao">
+            <option ng-repeat="contato in contatos" ng-value="contato.id" ng-selected="contato.id == selection.anfitriao">
+                {{contato.nome}}
+            </option>
+        </select>
+    </label>
+</ojs-form>

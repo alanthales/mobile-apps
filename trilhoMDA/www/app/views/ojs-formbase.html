@@ -1,0 +1,16 @@
+<div class="modal">
+    <ion-header-bar class="bar-dark">
+        <h1 class="title">{{title}}</h1>
+    </ion-header-bar>
+    <ion-content>
+        <form ng-submit="saveRecord(record)">
+            <div class="list card">
+                <ng-transclude></ng-transclude>
+            </div>
+            <div class="padding">
+                <button type="submit" class="button button-dark">Confirmar</button>
+                <button type="reset" class="button button-stable" ng-click="hideModal()">Cancelar</button>
+            </div>
+        </form>        
+    </ion-content>
+</div>

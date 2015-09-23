@@ -1,10 +1,33 @@
-<ion-view view-title="Células">
-    <ojs-nav-bar></ojs-nav-bar>
+<ion-view view-title="Célula">
+<!--    <ojs-nav-bar></ojs-nav-bar>-->
     <ion-content>
-        <ojs-list is-empty="celulas.data.length === 0">
-            <ojs-item collection-repeat="item in celulas.data">
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="img/ionic.png">
+                <h2>Chega +</h2>
+                <p>Rua ABC, 123</p>
+            </div>
+
+            <div class="item">
+                <p>
+                    <span class="subdued">{{membros.data.length}} membros</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="list card">
+            <div class="item item-divider" ng-if="membros.data > 0">
+                Membros
+            </div>
+            
+            <ojs-item collection-repeat="item in membros.data">
                 {{item.nome}}
             </ojs-item>
-        </ojs-list>
+            
+            <a class="item item-icon-left" href="#">
+                <i class="icon ion-android-add"></i>
+                Adicionar membro
+            </a>
+        </div>
     </ion-content>
 </ion-view>

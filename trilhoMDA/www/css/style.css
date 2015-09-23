@@ -1,1 +1,9 @@
-/* Empty. Add your own CSS if you like */
+.my-menu {
+    border-color: #333;
+    background-color: #555;
+    color: #fff;
+}
+
+.my-menu .item, .my-menu .item-content, .my-menu .item-complex {
+    background-color: rgba(0,0,0,0);
+}

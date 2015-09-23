@@ -1,9 +1,13 @@
 angular.module('controllers.celula', ['ionic'])
 
 .controller('CelulaCtrl', function($scope,  $ionicModal) {
-    $scope.celulas = db.createDataSet('celulas');
+    $scope.membros = db.createDataSet('membros');
     
-    $scope.celulas.open();
+    $scope.membros.open();
+    
+    db.select("celula", function(results) {
+        $scope.celula = results[0] || {};
+    });
     
     $ionicModal.fromTemplateUrl('app/views/celulas/cadastro.html', function(modal) {
         $scope.formModal = modal;
@@ -12,19 +16,14 @@ angular.module('controllers.celula', ['ionic'])
         animation: 'slide-in-up'
     });
     
-    $scope.newItem = function() {
-        $scope.selection = {};
-        $scope.formModal.show();
-    }
-    
-    $scope.editItem = function(item) {
-        $scope.selection = item;
+    $scope.editCelula = function() {
         $scope.formModal.show();
     }
     
     $scope.deleteItem = function(item) {
-        if (confirm('Deseja realmente excluir esta célula?')) {
+        if (confirm('Deseja realmente excluir este membro?')) {
             $scope.celulas.delete(item);
+            $scope.celulas.post();
         }
     }
     

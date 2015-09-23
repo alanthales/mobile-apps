@@ -26,4 +26,18 @@ angular.module('ojs.directives', ['ionic'])
         transclude: true,
         templateUrl: '/app/views/ojs-itembase.html'
     }
+})
+
+.directive('ojsForm', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        scope: {
+            title: '@',
+            hideModal: '&',
+            saveRecord: '&'
+        },
+        templateUrl: '/app/views/ojs-formbase.html'
+    }
 });

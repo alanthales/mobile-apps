@@ -8,10 +8,8 @@ DbProxies = {
 }
 
 function DbProxy() {
-    this._records = [];
     this.createDatabase = function() {}
 }
-
 
 
 /*
@@ -22,52 +20,57 @@ LocalStorageProxy.prototype = new DbProxy();
 LocalStorageProxy.prototype.constructor = LocalStorageProxy;
 //LocalStorageProxy.prototype.parent = DbProxy.prototype;
 
-function LocalStorageProxy() {}
+function LocalStorageProxy() {
+    this._records = [];
+}
 
-LocalStorageProxy.prototype.getRecords = function(options, callback) {
-    var opts = typeof options === 'object' ? options : { key: options },
-        table = window.localStorage[opts.key],
+LocalStorageProxy.prototype._get = function(key) {
+    var table = window.localStorage[key],
         results = [];
     if (table) {
         results = JSON.parse(table);
     }
-    callback( results );
-    this._records = results;
+    return results;
+}
+
+LocalStorageProxy.prototype.getRecords = function(options, callback) {
+    var opts = typeof options === "object" ? options : { key: options },
+        table = this._get(opts.key);
+    if (typeof callback === "function") {
+        callback( table );
+    }
+    this._records = table;
 }
 
 LocalStorageProxy.prototype.getHashTable = function() {
-//    if (this._records.length === 0) {
-//        return [];
-//    }
     return this._records.map(function(record) {
         return record.id;
     });
 }
 
 LocalStorageProxy.prototype.select = function(key, opts, callback) {
-    this.getRecords(key, function(table) {
-        var opts = opts && typeof opts === "object" ? opts : { id: opts },
-            result = [],
-            finded = false,
-            record, i, props;
+    var table = this._get(key),
+        opts = opts && typeof opts === "object" ? opts : { },
+        result = [],
+        finded, record, i, props;
 
-        for (i = 0; i < table.length; i++) {
-            record = table[i];
-            for (props in opts) {
-                if (record[props] != opts[props]) {
-                    finded = false;
-                    break;
-                } else {
-                    finded = true;
-                }
-            }
-            if (finded) {
-                result.push(record);
+    for (i = 0; i < table.length; i++) {
+        finded = true,
+        record = table[i];
+        
+        for (props in opts) {
+            if (record[props] != opts[props]) {
+                finded = false;
+                break;
             }
         }
+        
+        if (finded) {
+            result.push(record);
+        }
+    }
 
-        callback( result );
-    });
+    callback( result );
 }
 
 LocalStorageProxy.prototype._saveAll = function(key, callback) {
@@ -98,30 +101,22 @@ LocalStorageProxy.prototype.commit = function(key, toInsert, toUpdate, toDelete,
     var self = this,
         toSave = toInsert.concat(toUpdate),
         total = toSave.length + toDelete.length,
-        partial = toSave.length,
         cb = callback && typeof callback === "function" ? callback : function() {},
         i;
 
     function progress() {
         total--;
-        
         if (total === 0) {
             cb();
-            return;
         }
-        
-        if (partial === 0) {
-            for (i = 0; i < toDelete.length; i++) {
-                self.remove(key, toDelete[i], progress);
-            }
-            return;
-        }
-        
-        partial--;
     }
     
     for (i = 0; i < toSave.length; i++) {
         self.save(key, toSave[i], progress);
+    }
+    
+    for (i = 0; i < toDelete.length; i++) {
+        self.remove(key, toDelete[i], progress);
     }
 }
 
@@ -143,9 +138,7 @@ function SQLiteProxy(dbName) {
         db = window.openDatabase(dbName, "SQLite Database", "1.0", 5*1024*1024);
     }
     
-    this._records = [];
     this._maps = [];
-    
     this.getDb = function() {
         return db;
     }
@@ -158,7 +151,7 @@ SQLiteProxy.prototype.createDatabase = function(maps, callback) {
             fields = "",
             field, table, sql, i, j;
         
-        function done() {
+        function progress() {
             total--;
             if (total === 0) {
                 cb();
@@ -178,7 +171,7 @@ SQLiteProxy.prototype.createDatabase = function(maps, callback) {
             fields = fields.substr(0, fields.length -1);
             sql = ["CREATE TABLE IF NOT EXISTS", table, "(", fields, ")"].join(" ");
             
-            tx.executeSql(sql, [], done);
+            tx.executeSql(sql, [], progress);
         }
     });
 }
@@ -197,14 +190,7 @@ SQLiteProxy.prototype.getRecords = function(options, callback) {
             if (typeof callback === "function") {
                 callback( table );
             }
-            this._records = table;
         })
-    });
-}
-
-SQLiteProxy.prototype.getHashTable = function() {
-    return this._records.map(function(record) {
-        return record.id;
     });
 }
 
@@ -223,11 +209,7 @@ SQLiteProxy.prototype.insert = function(key, record, transaction, callback) {
     fields = fields.substr(0, fields.length -1);
     values = values.substr(0, values.length -1);
 
-    sql = [
-        "INSERT INTO", key, "(", fields, ") VALUES (", values, ")"
-    ].join(" ");
-    
-    this._records.push(record);
+    sql = ["INSERT INTO", key, "(", fields, ") VALUES (", values, ")"].join(" ");
     
     transaction.executeSql(sql, params, callback);
 }
@@ -247,24 +229,17 @@ SQLiteProxy.prototype.update = function(key, record, transaction, callback) {
 
     sets = sets.substr(0, sets.length -1);
 
-    sql = [
-        "UPDATE", key, "set", sets, "WHERE", where
-    ].join(" ");
-    
-    this._records.splice(index, 1, record);
+    sql = ["UPDATE", key, "set", sets, "WHERE", where].join(" ");
     
     transaction.executeSql(sql, params, callback);
 }
 
 SQLiteProxy.prototype.delete = function(key, record, transaction, callback) {
     var id = typeof record === "object" ? record.id : record,
-        index = this.getHashTable().indexOf(id),
         where = "id = " + id,
         sql;
     
     sql = ["DELETE FROM", key, "WHERE", where].join(" ");
-    
-    this._records.splice(index, 1);
     
     transaction.executeSql(sql, [], callback);
 }
@@ -357,9 +332,6 @@ DataSet.prototype.close = function() {
 }
 
 DataSet.prototype.getHashTable = function() {
-//    if (this.data.length === 0) {
-//        return [];
-//    }
     return this.data.map(function(record) {
         return record.id;
     });
