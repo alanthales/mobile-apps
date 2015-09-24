@@ -1,4 +1,4 @@
-<ojs-form title="Cadastrar Contato" hide-modal="hideModal()" save-record="saveItem(selection)">
+<ojs-form title="Cadastrar Contato" save-record="saveItem(selection)" close-form="modal.hide()">
     <label class="item item-input">
         <input type="text" placeholder="Nome completo" ng-model="selection.nome">
     </label>
@@ -18,6 +18,6 @@
         <input type="tel" placeholder="Telefone" ng-model="selection.telefone">
     </label>
     <label class="item item-input">
-        <input type="date" placeholder="Data nascimento" ng-model="selection.datanasc">
+        <input type="date" placeholder="Data nascimento" ng-model="selection.datanasc" format-date>
     </label>
 </div>

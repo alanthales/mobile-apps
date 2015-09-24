@@ -1,23 +1,38 @@
 angular.module('controllers.celula', ['ionic'])
 
 .controller('CelulaCtrl', function($scope,  $ionicModal) {
+    console.log($scope);
+    
     $scope.membros = db.createDataSet('membros');
     
     $scope.membros.open();
     
-    db.select("celula", function(results) {
+    $scope.celulas = db.createDataSet('celulas');
+    
+    $scope.celulas.open(function(results) {
         $scope.celula = results[0] || {};
     });
     
-    $ionicModal.fromTemplateUrl('app/views/celulas/cadastro.html', function(modal) {
-        $scope.formModal = modal;
-    }, {
-        scope: $scope,
-        animation: 'slide-in-up'
+    db.select("contatos", null, function(results) {
+        $scope.contatos = results;
     });
     
-    $scope.editCelula = function() {
-        $scope.formModal.show();
+    $scope.dias = [
+        { id: 0, nome: 'Domingo' },
+        { id: 1, nome: 'Segunda' },
+        { id: 2, nome: 'Terça' },
+        { id: 3, nome: 'Quarta' },
+        { id: 4, nome: 'Quinta' },
+        { id: 5, nome: 'Sexta' },
+        { id: 6, nome: 'Sábado' }
+    ];
+    
+    $scope.regCelula = function() {
+        $scope.modal.show();
+    }
+    
+    $scope.addMembro = function(e) {
+        $scope.popover.show(e);
     }
     
     $scope.deleteItem = function(item) {
@@ -28,14 +43,14 @@ angular.module('controllers.celula', ['ionic'])
     }
     
     $scope.hideModal = function() {
-        $scope.formModal.hide();
+        $scope.modal.hide();
     }
     
-    $scope.saveItem = function(item) {
-        if (item.id) {
-            $scope.celulas.update(item);
+    $scope.saveCelula = function(celula) {
+        if (celula.id) {
+            $scope.celulas.update(celula);
         } else {
-            $scope.celulas.insert(item);
+            $scope.celulas.insert(celula);
         }
         $scope.celulas.post(function() {
             $scope.hideModal();

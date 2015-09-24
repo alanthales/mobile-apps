@@ -1,33 +1,50 @@
-<ion-view view-title="Célula">
-<!--    <ojs-nav-bar></ojs-nav-bar>-->
+<ion-view view-title="Célula" ojs-template="app/views/celulas/cadastro.html">
     <ion-content>
-        <div class="list card">
-            <div class="item item-avatar">
-                <img src="img/ionic.png">
-                <h2>Chega +</h2>
-                <p>Rua ABC, 123</p>
+        <div ng-if="celula.id">
+            <div class="list card">
+                <div class="item item-avatar">
+                    <img src="img/ionic.png">
+                    <h2>{{celula.nome}}</h2>
+                    <p>
+                        <button class="button button-outline button-small button-balanced" ng-click="regCelula()">
+                            Editar
+                        </button>
+                    </p>
+                </div>
+
+                <div class="item">
+                    <p>
+                        <span class="subdued">{{membros.data.length}} membros</span>
+                    </p>
+                </div>
             </div>
 
-            <div class="item">
-                <p>
-                    <span class="subdued">{{membros.data.length}} membros</span>
-                </p>
+            <div class="list card">
+                <div class="item item-divider" ng-if="membros.data > 0">
+                    Membros
+                </div>
+
+                <div class="item" collection-repeat="item in membros.data">
+                    {{item.nome}}
+                </div>
+
+                <a class="item item-icon-left balanced" href="#" ng-click="addMembro($event)">
+                    <i class="icon ion-android-add"></i>
+                    Adicionar membro
+                </a>
             </div>
         </div>
         
-        <div class="list card">
-            <div class="item item-divider" ng-if="membros.data > 0">
-                Membros
+        <div class="list card" ng-if="!celula.id">
+            <div class="item item-divider">
+                Sua célula ainda não foi cadastrada
             </div>
-            
-            <ojs-item collection-repeat="item in membros.data">
-                {{item.nome}}
-            </ojs-item>
-            
-            <a class="item item-icon-left" href="#">
-                <i class="icon ion-android-add"></i>
-                Adicionar membro
-            </a>
+            <div class="item">
+                <a href="#" class="button button-balanced ion-android-add" ng-click="regCelula()">
+                    Cadastrar célula
+                </a>
+            </div>
         </div>
     </ion-content>
+    <ojs-pop-menu template="app/views/celulas/membro.html"></ojs-pop-menu>
 </ion-view>

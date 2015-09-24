@@ -1,0 +1,22 @@
+<ion-popover-view>
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">Adicionar membro</h1>
+    </ion-header-bar>
+    <ion-content>
+        <form ng-submit="addMembro(record)">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Membro
+                </div>
+                <select ng-model="record.id">
+                    <option ng-repeat="contato in contatos" ng-value="contato.id">
+                        {{contato.nome}}
+                    </option>
+                </select>
+            </label>
+            <div class="padding">
+                <button type="submit" class="button button-balanced">Confirmar</button>
+            </div>
+        </form>
+    </ion-content>
+</ion-popover-view>

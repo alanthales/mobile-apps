@@ -35,32 +35,13 @@ angular.module('ojs.directives', ['ionic'])
         transclude: true,
         scope: {
             title: '@',
-            saveRecord: '&',
-            closeForm: '&'
+            hideModal: '&',
+            saveRecord: '&'
         },
         templateUrl: '/app/views/ojs-formbase.html'
     }
 })
 
-.directive('ojsTemplate', ['$ionicModal', function($ionicModal) {
-	return {
-		restrict: 'A',
-		require: 'ionView',
-		link: function(scope, elm, attrs) {
-            $ionicModal.fromTemplateUrl(attrs.ojsTemplate, {
-                scope: scope,
-                animatioin: 'slide-up'
-            }).then(function(modal) {
-                scope.modal = modal;
-            });
-            
-		    scope.$on('$destroy', function() {
-                scope.modal.remove();
-		    });
-		}
-	};
-}])
-    
 .directive("formatDate", function() {
     return {
         restrict: 'A',
@@ -73,21 +54,21 @@ angular.module('ojs.directives', ['ionic'])
     }
 })
 
-.directive("ojsPopMenu", ['$ionicPopover', function($ionicPopover) {
+.directive("ojsPopMenu", function() {
     return {
-        restrict: 'E',
-        replace: true,
-		link: function(scope, elm, attrs) {
-            $ionicPopover.fromTemplateUrl(attrs.template, {
-                scope: scope,
+        restrict: 'A',
+        require: 'ionView',
+        controller: function($scope, $ionicPopover) {
+            $ionicPopover.fromTemplateUrl('app/views/ojs-popmenu.html', {
+                scope: $scope,
                 animation: 'fade-out'
             }).then(function(popover) {
-                scope.popover = popover;
+                $scope.popover = popover;
             });
             
-            scope.$on('$destroy', function() {
-                scope.popover.remove();
+            $scope.$on('$destroy', function() {
+                $scope.popover.remove();
             });
         }
     }
-}]);
+});

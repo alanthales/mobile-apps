@@ -1,36 +1,33 @@
 angular.module('controllers.contato', ['ionic'])
 
-.controller('ContatoCtrl', function($scope,  $ionicModal) {
+.controller('ContatoCtrl', function($scope,  $ionicModal, $ionicPopover) {
+    console.log($scope);
+
     $scope.contatos = db.createDataSet('contatos');
     
     $scope.contatos.open();
     
-    $ionicModal.fromTemplateUrl('app/views/contatos/cadastro.html', function(modal) {
-        $scope.formModal = modal;
-    }, {
-        scope: $scope,
-        animation: 'slide-in-up'
-    });
-    
-    $scope.newItem = function() {
-        $scope.selection = {};
-        $scope.formModal.show();
-    }
-    
-    $scope.editItem = function(item) {
+    $scope.showMenu = function(item, e) {
         $scope.selection = item;
-        $scope.formModal.show();
+        $scope.popover.show(e);
     }
     
-    $scope.deleteItem = function(item) {
+    $scope.newItem = function(e) {
+        $scope.selection = {};
+        $scope.modal.show();
+    }
+    
+    $scope.editItem = function() {
+        $scope.modal.show();
+        $scope.popover.hide();
+    }
+    
+    $scope.deleteItem = function() {
         if (confirm('Deseja realmente excluir este contato?')) {
-            $scope.contatos.delete(item);
+            $scope.contatos.delete($scope.selection);
             $scope.contatos.post();
         }
-    }
-    
-    $scope.hideModal = function() {
-        $scope.formModal.hide();
+        $scope.popover.hide();
     }
     
     $scope.saveItem = function(item) {
@@ -40,7 +37,7 @@ angular.module('controllers.contato', ['ionic'])
             $scope.contatos.insert(item);
         }
         $scope.contatos.post(function() {
-            $scope.hideModal();
+            $scope.modal.hide();
         });
     }
 });

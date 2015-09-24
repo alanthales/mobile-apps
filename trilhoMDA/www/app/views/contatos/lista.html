@@ -1,10 +1,15 @@
-<ion-view view-title="Contatos">
-    <ojs-nav-bar></ojs-nav-bar>
+<ion-view view-title="Contatos" ojs-template="app/views/contatos/cadastro.html">
+    <ion-nav-buttons side="right">
+        <button class="right button button-icon ion-android-add" ng-click="newItem()"></button>
+        <button class="right button button-icon ion-android-refresh" ng-click="import()"></button>
+    </ion-nav-buttons>
     <ion-content>
         <ojs-list is-empty="contatos.data.length === 0">
-            <ojs-item collection-repeat="item in contatos.data">
+            <div class="item" collection-repeat="item in contatos.data" on-hold="showMenu(item, $event)">
                 {{item.nome}}
-            </ojs-item>
+                <span class="item-note">{{item.telefone}}</span>
+            </div>
         </ojs-list>
     </ion-content>
+    <ojs-pop-menu template="app/views/ojs-popmenu.html"></ojs-pop-menu>
 </ion-view>
