@@ -1,4 +1,4 @@
-<ion-view view-title="Contatos" ojs-template="app/views/contatos/cadastro.html">
+<ion-view view-title="Contatos">
     <ion-nav-buttons side="right">
         <button class="right button button-icon ion-android-add" ng-click="newItem()"></button>
         <button class="right button button-icon ion-android-refresh" ng-click="import()"></button>
@@ -10,6 +10,8 @@
                 <span class="item-note">{{item.telefone}}</span>
             </div>
         </ojs-list>
+        
+        <ojs-modal name="form" template="app/views/contatos/cadastro.html"></ojs-modal>
+        <ojs-pop-menu name="menu" template="app/views/ojs-popmenu.html"></ojs-pop-menu>
     </ion-content>
-    <ojs-pop-menu template="app/views/ojs-popmenu.html"></ojs-pop-menu>
 </ion-view>

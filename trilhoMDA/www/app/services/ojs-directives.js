@@ -42,25 +42,58 @@ angular.module('ojs.directives', ['ionic'])
     }
 })
 
-.directive('ojsTemplate', ['$ionicModal', function($ionicModal) {
+.directive('ojsModal', ['$ionicModal', function($ionicModal) {
 	return {
-		restrict: 'A',
-		require: 'ionView',
+		restrict: 'E',
+		require: '^?ionContent',
 		link: function(scope, elm, attrs) {
-            $ionicModal.fromTemplateUrl(attrs.ojsTemplate, {
-                scope: scope,
-                animatioin: 'slide-up'
-            }).then(function(modal) {
-                scope.modal = modal;
-            });
-            
-		    scope.$on('$destroy', function() {
-                scope.modal.remove();
-		    });
+            var parentScope = scope.$parent;
+
+            parentScope[attrs.name] = {
+                openModal: function() {
+                    $ionicModal.fromTemplateUrl(attrs.template, function(modal) {
+                        parentScope.$ojsModal = modal;
+                        parentScope.$ojsModal.show();
+                    },{
+                        scope: scope,
+                        animation: 'slide-in-up',
+                        backdropClickToClose: false,
+                        hardwareBackButtonClose: false
+                    });
+                }
+            }
 		}
 	};
 }])
     
+.directive("ojsPopMenu", ['$ionicPopover', function($ionicPopover) {
+    return {
+        restrict: 'E',
+        require: '^?ionContent',
+		link: function(scope, elm, attrs) {
+            var parentScope = scope.$parent;
+            
+            parentScope[attrs.name] = {
+                openMenu: function(e) {
+                    $ionicPopover.fromTemplateUrl(attrs.template, {
+                        scope: scope,
+                        animation: 'fade-out',
+                        backdropClickToClose: false,
+                        hardwareBackButtonClose: false
+                    }).then(function(popover) {
+                        parentScope.popover = popover;
+                        parentScope.popover.show(e);
+                    });
+                },
+
+                closeMenu: function() {
+                    parentScope.popover.remove();
+                }
+            }
+        }
+    }
+}])
+
 .directive("formatDate", function() {
     return {
         restrict: 'A',
@@ -71,23 +104,4 @@ angular.module('ojs.directives', ['ionic'])
             });
         }
     }
-})
-
-.directive("ojsPopMenu", ['$ionicPopover', function($ionicPopover) {
-    return {
-        restrict: 'E',
-        replace: true,
-		link: function(scope, elm, attrs) {
-            $ionicPopover.fromTemplateUrl(attrs.template, {
-                scope: scope,
-                animation: 'fade-out'
-            }).then(function(popover) {
-                scope.popover = popover;
-            });
-            
-            scope.$on('$destroy', function() {
-                scope.popover.remove();
-            });
-        }
-    }
-}]);
+});

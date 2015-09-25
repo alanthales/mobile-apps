@@ -1,16 +1,10 @@
 angular.module('controllers.celula', ['ionic'])
 
-.controller('CelulaCtrl', function($scope,  $ionicModal) {
-    console.log($scope);
-    
-    $scope.membros = db.createDataSet('membros');
-    
-    $scope.membros.open();
-    
+.controller('CelulaCtrl', function($scope) {
     $scope.celulas = db.createDataSet('celulas');
     
     $scope.celulas.open(function(results) {
-        $scope.celula = results[0] || {};
+        $scope.celula = results[0] || { membros: [] };
     });
     
     db.select("contatos", null, function(results) {
@@ -26,34 +20,32 @@ angular.module('controllers.celula', ['ionic'])
         { id: 5, nome: 'Sexta' },
         { id: 6, nome: 'Sábado' }
     ];
-    
-    $scope.regCelula = function() {
-        $scope.modal.show();
-    }
-    
-    $scope.addMembro = function(e) {
-        $scope.popover.show(e);
-    }
-    
-    $scope.deleteItem = function(item) {
-        if (confirm('Deseja realmente excluir este membro?')) {
-            $scope.celulas.delete(item);
-            $scope.celulas.post();
-        }
-    }
-    
-    $scope.hideModal = function() {
-        $scope.modal.hide();
-    }
-    
-    $scope.saveCelula = function(celula) {
+
+    $scope.postCelula = function(record) {
+        var celula = record || $scope.celula;
         if (celula.id) {
             $scope.celulas.update(celula);
         } else {
             $scope.celulas.insert(celula);
         }
-        $scope.celulas.post(function() {
-            $scope.hideModal();
-        });
+        $scope.celulas.post();
+    }
+    
+    $scope.addMembro = function(membro) {
+        $scope.celula.membros.push(membro.id);
+        $scope.postCelula();
+        $scope.frmMembro.closeModal();
+    }
+    
+    $scope.deleteMembro = function(membro) {
+        if (confirm('Deseja realmente excluir este membro?')) {
+            $scope.celulas.delete(membro);
+            $scope.celulas.post();
+        }
+    }
+    
+    $scope.saveCelula = function(celula) {
+        $scope.postCelula(celula);
+        $scope.frmCelula.closeModal();
     }
 });

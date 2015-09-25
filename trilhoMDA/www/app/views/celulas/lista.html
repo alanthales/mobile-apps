@@ -1,4 +1,4 @@
-<ion-view view-title="Célula" ojs-template="app/views/celulas/cadastro.html">
+<ion-view view-title="Célula">
     <ion-content>
         <div ng-if="celula.id">
             <div class="list card">
@@ -6,7 +6,7 @@
                     <img src="img/ionic.png">
                     <h2>{{celula.nome}}</h2>
                     <p>
-                        <button class="button button-outline button-small button-balanced" ng-click="regCelula()">
+                        <button class="button button-outline button-small button-positive" ng-click="frmCelula.openModal()">
                             Editar
                         </button>
                     </p>
@@ -14,7 +14,7 @@
 
                 <div class="item">
                     <p>
-                        <span class="subdued">{{membros.data.length}} membros</span>
+                        <span class="subdued">{{celula.membros.length}} membros</span>
                     </p>
                 </div>
             </div>
@@ -24,12 +24,12 @@
                     Membros
                 </div>
 
-                <div class="item" collection-repeat="item in membros.data">
-                    {{item.nome}}
+                <div class="item" collection-repeat="item in celula.membros">
+                    {{contatos[item.id]}}
                 </div>
 
-                <a class="item item-icon-left balanced" href="#" ng-click="addMembro($event)">
-                    <i class="icon ion-android-add"></i>
+                <a class="item item-icon-left positive" href="#" ng-click="frmMembro.openModal()">
+                    <i class="icon ion-android-person-add"></i>
                     Adicionar membro
                 </a>
             </div>
@@ -40,11 +40,13 @@
                 Sua célula ainda não foi cadastrada
             </div>
             <div class="item">
-                <a href="#" class="button button-balanced ion-android-add" ng-click="regCelula()">
+                <a href="#" class="button button-positive ion-android-add" ng-click="frmCelula.openModal()">
                     Cadastrar célula
                 </a>
             </div>
         </div>
+        
+        <ojs-modal name="frmMembro" template="app/views/celulas/membro.html"></ojs-pop-menu>
+        <ojs-modal name="frmCelula" template="app/views/celulas/cadastro.html"></ojs-modal>
     </ion-content>
-    <ojs-pop-menu template="app/views/celulas/membro.html"></ojs-pop-menu>
 </ion-view>

@@ -1,25 +1,23 @@
 angular.module('controllers.contato', ['ionic'])
 
-.controller('ContatoCtrl', function($scope,  $ionicModal, $ionicPopover) {
-    console.log($scope);
-
+.controller('ContatoCtrl', function($scope) {
     $scope.contatos = db.createDataSet('contatos');
     
     $scope.contatos.open();
     
     $scope.showMenu = function(item, e) {
         $scope.selection = item;
-        $scope.popover.show(e);
+        $scope.menu.openMenu(e);
     }
     
     $scope.newItem = function(e) {
         $scope.selection = {};
-        $scope.modal.show();
+        $scope.form.openModal();
     }
     
     $scope.editItem = function() {
-        $scope.modal.show();
-        $scope.popover.hide();
+        $scope.form.openModal();
+        $scope.menu.closeMenu();
     }
     
     $scope.deleteItem = function() {
@@ -27,7 +25,7 @@ angular.module('controllers.contato', ['ionic'])
             $scope.contatos.delete($scope.selection);
             $scope.contatos.post();
         }
-        $scope.popover.hide();
+        $scope.menu.closeMenu();
     }
     
     $scope.saveItem = function(item) {
@@ -37,7 +35,7 @@ angular.module('controllers.contato', ['ionic'])
             $scope.contatos.insert(item);
         }
         $scope.contatos.post(function() {
-            $scope.modal.hide();
+            $scope.form.closeModal();
         });
     }
 });
