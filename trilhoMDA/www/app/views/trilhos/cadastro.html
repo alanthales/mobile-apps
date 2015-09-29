@@ -1,7 +1,7 @@
 <ojs-form title="Trilho" save-record="saveItem(selection)" close-form="form.closeModal()" ui-class="energized">
     <label class="item item-input item-select">
-        <div class="input-label">Selecione o membro</div>
-        <select ng-model="selection.membroId">
+        <div class="input-label">Membro</div>
+        <select ng-model="selection.membroId" required>
             <option ng-repeat="membro in celula.membros" ng-value="membro" ng-selected="membro == selection.membroId">
                 {{contatos.getById(membro).nome}}
             </option>
