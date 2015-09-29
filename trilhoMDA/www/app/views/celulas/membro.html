@@ -11,7 +11,7 @@
     </ion-header-bar>
     <ion-content>
         <div class="list">
-            <div class="item" collection-repeat="item in contatos | filter:search" ng-click="addMembro(item)">
+            <div class="item" collection-repeat="item in contatos.data | filter:search" ng-click="addMembro(item)">
                 {{item.nome}}
                 <span class="item-note">{{item.telefone}}</span>
             </div>

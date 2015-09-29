@@ -6,7 +6,7 @@ var db = new DbFactory('trilhoMDA', DbProxies.LOCALSTORAGE);
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('trilhoMDA', [
-    'ionic', 'ojs.directives', 'tabs.swipable', 'controllers.home', 'controllers.contato',
+    'ionic', 'db.dao', 'ojs.directives', 'tabs.swipable', 'controllers.home', 'controllers.contato',
     'controllers.celula', 'controllers.chamada'
 ])
 

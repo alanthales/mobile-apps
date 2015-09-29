@@ -11,10 +11,10 @@
                 <div class="item">
                     <h2>{{celula.nome}}</h2>
                     <p>
-                        {{getContatosById(celula.lider).nome}}
+                        {{contatos.getById(celula.lider).nome}}
                     </p>
                     <p>
-                        {{getContatosById(celula.anfitriao).endereco}}
+                        {{contatos.getById(celula.anfitriao).endereco}}
                     </p>
                     <p>
                         <button class="button button-outline button-small button-positive" ng-click="frmCelula.openModal()">
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="item item-button-right" ng-repeat="membro in celula.membros">
-                    {{getContatosById(membro).nome}}
+                    {{contatos.getById(membro).nome}}
                     <button class="button button-clear button-assertive" ng-click="deleteMembro(membro)">
                         <i class="icon ion-android-remove-circle"></i>
                     </button>

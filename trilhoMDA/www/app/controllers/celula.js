@@ -1,9 +1,7 @@
 angular.module('controllers.celula', ['ionic'])
 
-.controller('CelulaCtrl', function($scope) {
-    $scope.celulas = db.createDataSet('celulas');
-    
-    $scope.celulas.open(function(results) {
+.controller('CelulaCtrl', function($scope, $dao, $ionicPopup) {
+    $scope.celulas = $dao.getCelulas(function(results) {
         var celula = results[0] || {};
         if (!celula.membros) {
             celula.membros = [];
@@ -11,16 +9,7 @@ angular.module('controllers.celula', ['ionic'])
         $scope.celula = celula;
     });
     
-    db.select("contatos", null, function(results) {
-        $scope.contatos = results;
-        $scope.getContatosById = function(uid) {
-            var hashtable = $scope.contatos.map(function(record) {
-                    return record.id;
-                }),
-                index = hashtable.indexOf(parseInt(uid));
-            return $scope.contatos[index];
-        }
-    });
+    $scope.contatos = $dao.getContatos();
     
     $scope.dias = [
         { id: 0, nome: 'Domingo' },
@@ -43,17 +32,41 @@ angular.module('controllers.celula', ['ionic'])
     }
     
     $scope.addMembro = function(membro) {
+        var index = $scope.celula.membros.indexOf(membro.id),
+            alertPopup;
+        
+        if (index !== -1) {
+            alertPopup = $ionicPopup.alert({
+                title: 'Atenção',
+                template: 'Este contato já é membro da célula'
+            });
+            
+            alertPopup.then();
+            
+            return;
+        }
+        
         $scope.celula.membros.push(membro.id);
         $scope.postCelula();
         $scope.frmMembro.closeModal();
     }
     
     $scope.deleteMembro = function(membro) {
-        if (confirm('Deseja realmente excluir este membro?')) {
-            var index = $scope.celula.membros.indexOf(membro);
-            $scope.celula.membros.splice(index, 1);
-            $scope.postCelula();
-        }
+        var confirmPopup = $ionicPopup.confirm({
+                title: 'Confirme',
+                okText: 'Sim',
+                cancelText: 'Não',
+                template: 'Deseja realmente excluir este membro?'
+            }),
+            index;
+        
+        confirmPopup.then(function(res) {
+            if (res) {
+                index = $scope.celula.membros.indexOf(membro);
+                $scope.celula.membros.splice(index, 1);
+                $scope.postCelula();
+            }
+        });
     }
     
     $scope.saveCelula = function(celula) {

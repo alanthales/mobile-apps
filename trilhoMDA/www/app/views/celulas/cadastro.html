@@ -1,4 +1,4 @@
-<ojs-form title="Cadastrar Célula" save-record="saveCelula(celula)" close-form="$ojsModal.remove()">
+<ojs-form title="Cadastrar Célula" save-record="saveCelula(celula)" close-form="$ojsModal.remove()" ui-class="positive">
     <label class="item item-input item-stacked-label">
         <span class="input-label">Nome da célula</span>
         <input type="text" placeholder="Te vejo lá" ng-model="celula.nome">
@@ -18,7 +18,7 @@
     <label class="item item-input item-select">
         <div class="input-label">Selecione o líder</div>
         <select ng-model="celula.lider">
-            <option ng-repeat="contato in contatos" ng-value="contato.id" ng-selected="contato.id == celula.lider">
+            <option ng-repeat="contato in contatos.data" ng-value="contato.id" ng-selected="contato.id == celula.lider">
                 {{contato.nome}}
             </option>
         </select>
@@ -26,7 +26,7 @@
     <label class="item item-input item-select">
         <div class="input-label">Selecione o anfitrião</div>
         <select ng-model="celula.anfitriao">
-            <option ng-repeat="contato in contatos" ng-value="contato.id" ng-selected="contato.id == celula.anfitriao">
+            <option ng-repeat="contato in contatos.data" ng-value="contato.id" ng-selected="contato.id == celula.anfitriao">
                 {{contato.nome}}
             </option>
         </select>

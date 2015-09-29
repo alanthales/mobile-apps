@@ -1,9 +1,7 @@
 angular.module('controllers.contato', ['ionic'])
 
-.controller('ContatoCtrl', function($scope) {
-    $scope.contatos = db.createDataSet('contatos');
-    
-    $scope.contatos.open();
+.controller('ContatoCtrl', function($scope, $dao, $ionicPopup) {
+    $scope.contatos = $dao.getContatos();
     
     $scope.showMenu = function(item, e) {
         $scope.selection = item;
@@ -21,10 +19,21 @@ angular.module('controllers.contato', ['ionic'])
     }
     
     $scope.deleteItem = function() {
-        if (confirm('Deseja realmente excluir este contato?')) {
-            $scope.contatos.delete($scope.selection);
-            $scope.contatos.post();
-        }
+        var confirmPopup = $ionicPopup.confirm({
+                title: 'Confirme',
+                okText: 'Sim',
+                okType: 'button-assertive',
+                cancelText: 'Não',
+                template: 'Deseja realmente excluir este contato?'
+            });
+        
+        confirmPopup.then(function(res) {
+            if (res) {
+                $scope.contatos.delete($scope.selection);
+                $scope.contatos.post();
+            }
+        });
+        
         $scope.menu.closeMenu();
     }
     

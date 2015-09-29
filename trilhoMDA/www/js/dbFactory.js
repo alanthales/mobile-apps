@@ -345,6 +345,12 @@ DataSet.prototype.getHashTable = function() {
     });
 }
 
+DataSet.prototype.getById = function(id) {
+    var hashtable = this.getHashTable(),
+        index = hashtable.indexOf(parseInt(id));
+    return this.data[index];
+}
+
 DataSet.prototype.insert = function(record) {
     if (!this.active) {
         throw "Invalid operation on closed dataset";

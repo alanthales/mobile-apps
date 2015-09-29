@@ -6,21 +6,32 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <ojs-list is-empty="chamadas.data.length === 0">
-            <div class="item" collection-repeat="item in chamadas.data" on-hold="showMenu(item, $event)">
-                {{item.data}}
+        <div ng-if="celula">
+            <ojs-list is-empty="chamadas.data.length === 0">
+                <div class="item" collection-repeat="item in chamadas.data" on-hold="showMenu(item, $event)">
+                    {{item.data}}
+                </div>
+            </ojs-list>
+            
+            <div class="padding">
+                <div class="item item-icon-left" ng-if="chamadas.data.length > 0">
+                    <p>
+                        <i class="icon icon-small ion-information-circled"></i>
+                        <span>Toque e segure para editar, excluir...</span>
+                    </p>
+                </div>
             </div>
-        </ojs-list>
+        </div>
         
-        <div class="padding">
-            <div class="item item-icon-left" ng-if="contatos.data.length > 0">
+        <div class="padding" ng-if="!celula">
+            <div class="item item-icon-left">
                 <p>
-                    <i class="icon icon-small ion-information-circled positive"></i>
-                    <span class="positive">Toque e segure para editar, excluir...</span>
+                    <i class="icon icon-small ion-information-circled"></i>
+                    <span>Você deve cadastrar sua célula primeiro.</span>
                 </p>
             </div>
         </div>
         
-        <ojs-modal name="form" template="app/views/chamadas/cadastro.html"></ojs-modal>
     </ion-content>
+    <ojs-modal name="form" template="app/views/chamadas/cadastro.html"></ojs-modal>
 </ion-view>

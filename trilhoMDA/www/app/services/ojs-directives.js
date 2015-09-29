@@ -1,13 +1,5 @@
 angular.module('ojs.directives', ['ionic'])
 
-.directive('ojsNavBar', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<ion-nav-buttons side="right"><button class="right button button-icon ion-android-add" ng-click="newItem()"></button></ion-nav-buttons>'
-    }
-})
-
 .directive('ojsList', function() {
     return {
         restrict: 'E',
@@ -38,7 +30,13 @@ angular.module('ojs.directives', ['ionic'])
             saveRecord: '&',
             closeForm: '&'
         },
-        templateUrl: '/app/views/ojs-formbase.html'
+        templateUrl: '/app/views/ojs-formbase.html',
+        link: function(scope, elm, attrs) {
+            var bar = elm.find('ion-header-bar'),
+                btn = angular.element(elm[0].querySelector('button[type="submit"]'));
+            bar.addClass('bar-' + attrs.uiClass);
+            btn.addClass('button-' + attrs.uiClass);
+        }
     }
 })
 
@@ -48,7 +46,7 @@ angular.module('ojs.directives', ['ionic'])
 		require: '^?ionContent',
 		link: function(scope, elm, attrs) {
             var parentScope = scope.$parent;
-
+            
             parentScope[attrs.name] = {
                 openModal: function() {
                     $ionicModal.fromTemplateUrl(attrs.template, function(modal) {

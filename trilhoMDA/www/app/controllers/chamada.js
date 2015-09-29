@@ -1,7 +1,11 @@
 angular.module('controllers.chamada', ['ionic'])
 
-.controller('ChamadaCtrl', function($scope) {
-    $scope.chamadas = db.createDataSet('chamadas');
+.controller('ChamadaCtrl', function($scope, $dao) {
+    $scope.celula = undefined;
+    $scope.chamadas = $dao.getChamadas();
+    $scope.contatos = $dao.getContatos();
     
-    $scope.chamadas.open();
+    $dao.getCelulas(function(results) {
+        $scope.celula = results[0];
+    });
 });

@@ -1,0 +1,15 @@
+<ojs-form title="Chamada da célula" save-record="saveItem(selection)" close-form="$ojsModal.remove()" ui-class="balanced">
+    <label class="item item-input item-stacked-label">
+        <span class="input-label">Data</span>
+        <input type="text" ng-model="selection.data">
+    </label>
+    
+    <ul class="list">
+        <li class="item item-checkbox" ng-repeat="item in membros">
+            <label class="checkbox">
+                <input type="checkbox">
+            </label>
+            {{contatos.getById(item).nome}}
+        </li>        
+    </ul>
+</div>
