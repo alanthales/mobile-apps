@@ -1,13 +1,5 @@
 angular.module('ojs.directives', ['ionic'])
 
-.directive('ojsNavBar', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<ion-nav-buttons side="right"><button class="right button button-icon ion-android-add" ng-click="newItem()"></button></ion-nav-buttons>'
-    }
-})
-
 .directive('ojsList', function() {
     return {
         restrict: 'E',
@@ -35,12 +27,74 @@ angular.module('ojs.directives', ['ionic'])
         transclude: true,
         scope: {
             title: '@',
-            hideModal: '&',
-            saveRecord: '&'
+            saveRecord: '&',
+            closeForm: '&'
         },
-        templateUrl: '/app/views/ojs-formbase.html'
+        templateUrl: '/app/views/ojs-formbase.html',
+        link: function(scope, elm, attrs) {
+            var bar = elm.find('ion-header-bar'),
+                btn = angular.element(elm[0].querySelector('button[type="submit"]'));
+            bar.addClass('bar-' + attrs.uiClass);
+            btn.addClass('button-' + attrs.uiClass);
+        }
     }
 })
+
+.directive('ojsModal', ['$ionicModal', function($ionicModal) {
+	return {
+		restrict: 'E',
+		require: '^?ionContent',
+		link: function(scope, elm, attrs) {
+            var parentScope = scope.$parent;
+            
+            parentScope[attrs.name] = {
+                openModal: function() {
+                    $ionicModal.fromTemplateUrl(attrs.template, function(modal) {
+                        parentScope.$ojsModal = modal;
+                        parentScope.$ojsModal.show();
+                    },{
+                        scope: scope,
+                        animation: 'slide-in-up',
+                        backdropClickToClose: false,
+                        hardwareBackButtonClose: false
+                    });
+                },
+                
+                closeModal: function() {
+                    parentScope.$ojsModal.remove();
+                }
+            }
+		}
+	};
+}])
+    
+.directive("ojsPopMenu", ['$ionicPopover', function($ionicPopover) {
+    return {
+        restrict: 'E',
+        require: '^?ionContent',
+		link: function(scope, elm, attrs) {
+            var parentScope = scope.$parent;
+            
+            parentScope[attrs.name] = {
+                openMenu: function(e) {
+                    $ionicPopover.fromTemplateUrl(attrs.template, {
+                        scope: scope,
+                        animation: 'fade-out',
+                        backdropClickToClose: false,
+                        hardwareBackButtonClose: false
+                    }).then(function(popover) {
+                        parentScope.$ojsPopMenu = popover;
+                        parentScope.$ojsPopMenu.show(e);
+                    });
+                },
+
+                closeMenu: function() {
+                    parentScope.$ojsPopMenu.remove();
+                }
+            }
+        }
+    }
+}])
 
 .directive("formatDate", function() {
     return {
@@ -48,26 +102,9 @@ angular.module('ojs.directives', ['ionic'])
         require: 'ngModel',
         link: function(scope, elem, attr, modelCtrl) {
             modelCtrl.$formatters.push(function(modelValue) {
-                return new Date(modelValue);
-            });
-        }
-    }
-})
-
-.directive("ojsPopMenu", function() {
-    return {
-        restrict: 'A',
-        require: 'ionView',
-        controller: function($scope, $ionicPopover) {
-            $ionicPopover.fromTemplateUrl('app/views/ojs-popmenu.html', {
-                scope: $scope,
-                animation: 'fade-out'
-            }).then(function(popover) {
-                $scope.popover = popover;
-            });
-            
-            $scope.$on('$destroy', function() {
-                $scope.popover.remove();
+                if (modelValue) {
+                    return new Date(modelValue);
+                }
             });
         }
     }

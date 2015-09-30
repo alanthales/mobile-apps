@@ -1,6 +1,7 @@
 <div class="modal">
-    <ion-header-bar class="bar-dark">
+    <ion-header-bar>
         <h1 class="title">{{title}}</h1>
+        <button class="right button button-icon ion-android-close" ng-click="closeForm()"></button>
     </ion-header-bar>
     <ion-content>
         <form ng-submit="saveRecord(record)">
@@ -8,8 +9,8 @@
                 <ng-transclude></ng-transclude>
             </div>
             <div class="padding">
-                <button type="submit" class="button button-dark">Confirmar</button>
-                <button type="reset" class="button button-stable" ng-click="hideModal()">Cancelar</button>
+                <button type="submit" class="button">Confirmar</button>
+                <button type="button" class="button button-stable" ng-click="closeForm()">Cancelar</button>
             </div>
         </form>        
     </ion-content>

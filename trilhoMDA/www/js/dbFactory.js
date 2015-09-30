@@ -144,7 +144,17 @@ function SQLiteProxy(dbName) {
     }
 }
 
+SQLiteProxy.prototype.getFields = function(table) {
+    var hashtable = this._maps.map(function(maps) {
+            return maps.table;
+        }),
+        index = hashtable.indexOf(table);
+    return this._maps[index].fields;
+}
+
 SQLiteProxy.prototype.createDatabase = function(maps, callback) {
+    this._maps = maps;
+    
     this.getDb().transaction(function(tx) {
         var cb = callback && typeof callback === "function" ? callback : function() {},
             total = maps.length,
@@ -177,15 +187,28 @@ SQLiteProxy.prototype.createDatabase = function(maps, callback) {
 }
 
 SQLiteProxy.prototype.getRecords = function(options, callback) {
-    var opts = typeof options === "object" ? options : { key: options, limit: 1000 };
+    var opts = typeof options === "object" ? options : { key: options, limit: 1000 },
+        self = this;
     
-    this.getDb().transaction(function(tx) {
+    self.getDb().transaction(function(tx) {
         var sql = ["SELECT * FROM", opts.key, "LIMIT", opts.limit].join(" "),
+            fields = self.getFields(opts.key),
+            hashtable = fields.map(function(field) {
+                return field.name;
+            }),
             table = [],
-            i;
+            i, record, field, index;
+        
         tx.executeSql(sql, [], function(tx, results) {
             for (i = 0; i < results.rows.length; i++) {
-                table.push(results.rows.item(i));
+                record = results.rows.item(i);
+                for (field in record) {
+                    index = hashtable.indexOf(field);
+                    if (fields[index].serialize) {
+                        record[field] = JSON.parse(record[field]);
+                    }
+                }
+                table.push(record);
             }
             if (typeof callback === "function") {
                 callback( table );

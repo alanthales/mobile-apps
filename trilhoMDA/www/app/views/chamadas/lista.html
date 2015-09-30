@@ -6,32 +6,36 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div ng-if="celula">
+        <div ng-if="celula && celula.membros.length > 0">
             <ojs-list is-empty="chamadas.data.length === 0">
                 <div class="item" collection-repeat="item in chamadas.data" on-hold="showMenu(item, $event)">
-                    {{item.data}}
+                    {{item.data | date:'dd/MM/yyyy'}}
+                    <span class="item-note">{{item.membros.length + item.visitantes.length}} presente(s)</span>
                 </div>
             </ojs-list>
-            
-            <div class="padding">
-                <div class="item item-icon-left" ng-if="chamadas.data.length > 0">
-                    <p>
-                        <i class="icon icon-small ion-information-circled"></i>
-                        <span>Toque e segure para editar, excluir...</span>
-                    </p>
-                </div>
-            </div>
         </div>
         
-        <div class="padding" ng-if="!celula">
+        <div class="padding" ng-if="!celula || celula.membros.length === 0">
             <div class="item item-icon-left">
                 <p>
                     <i class="icon icon-small ion-information-circled"></i>
-                    <span>Você deve cadastrar sua célula primeiro.</span>
+                    <span>Você deve cadastrar sua célula e adicionar membros.</span>
                 </p>
             </div>
         </div>
         
+        <div class="padding" ng-if="chamadas.data.length > 0">
+            <div class="item item-icon-left">
+                <p>
+                    <i class="icon icon-small ion-information-circled"></i>
+                    <span>Toque e segure para editar, excluir...</span>
+                </p>
+            </div>
+        </div>
+        
+        <ojs-modal name="frmVisitante" template="app/views/chamadas/visitante.html"></ojs-modal>
     </ion-content>
+    
     <ojs-modal name="form" template="app/views/chamadas/cadastro.html"></ojs-modal>
+    <ojs-pop-menu name="menu" template="app/views/ojs-popmenu.html"></ojs-pop-menu>
 </ion-view>
