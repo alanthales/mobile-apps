@@ -1,12 +1,11 @@
 angular.module('controllers.chamada', ['ionic'])
 
 .controller('ChamadaCtrl', function($scope, $dao, $ionicPopup) {
-    $scope.celula = undefined;
     $scope.chamadas = $dao.getChamadas();
     $scope.contatos = $dao.getContatos();
     
     $dao.getCelulas(function(results) {
-        $scope.celula = results[0];
+        $scope.celula = results[0] || undefined;
     });
     
     $scope.newChamada = function() {
@@ -17,7 +16,7 @@ angular.module('controllers.chamada', ['ionic'])
             return;
         }
         
-        $scope.selection = { membros: [], visitantes: [] };
+        $scope.selection = { celulaId: celula.id, membros: [], visitantes: [] };
         
         for (i = 0; i < celula.membros.length; i++) {
             record = { id: celula.membros[i], presente: false };

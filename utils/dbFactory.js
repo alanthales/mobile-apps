@@ -20,10 +20,15 @@ LocalStorageProxy.prototype = new DbProxy();
 LocalStorageProxy.prototype.constructor = LocalStorageProxy;
 //LocalStorageProxy.prototype.parent = DbProxy.prototype;
 
-function LocalStorageProxy() {
-    this._records = [];
-}
+function LocalStorageProxy() {}
 
+LocalStorageProxy.prototype.getIndex = function(table, id) {
+    var hashtable = table.map(function(record) {
+            return record.id;
+        });
+    return hashtable.indexOf(parseInt(id));
+}
+    
 LocalStorageProxy.prototype._get = function(key) {
     var table = window.localStorage[key],
         results = [];
@@ -39,13 +44,6 @@ LocalStorageProxy.prototype.getRecords = function(options, callback) {
     if (typeof callback === "function") {
         callback( table );
     }
-    this._records = table;
-}
-
-LocalStorageProxy.prototype.getHashTable = function() {
-    return this._records.map(function(record) {
-        return record.id;
-    });
 }
 
 LocalStorageProxy.prototype.select = function(key, opts, callback) {
@@ -73,28 +71,30 @@ LocalStorageProxy.prototype.select = function(key, opts, callback) {
     callback( result );
 }
 
-LocalStorageProxy.prototype._saveAll = function(key, callback) {
-    window.localStorage[key] = JSON.stringify(this._records);
+LocalStorageProxy.prototype._saveAll = function(key, table, callback) {
+    window.localStorage[key] = JSON.stringify(table);
     if (typeof callback == "function") {
         callback();
     }
 }
 
 LocalStorageProxy.prototype.save = function(key, record, callback) {
-    var index = this.getHashTable().indexOf(record.id);
+    var table = this._get(key),
+        index = this.getIndex(table, record.id);
     if (index === -1) {
-        this._records.push(record);
+        table.push(record);
     } else {
-        this._records.splice(index, 1, record);
+        table.splice(index, 1, record);
     }
-    this._saveAll(key, callback);
+    this._saveAll(key, table, callback);
 }
 
 LocalStorageProxy.prototype.remove = function(key, record, callback) {
     var id = typeof record === "object" ? record.id : record,
-        index = this.getHashTable().indexOf(id);
-    this._records.splice(index, 1);
-    this._saveAll(key, callback);
+        table = this._get(key),
+        index = this.getIndex(table, id);
+    table.splice(index, 1);
+    this._saveAll(key, table, callback);
 }
 
 LocalStorageProxy.prototype.commit = function(key, toInsert, toUpdate, toDelete, callback) {
@@ -144,7 +144,17 @@ function SQLiteProxy(dbName) {
     }
 }
 
+SQLiteProxy.prototype.getFields = function(table) {
+    var hashtable = this._maps.map(function(maps) {
+            return maps.table;
+        }),
+        index = hashtable.indexOf(table);
+    return this._maps[index].fields;
+}
+
 SQLiteProxy.prototype.createDatabase = function(maps, callback) {
+    this._maps = maps;
+    
     this.getDb().transaction(function(tx) {
         var cb = callback && typeof callback === "function" ? callback : function() {},
             total = maps.length,
@@ -177,15 +187,28 @@ SQLiteProxy.prototype.createDatabase = function(maps, callback) {
 }
 
 SQLiteProxy.prototype.getRecords = function(options, callback) {
-    var opts = typeof options === "object" ? options : { key: options, limit: 1000 };
+    var opts = typeof options === "object" ? options : { key: options, limit: 1000 },
+        self = this;
     
-    this.getDb().transaction(function(tx) {
+    self.getDb().transaction(function(tx) {
         var sql = ["SELECT * FROM", opts.key, "LIMIT", opts.limit].join(" "),
+            fields = self.getFields(opts.key),
+            hashtable = fields.map(function(field) {
+                return field.name;
+            }),
             table = [],
-            i;
+            i, record, field, index;
+        
         tx.executeSql(sql, [], function(tx, results) {
             for (i = 0; i < results.rows.length; i++) {
-                table.push(results.rows.item(i));
+                record = results.rows.item(i);
+                for (field in record) {
+                    index = hashtable.indexOf(field);
+                    if (fields[index].serialize) {
+                        record[field] = JSON.parse(record[field]);
+                    }
+                }
+                table.push(record);
             }
             if (typeof callback === "function") {
                 callback( table );
@@ -311,7 +334,7 @@ function DataSet(proxy, table) {
 
 DataSet.prototype.open = function(callback) {
     var self = this,
-        opts = { key: this.getTable(), limit: this.limit };
+        opts = { key: self.getTable(), limit: self.limit };
     
     function fn(results, cb) {
         if (typeof cb === "function") {
@@ -398,7 +421,8 @@ DataSet.prototype.post = function(callback) {
     }
     this.getProxy().commit(
         this.getTable(), this._inserteds, this._updateds,
-        this._deleteds, callback);
+        this._deleteds, callback
+    );
 }
 
 DataSet.prototype.filter = function(options) {

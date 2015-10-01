@@ -4,6 +4,7 @@
         "D:/User/workspace/trilhoMDA/www/js/controllers.js",
         "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/contato.js",
         "D:/User/workspace/mobile-apps/trilhoMDA/www/js/dbFactory.js",
-        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/celula.js"
+        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/celula.js",
+        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/chamada.js"
     ]
 }

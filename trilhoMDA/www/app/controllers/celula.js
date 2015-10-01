@@ -52,17 +52,20 @@ angular.module('controllers.celula', ['ionic'])
     }
     
     $scope.deleteMembro = function(membro) {
-        var confirmPopup = $ionicPopup.confirm({
+        var index = $scope.celula.membros.indexOf(membro),
+            confirmPopup = $ionicPopup.confirm({
                 title: 'Confirme',
                 okText: 'Sim',
                 cancelText: 'Não',
                 template: 'Deseja realmente excluir este membro?'
-            }),
-            index;
+            });
+        
+        if (index === -1) {
+            return;
+        }
         
         confirmPopup.then(function(res) {
             if (res) {
-                index = $scope.celula.membros.indexOf(membro);
                 $scope.celula.membros.splice(index, 1);
                 $scope.postCelula();
             }

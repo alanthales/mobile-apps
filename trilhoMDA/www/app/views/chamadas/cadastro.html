@@ -9,7 +9,7 @@
             Membros presentes
         </div>
         
-        <div class="item item-checkbox" ng-repeat="item in selection.membros">
+        <div class="item item-checkbox" ng-repeat="item in selection.membros track by $id($index)">
             <label class="checkbox checkbox-balanced">
                 <input type="checkbox" ng-model="item.presente" ng-checked="item.presente">
             </label>
@@ -22,7 +22,7 @@
             Visitantes
         </div>
 
-        <div class="item item-button-right" ng-repeat="item in selection.visitantes">
+        <div class="item item-button-right" ng-repeat="item in selection.visitantes track by $id($index)">
             {{contatos.getById(item).nome}}
             <button class="button button-clear button-assertive" ng-click="deleteVisitante(item)">
                 <i class="icon ion-android-remove-circle"></i>
@@ -34,4 +34,6 @@
             Adicionar visitante
         </a>
     </div>
+    
+    <input type="hidden" ng-model="selection.celulaId" ng-value="selection.celulaId">
 </div>
