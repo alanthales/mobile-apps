@@ -88,6 +88,8 @@ angular.module('controllers.chamada', ['ionic'])
     
     $scope.deleteVisitante = function(contato) {
         var index = $scope.selection.visitantes.indexOf(contato.id);
-        $scope.selection.visitantes.splice(index, 1);
+        if (index !== -1) {
+            $scope.selection.visitantes.splice(index, 1);
+        }
     }
 });

@@ -96,16 +96,53 @@ angular.module('ojs.directives', ['ionic'])
     }
 }])
 
-.directive("formatDate", function() {
+.directive("format", ['$filter', function($filter) {
     return {
         restrict: 'A',
         require: 'ngModel',
-        link: function(scope, elem, attr, modelCtrl) {
-            modelCtrl.$formatters.push(function(modelValue) {
-                if (modelValue) {
-                    return new Date(modelValue);
-                }
-            });
+        link: function(scope, elem, attrs, ctrl) {
+            if (!ctrl) return;
+
+            var parser = function() {},
+                formatter = function() {};
+            
+            function currencyParser(value) {
+				var actualNumber = value.replace(/[^\d]+/g,''),
+                    decimals = parseInt(attrs.decimals),
+                    formatedValue;
+                
+				actualNumber = actualNumber.replace(/^[0]+([1-9])/,'$1');
+				formatedValue = parseInt(actualNumber) / Math.pow(10, decimals);
+                
+                elem[0].value = formatedValue.toFixed(decimals).toString();
+                
+                return elem[0].value;
+            }
+            
+            switch(attrs.type) {
+                case 'date':
+                case 'datetime':
+                case 'datetime-local':
+                    formatter = function(value) {
+                        if (!ctrl.$isEmpty(value)) {
+                            return new Date(value);
+                        }
+                    };
+                    break;
+                case 'number':
+                case 'text':
+                    if (attrs.decimals && attrs.decimals.trim() !== '') {
+                        formatter = function(value) {
+                            return $filter('number')(ctrl.$modelValue);
+                        };
+                        parser = currencyParser;
+                    }
+                    break;
+            }
+            
+            ctrl.$formatters.push(formatter);
+
+            ctrl.$parsers.unshift(parser);
         }
     }
-});
+}]);

@@ -105,6 +105,21 @@ angular.module('controllers.trilho', ['ionic'])
         if (record.id) {
             $scope.trilhos.update(record);
         } else {
+            var results = $scope.trilhos.filter({ membroId: record.membroId }),
+                alertPopup;
+            
+            if (results.length > 0) {
+                alertPopup = $ionicPopup.alert({
+                    title: 'Atenção',
+                    template: 'Este membro já está no trilho',
+                    okType: 'button-energized'
+                });
+
+                alertPopup.then();
+                
+                return;                
+            }
+            
             $scope.trilhos.insert(record);
         }
         $scope.trilhos.post(function() {
