@@ -7,7 +7,7 @@ angular.module('ojs.directives', ['ionic'])
         scope: {
             isEmpty: '='
         },
-        templateUrl: '/app/views/ojs-listbase.html'
+        templateUrl: './app/views/ojs-listbase.html'
     }
 })
 
@@ -16,7 +16,7 @@ angular.module('ojs.directives', ['ionic'])
         restrict: 'E',
         replace: true,
         transclude: true,
-        templateUrl: '/app/views/ojs-itembase.html'
+        templateUrl: './app/views/ojs-itembase.html'
     }
 })
 
@@ -30,7 +30,7 @@ angular.module('ojs.directives', ['ionic'])
             saveRecord: '&',
             closeForm: '&'
         },
-        templateUrl: '/app/views/ojs-formbase.html',
+        templateUrl: './app/views/ojs-formbase.html',
         link: function(scope, elm, attrs) {
             var bar = elm.find('ion-header-bar'),
                 btn = angular.element(elm[0].querySelector('button[type="submit"]'));
