@@ -1,7 +1,15 @@
 angular.module('controllers.contato', ['ionic'])
 
 .controller('ContatoCtrl', function($scope, $dao, $ionicPopup) {
-    $scope.contatos = $dao.getContatos();
+    $scope.contatos = $dao.getContatos(function(results) {
+        var mesAtual = new Date().getMonth(),
+            mesContato;
+        
+        $scope.aniversariantes = results.filter(function(record) {
+            mesContato = new Date(record.datanasc).getMonth();
+            return mesContato === mesAtual;
+        });
+    });
     
     $scope.showMenu = function(item, e) {
         $scope.selection = item;

@@ -103,7 +103,9 @@ angular.module('ojs.directives', ['ionic'])
         link: function(scope, elem, attrs, ctrl) {
             if (!ctrl) return;
 
-            var parser = function() {},
+            var parser = function(value) {
+                    return value;
+                },
                 formatter = function() {};
             
             function currencyParser(value) {
@@ -142,7 +144,7 @@ angular.module('ojs.directives', ['ionic'])
             
             ctrl.$formatters.push(formatter);
 
-            ctrl.$parsers.unshift(parser);
+            ctrl.$parsers.push(parser);
         }
     }
 }]);

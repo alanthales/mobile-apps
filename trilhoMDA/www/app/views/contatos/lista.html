@@ -7,6 +7,17 @@
         </ion-nav-buttons>
     </ojs-nav-bar>
     <ion-content>
+        <div class="list list-inset" ng-if="aniversariantes.length > 0">
+            <div class="item item-divider">
+                <i class="icon icon-small ion-android-star"></i>
+                Aniversáriantes do mês
+            </div>
+            <div class="item" ng-repeat="contato in aniversariantes">
+                {{contato.nome}}
+                <span class="item-note">{{contato.datanasc | date: 'dd/MM/yyyy'}}</span>
+            </div>
+        </div>
+        
         <ojs-list is-empty="contatos.data.length === 0">
             <div class="item" collection-repeat="item in contatos.data" on-hold="showMenu(item, $event)">
                 {{item.nome}}

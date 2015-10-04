@@ -426,6 +426,9 @@ DataSet.prototype.post = function(callback) {
 }
 
 DataSet.prototype.filter = function(options) {
+    if (options && typeof options === 'function') {
+        return this.data.filter(options);
+    }
     return this.data.filter(function(record) {
         var finded = true,
             prop;
