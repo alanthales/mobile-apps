@@ -58,15 +58,14 @@ angular.module('controllers.contato', ['ionic'])
     
     $scope.import = function() {
         function onSuccess(contact) {
-            $scope.selection = {
+            var contato = {
                 nome: contact.displayName,
-                endereco: contact.addresses ? contact.addresses[0].value : undefined,
-                telefone: contact.phoneNumbers ? contact.phoneNumbers[0].value.replace(/\D+/g, '') : undefined,
-                email: contact.emails ? contact.emails[0].value : undefined,
-                datanasc: contact.birthday
+                endereco: contact.addresses ? contact.addresses[0].value : null,
+                telefone: contact.phoneNumbers ? contact.phoneNumbers[0].value.replace(/\D+/g, '') : null,
+                email: contact.emails ? contact.emails[0].value : null,
+                datanasc: contact.birthday ? new Date(contact.birthday) : null
             };
-            
-            $scope.form.openModal();
+            $scope.saveItem(contato);
         }
         
         navigator.contacts.pickContact(onSuccess, function(err) {
