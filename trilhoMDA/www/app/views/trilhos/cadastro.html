@@ -1,22 +1,21 @@
 <ojs-form title="Trilho" save-record="saveItem(selection)" close-form="form.closeModal()" ui-class="energized">
     <label class="item item-input item-select">
         <div class="input-label">Membro</div>
-        <select ng-model="selection.membroId" required>
-            <option ng-repeat="membro in celula.membros" ng-value="membro" ng-selected="membro == selection.membroId">
-                {{contatos.getById(membro).nome}}
-            </option>
+        <select ng-model="selection.membroId" ng-options="membro as contatos.getById(membro).nome for membro in celula.membros" required>
         </select>
     </label>
     
-    <div class="item item-divider">
-        Marque o que já foi concluído
-    </div>
+    <div class="padding-top">
+        <div class="item item-divider">
+            Marque o que já foi concluído
+        </div>
 
-    <div class="item item-checkbox" ng-repeat="item in selection.atributos track by $id($index)">
-        <label class="checkbox checkbox-energized">
-            <input type="checkbox" ng-model="item.concluido" ng-checked="item.concluido">
-        </label>
-        {{getAttrName(item.id)}}
+        <div class="item item-checkbox" ng-repeat="item in selection.atributos track by $id($index)">
+            <label class="checkbox checkbox-energized">
+                <input type="checkbox" ng-model="item.concluido" ng-checked="item.concluido">
+            </label>
+            {{getAttrName(item.id)}}
+        </div>
     </div>
     
     <input type="hidden" ng-model="selection.celulaId" ng-value="selection.celulaId">

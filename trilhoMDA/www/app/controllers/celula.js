@@ -21,18 +21,15 @@ angular.module('controllers.celula', ['ionic'])
         { id: 6, nome: 'Sábado' }
     ];
 
-    $scope.clearLider = function() {
-        $scope.celula.lider = null;
-        console.log($scope.celula);
-    }
-    
     $scope.postCelula = function(record) {
         var celula = record || $scope.celula;
+
         if (celula.id) {
             $scope.celulas.update(celula);
         } else {
             $scope.celulas.insert(celula);
         }
+        
         $scope.celulas.post();
     }
     

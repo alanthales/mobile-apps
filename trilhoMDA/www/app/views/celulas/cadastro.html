@@ -9,26 +9,21 @@
     </label>
     <label class="item item-input item-select">
         <div class="input-label">Dia da célula</div>
-        <select ng-model="celula.dia" required>
-            <option ng-repeat="dia in dias" ng-value="dia.id" ng-selected="dia.id == celula.dia">
-                {{dia.nome}}
-            </option>
+        <select ng-model="celula.dia" ng-options="dia.id as dia.nome for dia in dias" required>
         </select>
     </label>
+<!--
+    <ojs-select header-text="Contatos" allow-empty='false' value="celula.lider" text="'Selecione o Líder'" items="contatos.data">
+    </ojs-select>
+-->
     <label class="item item-input item-select">
         <span class="input-label">Líder</span>
-        <select ng-model="celula.lider" required>
-            <option ng-repeat="contato in contatos.data" ng-value="contato.id" ng-selected="contato.id == celula.lider">
-                {{contato.nome}}
-            </option>
+        <select ng-model="celula.lider" ng-options="contato.id as contato.nome for contato in contatos.data" required>
         </select>
     </label>
     <label class="item item-input item-select">
-        <div class="input-label">Selecione o anfitrião</div>
-        <select ng-model="celula.anfitriao" required>
-            <option ng-repeat="contato in contatos.data" ng-value="contato.id" ng-selected="contato.id == celula.anfitriao">
-                {{contato.nome}}
-            </option>
+        <div class="input-label">Anfitrião</div>
+        <select ng-model="celula.anfitriao" ng-options="contato.id as contato.nome for contato in contatos.data" required>
         </select>
     </label>
     <label class="item item-input item-stacked-label">

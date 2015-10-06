@@ -15,12 +15,14 @@
             </ojs-list>
         </div>
         
-        <div class="padding" ng-if="!celula || celula.membros.length === 0">
-            <div class="item item-icon-left">
-                <p>
-                    <i class="icon icon-small ion-information-circled"></i>
-                    <a class="energized" href="#/app/celula">Cadastre</a> sua célula para começar.
-                </p>
+        <div class="list list-inset" ng-if="!celula || celula.membros.length === 0">
+            <div class="item item-divider">
+                Sua célula ainda não foi cadastrada
+            </div>
+            <div class="item">
+                <a href="#/app/celula" class="button button-energized ion-android-add">
+                    Cadastrar célula
+                </a>
             </div>
         </div>
         

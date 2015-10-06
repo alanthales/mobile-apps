@@ -16,7 +16,7 @@ angular.module('controllers.chamada', ['ionic'])
             return;
         }
         
-        $scope.selection = { celulaId: celula.id, membros: [], visitantes: [] };
+        $scope.selection = { celulaId: celula.id, data: new Date(), membros: [], visitantes: [] };
         
         for (i = 0; i < celula.membros.length; i++) {
             record = { id: celula.membros[i], presente: false };

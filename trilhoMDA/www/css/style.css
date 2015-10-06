@@ -1,3 +1,14 @@
+/*
+* {
+    box-shadow: none !important;
+}
+*/
+
+.card {
+    background-image: linear-gradient(0deg, #B2B2B2, #B2B2B2 50%, rgba(0, 0, 0, 0) 50%);
+    box-shadow: none;
+}
+
 .my-menu {
     border-color: #333;
     background-color: #555;
@@ -10,4 +21,50 @@
 
 .icon-small {
     font-size: 18px !important;
+}
+
+.item-avatar .item-image {
+    background-color: #e74c3c;
+    color: #fff;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 38px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* ojs-select class's */
+ojs-select .list {
+    margin: -1px 0;
+}
+
+.ojs-select-items {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ojs-select-items .item {
+    overflow: hidden;
+    /* Clearfix */
+}
+
+.ojs-select-items label p {
+    height: 32px;
+    line-height: 32px;
+}
+
+.ojs-select-icon {
+    float: left;
+    margin-right: 10px;
+    width: 30px;
+    text-align: center;
 }

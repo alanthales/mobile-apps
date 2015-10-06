@@ -122,6 +122,7 @@ angular.module('controllers.trilho', ['ionic'])
             
             $scope.trilhos.insert(record);
         }
+        
         $scope.trilhos.post(function() {
             $scope.form.closeModal();
         });
