@@ -5,6 +5,8 @@
         "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/contato.js",
         "D:/User/workspace/mobile-apps/trilhoMDA/www/js/dbFactory.js",
         "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/celula.js",
-        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/chamada.js"
+        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/chamada.js",
+        "D:/User/workspace/mobile-apps/trilhoMDA/plugins/com.ionic.keyboard/www/keyboard.js",
+        "D:/User/workspace/mobile-apps/trilhoMDA/plugins/cordova-plugin-device/src/blackberry10/index.js"
     ]
 }

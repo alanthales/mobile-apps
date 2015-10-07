@@ -1,0 +1,20 @@
+<div class="modal">
+    <ion-header-bar class="bar-{{tabColor}}">
+        <h1 class="title">Contatos</h1>
+        <button class="right button button-icon ion-android-close" ng-click="$ojsModal.close()"></button>
+    </ion-header-bar>
+    <ion-header-bar class="bar-subheader item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-android-search placeholder-icon"></i>
+            <input type="search" placeholder="Pesquisar..." ng-model="search">
+        </label>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <div class="item" collection-repeat="item in contatos.data | filter:search" ng-click="selectItem(item)">
+                {{item.nome}}
+                <span class="item-note">{{item.telefone}}</span>
+            </div>
+        </div>
+    </ion-content>
+</div>

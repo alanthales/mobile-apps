@@ -9,7 +9,7 @@ angular.module('controllers.contato', ['ionic'])
             mesContato = new Date(record.datanasc).getMonth();
             return mesContato === mesAtual;
         });
-    });
+    }, { sort: "nome" });
     
     $scope.showMenu = function(item, e) {
         $scope.selection = item;

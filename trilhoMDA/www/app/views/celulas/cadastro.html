@@ -12,15 +12,15 @@
         <select ng-model="celula.dia" ng-options="dia.id as dia.nome for dia in dias" required>
         </select>
     </label>
-<!--
-    <ojs-select header-text="Contatos" allow-empty='false' value="celula.lider" text="'Selecione o Líder'" items="contatos.data">
+    <ojs-select text="contatos.getById(celula.lider).nome" value="celula.lider" popup-tmpl="./app/views/celulas/membro.html">
     </ojs-select>
--->
+<!--
     <label class="item item-input item-select">
         <span class="input-label">Líder</span>
         <select ng-model="celula.lider" ng-options="contato.id as contato.nome for contato in contatos.data" required>
         </select>
     </label>
+-->
     <label class="item item-input item-select">
         <div class="input-label">Anfitrião</div>
         <select ng-model="celula.anfitriao" ng-options="contato.id as contato.nome for contato in contatos.data" required>

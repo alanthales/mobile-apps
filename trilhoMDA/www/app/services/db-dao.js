@@ -7,7 +7,10 @@ angular.module('db.dao', ['ionic'])
         trilhos = db.createDataSet('trilhos');
     
     return {
-        getContatos: function(callback) {
+        getContatos: function(callback, opts) {
+            if (opts && opts.sort) {
+                contatos.sortBy = opts.sort;
+            }
             contatos.open(callback);
             return contatos;
         },
