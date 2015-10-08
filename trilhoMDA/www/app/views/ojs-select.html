@@ -1,6 +1,4 @@
-<div class="list">
-    <div class="item item-icon-right item-text-wrap" ng-click="showItems($event)">
-        {{text}}
-        <i class="icon ion-chevron-right"></i>
-    </div>
+<div class="item item-icon-right" ng-click="showItems($event)">
+    <ng-transclude></ng-transclude>
+    <i class="icon icon-small ion-chevron-right"></i>
 </div>

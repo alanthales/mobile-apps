@@ -12,7 +12,11 @@
         <select ng-model="celula.dia" ng-options="dia.id as dia.nome for dia in dias" required>
         </select>
     </label>
-    <ojs-select text="contatos.getById(celula.lider).nome" value="celula.lider" popup-tmpl="./app/views/celulas/membro.html">
+    <ojs-select items="contatos.data" value="celula.lider" popup-tmpl="./app/views/contatos/pesquisa.html" ui-class="positive">
+        <span>Líder</span>
+        <span>
+            {{contatos.getById(celula.lider).nome}}
+        </span>
     </ojs-select>
 <!--
     <label class="item item-input item-select">
@@ -21,11 +25,12 @@
         </select>
     </label>
 -->
-    <label class="item item-input item-select">
-        <div class="input-label">Anfitrião</div>
-        <select ng-model="celula.anfitriao" ng-options="contato.id as contato.nome for contato in contatos.data" required>
-        </select>
-    </label>
+    <ojs-select items="contatos.data" value="celula.anfitriao" popup-tmpl="./app/views/contatos/pesquisa.html" ui-class="positive">
+        <span>Anfitrião</span>
+        <span>
+            {{contatos.getById(celula.anfitriao).nome}}
+        </span>
+    </ojs-select>
     <label class="item item-input item-stacked-label">
         <span class="input-label">Data da multiplicação</span>
         <input type="date" ng-model="celula.datamulti" format-date>

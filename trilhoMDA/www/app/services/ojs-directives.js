@@ -131,7 +131,7 @@ angular.module('ojs.directives', ['ionic'])
                         }
                     };
                     break;
-                case 'number':
+                case 'tel':
                 case 'text':
                     if (attrs.decimals && attrs.decimals.trim() !== '') {
                         formatter = function(value) {
@@ -152,17 +152,19 @@ angular.module('ojs.directives', ['ionic'])
 .directive('ojsSelect', ['$ionicModal', function($ionicModal) {
     return {
         restrict : 'E',
-        templateUrl: './app/views/ojs-select.html',
-
+        transclude: true,
         scope: {
-            text: '=',
+            items: '=',
             value: '='
         },
+        templateUrl: './app/views/ojs-select.html',
 
         link: function (scope, element, attrs) {
             $ionicModal.fromTemplateUrl(attrs.popupTmpl, {
                 scope: scope
             }).then(function(modal) {
+                var bar = angular.element(modal.$el.find('ion-header-bar')[0]);
+                bar.addClass('bar-' + attrs.uiClass);
                 scope.selModal = modal;
             });
 
@@ -179,7 +181,8 @@ angular.module('ojs.directives', ['ionic'])
                 scope.selModal.remove();
             });
 
-            scope.selectItem = function(item) {
+            scope.selectValue = function(value) {
+                scope.value = value;
                 scope.hideItems();
             }
         }

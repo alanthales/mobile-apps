@@ -20,7 +20,7 @@
         
         <ojs-list is-empty="contatos.data.length === 0">
             <div class="item item-avatar" collection-repeat="item in contatos.data" on-hold="showMenu(item, $event)">
-                <div class="item-image">{{item.nome.charAt(0)}}</div>
+                <div class="item-image assertive-bg">{{item.nome.charAt(0)}}</div>
                 <h2>{{item.nome}}</h2>
                 <p>{{item.telefone}}</p>
             </div>

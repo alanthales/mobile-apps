@@ -13,7 +13,6 @@
 }
 
 .item-avatar .item-image {
-    background-color: #e74c3c;
     color: #fff;
     text-overflow: ellipsis;
     text-transform: uppercase;
@@ -29,31 +28,7 @@
     font-weight: 500;
 }
 
-/* ojs-select class's */
-ojs-select .list {
-    margin: -1px 0;
-}
-
-.ojs-select-items {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.ojs-select-items .item {
-    overflow: hidden;
-    /* Clearfix */
-}
-
-.ojs-select-items label p {
-    height: 32px;
-    line-height: 32px;
-}
-
-.ojs-select-icon {
-    float: left;
-    margin-right: 10px;
-    width: 30px;
-    text-align: center;
+ojs-select .item span:last-child {
+    float: right;
+    font-size: 14px;
 }
