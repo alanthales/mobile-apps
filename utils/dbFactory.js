@@ -41,6 +41,13 @@ LocalStorageProxy.prototype._get = function(key) {
 LocalStorageProxy.prototype.getRecords = function(options, callback) {
     var opts = typeof options === "object" ? options : { key: options },
         table = this._get(opts.key);
+
+    if (opts.sort && opts.sort !== "") {
+        table.sort(function(a,b) {
+            return (a[opts.sort] > b[opts.sort]) - (a[opts.sort] < b[opts.sort]);
+        });
+    }
+    
     if (typeof callback === "function") {
         callback( table );
     }
@@ -188,10 +195,11 @@ SQLiteProxy.prototype.createDatabase = function(maps, callback) {
 
 SQLiteProxy.prototype.getRecords = function(options, callback) {
     var opts = typeof options === "object" ? options : { key: options, limit: 1000 },
+        sortBy = opts.sort && opts.sort !== "" ? "ORDER BY " + opts.sort : "",
         self = this;
     
     self.getDb().transaction(function(tx) {
-        var sql = ["SELECT * FROM", opts.key, "LIMIT", opts.limit].join(" "),
+        var sql = ["SELECT * FROM", opts.key, sortBy, "LIMIT", opts.limit].join(" "),
             fields = self.getFields(opts.key),
             hashtable = fields.map(function(field) {
                 return field.name;
@@ -322,6 +330,7 @@ function DataSet(proxy, table) {
     this.active = false;
     this.data = [];
     this.limit = 1000;
+    this.sortBy = "";
     
     this.getProxy = function() {
         return prx;
@@ -334,7 +343,7 @@ function DataSet(proxy, table) {
 
 DataSet.prototype.open = function(callback) {
     var self = this,
-        opts = { key: self.getTable(), limit: self.limit };
+        opts = { key: self.getTable(), limit: self.limit, sort: self.sortBy };
     
     function fn(results, cb) {
         if (typeof cb === "function") {
@@ -426,6 +435,9 @@ DataSet.prototype.post = function(callback) {
 }
 
 DataSet.prototype.filter = function(options) {
+    if (options && typeof options === 'function') {
+        return this.data.filter(options);
+    }
     return this.data.filter(function(record) {
         var finded = true,
             prop;

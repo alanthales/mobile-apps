@@ -9,7 +9,7 @@ angular.module('controllers.contato', ['ionic'])
             mesContato = new Date(record.datanasc).getMonth();
             return mesContato === mesAtual;
         });
-    }, { sort: "nome" });
+    }, { sort: 'nome' });
     
     $scope.showMenu = function(item, e) {
         $scope.selection = item;
@@ -53,6 +53,24 @@ angular.module('controllers.contato', ['ionic'])
         }
         $scope.contatos.post(function() {
             $scope.form.closeModal();
+        });
+    }
+    
+    $scope.import = function() {
+        function onSuccess(contact) {
+            $scope.selection = {
+                nome: contact.displayName,
+                endereco: contact.addresses ? contact.addresses[0].value : undefined,
+                telefone: contact.phoneNumbers ? contact.phoneNumbers[0].value.replace(/\D+/g, '') : undefined,
+                email: contact.emails ? contact.emails[0].value : undefined,
+                datanasc: contact.birthday
+            };
+            
+            $scope.form.openModal();
+        }
+        
+        navigator.contacts.pickContact(onSuccess, function(err) {
+            alert(err);
         });
     }
 });

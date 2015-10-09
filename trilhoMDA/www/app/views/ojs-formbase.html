@@ -4,7 +4,7 @@
         <button class="right button button-icon ion-android-close" ng-click="closeForm()"></button>
     </ion-header-bar>
     <ion-content>
-        <form ng-submit="saveRecord(record)">
+        <form name="ojs-form" ng-submit="saveRecord(record)" class="ojs-form">
             <div class="list list-inset">
                 <ng-transclude></ng-transclude>
             </div>

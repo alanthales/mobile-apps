@@ -28,6 +28,14 @@
     font-weight: 500;
 }
 
+.ojs-form input.ng-invalid.ng-touched {
+    background-color: #FA787E;
+}
+
+.ojs-form input.ng-valid.ng-touched {
+    background-color: inherit;
+}
+
 ojs-select .item span:last-child {
     float: right;
     font-size: 14px;
