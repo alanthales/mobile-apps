@@ -102,6 +102,9 @@ angular.module('controllers.trilho', ['ionic'])
     }
     
     $scope.saveItem = function(record) {
+        if (!$scope.ojsForm.$valid) {
+            return;
+        }
         if (record.id) {
             $scope.trilhos.update(record);
         } else {

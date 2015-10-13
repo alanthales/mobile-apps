@@ -77,6 +77,10 @@ angular.module('ojs.directives', ['ionic'])
             
             parentScope[attrs.name] = {
                 openMenu: function(e) {
+                    if (navigator.vibrate) {
+                        navigator.vibrate(200);
+                    }
+                    
                     $ionicPopover.fromTemplateUrl(attrs.template, {
                         scope: scope,
                         animation: 'fade-out',

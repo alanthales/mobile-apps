@@ -75,6 +75,9 @@ angular.module('controllers.celula', ['ionic'])
     }
     
     $scope.saveCelula = function(celula) {
+        if (!$scope.ojsForm.$valid) {
+            return;
+        }
         $scope.postCelula(celula);
         $scope.frmCelula.closeModal();
     }

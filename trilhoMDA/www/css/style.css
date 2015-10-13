@@ -26,6 +26,27 @@
     line-height: 38px;
     font-size: 18px;
     font-weight: 500;
+    padding-top: 1px;
+}
+
+.w70, .w75, .w80, .w85 {
+    text-overflow: ellipsis;
+}
+
+.w70 {
+    max-width: 70%;
+}
+
+.w75 {
+    max-width: 75%;
+}
+
+.w80 {
+    max-width: 80%;
+}
+
+.w85 {
+    max-width: 85%;
 }
 
 .ojs-form input.ng-invalid.ng-touched {
@@ -33,10 +54,12 @@
 }
 
 .ojs-form input.ng-valid.ng-touched {
-    background-color: inherit;
+    background-color: #FFF;
 }
 
 ojs-select .item span:last-child {
     float: right;
     font-size: 14px;
+    max-width: 75%;
+    text-overflow: ellipsis;
 }

@@ -18,17 +18,16 @@
             {{contatos.getById(celula.lider).nome}}
         </span>
     </ojs-select>
-<!--
-    <label class="item item-input item-select">
-        <span class="input-label">Líder</span>
-        <select ng-model="celula.lider" ng-options="contato.id as contato.nome for contato in contatos.data" required>
-        </select>
-    </label>
--->
     <ojs-select items="contatos.data" value="celula.anfitriao" popup-tmpl="./app/views/contatos/pesquisa.html" ui-class="positive">
         <span>Anfitrião</span>
         <span>
             {{contatos.getById(celula.anfitriao).nome}}
+        </span>
+    </ojs-select>
+    <ojs-select items="contatos.data" value="celula.supervisor" popup-tmpl="./app/views/contatos/pesquisa.html" ui-class="positive">
+        <span>Supervisor</span>
+        <span>
+            {{contatos.getById(celula.supervisor).nome}}
         </span>
     </ojs-select>
     <label class="item item-input item-stacked-label">

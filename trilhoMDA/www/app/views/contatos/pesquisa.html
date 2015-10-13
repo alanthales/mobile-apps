@@ -12,7 +12,7 @@
     <ion-content>
         <div class="list">
             <div class="item" collection-repeat="item in items | filter:search" ng-click="selectValue(item.id)">
-                {{item.nome}}
+                <span class="w80">{{item.nome}}</span>
                 <span class="item-note">{{item.telefone}}</span>
             </div>
         </div>

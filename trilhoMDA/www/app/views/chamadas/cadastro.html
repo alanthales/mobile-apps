@@ -29,7 +29,7 @@
 
         <div class="item item-button-right" ng-repeat="item in selection.visitantes track by $id($index)">
             {{contatos.getById(item).nome}}
-            <button class="button button-clear button-assertive" ng-click="deleteVisitante(item)">
+            <button type="button" class="button button-clear button-assertive" ng-click="deleteVisitante(item)">
                 <i class="icon ion-android-remove-circle"></i>
             </button>
         </div>

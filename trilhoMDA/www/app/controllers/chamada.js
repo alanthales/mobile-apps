@@ -16,7 +16,13 @@ angular.module('controllers.chamada', ['ionic'])
             return;
         }
         
-        $scope.selection = { celulaId: celula.id, data: new Date(), membros: [], visitantes: [] };
+        $scope.selection = {
+            celulaId: celula.id,
+            data: new Date(),
+            oferta: 0.00,
+            membros: [],
+            visitantes: []
+        };
         
         for (i = 0; i < celula.membros.length; i++) {
             record = { id: celula.membros[i], presente: false };
@@ -56,6 +62,9 @@ angular.module('controllers.chamada', ['ionic'])
     }
     
     $scope.saveItem = function(record) {
+        if (!$scope.ojsForm.$valid) {
+            return;
+        }
         if (record.id) {
             $scope.chamadas.update(record);
         } else {
@@ -86,8 +95,8 @@ angular.module('controllers.chamada', ['ionic'])
         $scope.frmVisitante.closeModal();
     }
     
-    $scope.deleteVisitante = function(contato) {
-        var index = $scope.selection.visitantes.indexOf(contato.id);
+    $scope.deleteVisitante = function(contatoId) {
+        var index = $scope.selection.visitantes.indexOf(contatoId);
         if (index !== -1) {
             $scope.selection.visitantes.splice(index, 1);
         }

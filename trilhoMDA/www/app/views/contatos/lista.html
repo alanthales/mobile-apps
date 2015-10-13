@@ -13,19 +13,20 @@
                 Aniversáriantes do mês
             </div>
             <div class="item" ng-repeat="contato in aniversariantes">
-                {{contato.nome}}
+                <span class="w80">{{contato.nome}}</span>
                 <span class="item-note">{{contato.datanasc | date: 'dd/MM/yyyy'}}</span>
             </div>
         </div>
         
         <ojs-list is-empty="contatos.data.length === 0">
-            <div class="item item-avatar" collection-repeat="item in contatos.data" on-hold="showMenu(item, $event)">
+            <div class="item item-avatar" collection-repeat="item in contatos.data" on-hold="showMenu(item, $event)" on-double-tap="callContact(item)">
                 <div class="item-image assertive-bg">{{item.nome.charAt(0)}}</div>
                 <h2>{{item.nome}}</h2>
                 <p>{{item.telefone}}</p>
             </div>
         </ojs-list>
         
+<!--
         <div class="padding" ng-if="contatos.data.length > 0">
             <div class="item item-icon-left">
                 <p>
@@ -34,6 +35,7 @@
                 </p>
             </div>
         </div>
+-->
     </ion-content>
     
     <ojs-modal name="form" template="./app/views/contatos/cadastro.html"></ojs-modal>

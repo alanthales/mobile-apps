@@ -1,6 +1,6 @@
 angular.module('controllers.contato', ['ionic'])
 
-.controller('ContatoCtrl', function($scope, $dao, $ionicPopup) {
+.controller('ContatoCtrl', function($scope, $dao, $ionicPopup, $ionicLoading) {
     $scope.contatos = $dao.getContatos(function(results) {
         var mesAtual = new Date().getMonth(),
             mesContato;
@@ -45,27 +45,68 @@ angular.module('controllers.contato', ['ionic'])
         $scope.menu.closeMenu();
     }
     
-    $scope.saveItem = function(item) {
-        if (item.id) {
-            $scope.contatos.update(item);
+    $scope.callContact = function(contato) {
+        window.open('tel:'+ contato.telefone);
+//        document.location.href = 'tel:' + contato.telefone;
+    }
+    
+    $scope.postContato = function(record, callback) {
+        if (record.id) {
+            $scope.contatos.update(record);
         } else {
-            $scope.contatos.insert(item);
+            $scope.contatos.insert(record);
         }
         $scope.contatos.post(function() {
+            callback();
+        });
+        
+    }
+    
+    $scope.saveItem = function(item) {
+        if (!$scope.ojsForm.$valid) {
+            return;
+        }
+        $scope.postContato(item, function() {
             $scope.form.closeModal();
         });
     }
     
     $scope.import = function() {
         function onSuccess(contact) {
-            var contato = {
-                nome: contact.displayName,
+            $ionicLoading.show({
+                template: 'Aguarde...'
+            });
+            
+            var name = contact.displayName,
+                phone = contact.phoneNumbers ? contact.phoneNumbers[0].value.replace(/\D+/g, '') : null,
+                table = $scope.contatos.filter({ nome: name, telefone: phone }),
+                contato, alertPopup;
+
+            if (table.length > 0) {
+                alertPopup = $ionicPopup.alert({
+                    title: 'Atenção',
+                    template: 'Já existe um contato com este nome e fone: ' + name + ' - ' + phone,
+                    okType: 'button-assertive'
+                });
+
+                alertPopup.then(function() {
+                    $ionicLoading.hide();
+                });
+
+                return;
+            }
+            
+            contato = {
+                nome: name,
                 endereco: contact.addresses ? contact.addresses[0].value : null,
-                telefone: contact.phoneNumbers ? contact.phoneNumbers[0].value.replace(/\D+/g, '') : null,
+                telefone: phone,
                 email: contact.emails ? contact.emails[0].value : null,
-                datanasc: contact.birthday ? new Date(contact.birthday) : null
+                datanasc: contact.birthday
             };
-            $scope.saveItem(contato);
+            
+            $scope.postContato(contato, function() {
+                $ionicLoading.hide();
+            });
         }
         
         navigator.contacts.pickContact(onSuccess, function(err) {
