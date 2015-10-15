@@ -62,9 +62,6 @@ angular.module('controllers.chamada', ['ionic'])
     }
     
     $scope.saveItem = function(record) {
-        if (!$scope.ojsForm.$valid) {
-            return;
-        }
         if (record.id) {
             $scope.chamadas.update(record);
         } else {

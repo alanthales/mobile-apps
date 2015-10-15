@@ -102,7 +102,7 @@ angular.module('controllers.trilho', ['ionic'])
     }
     
     $scope.saveItem = function(record) {
-        if (!$scope.ojsForm.$valid) {
+        if (!record.membroId) {
             return;
         }
         if (record.id) {

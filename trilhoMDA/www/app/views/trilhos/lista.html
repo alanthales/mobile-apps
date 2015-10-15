@@ -8,8 +8,8 @@
     <ion-content>
         <div ng-if="celula && celula.membros.length > 0">
             <ojs-list is-empty="trilhos.data.length === 0">
-                <div class="item" collection-repeat="item in trilhos.data" on-hold="showMenu(item, $event)">
-                    {{contatos.getById(item.membroId).nome}}
+                <div class="item" collection-repeat="item in trilhos.data" on-double-tap="showMenu(item, $event)">
+                    <span class="float-left w75">{{contatos.getById(item.membroId).nome}}</span>
                     <span class="item-note">{{countAttr(item.id)}}/{{atributos.length}}</span>
                 </div>
             </ojs-list>

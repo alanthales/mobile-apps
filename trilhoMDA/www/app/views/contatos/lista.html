@@ -5,21 +5,21 @@
             <button class="right button button-icon ion-android-add" ng-click="newItem()"></button>
             <button class="right button button-icon ion-android-contacts" ng-click="import()"></button>
         </ion-nav-buttons>
-    </ojs-nav-bar>
+    </ion-nav-bar>
     <ion-content>
         <div class="list list-inset" ng-if="aniversariantes.length > 0">
             <div class="item item-divider">
-                <i class="icon icon-small ion-android-star"></i>
+                <i class="icon icon-small ion-icecream"></i>
                 Aniversáriantes do mês
             </div>
             <div class="item" ng-repeat="contato in aniversariantes">
-                <span class="w80">{{contato.nome}}</span>
+                <span class="float-left w65">{{contato.nome}}</span>
                 <span class="item-note">{{contato.datanasc | date: 'dd/MM/yyyy'}}</span>
             </div>
         </div>
         
         <ojs-list is-empty="contatos.data.length === 0">
-            <div class="item item-avatar" collection-repeat="item in contatos.data" on-hold="showMenu(item, $event)" on-double-tap="callContact(item)">
+            <div class="item item-avatar" collection-repeat="item in contatos.data" on-double-tap="showMenu(item, $event)">
                 <div class="item-image assertive-bg">{{item.nome.charAt(0)}}</div>
                 <h2>{{item.nome}}</h2>
                 <p>{{item.telefone}}</p>
@@ -37,7 +37,7 @@
         </div>
 -->
     </ion-content>
-    
+
+    <ojs-pop-menu name="menu" template="./app/views/contatos/popmenu.html"></ojs-pop-menu>
     <ojs-modal name="form" template="./app/views/contatos/cadastro.html"></ojs-modal>
-    <ojs-pop-menu name="menu" template="./app/views/ojs-popmenu.html"></ojs-pop-menu>
 </ion-view>

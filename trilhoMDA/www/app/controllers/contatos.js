@@ -1,6 +1,6 @@
-angular.module('controllers.contato', ['ionic'])
+angular.module('controllers.contatos', ['ionic'])
 
-.controller('ContatoCtrl', function($scope, $dao, $ionicPopup, $ionicLoading) {
+.controller('ContatosCtrl', function($scope, $dao, $ionicPopup, $ionicLoading) {
     $scope.contatos = $dao.getContatos(function(results) {
         var mesAtual = new Date().getMonth(),
             mesContato;
@@ -11,9 +11,10 @@ angular.module('controllers.contato', ['ionic'])
         });
     }, { sort: 'nome' });
     
-    $scope.showMenu = function(item, e) {
+    $scope.showMenu = function(item, event) {
         $scope.selection = item;
-        $scope.menu.openMenu(e);
+        $scope.menu.openMenu(event);
+//        $state.go('app.contato', { id: item.id });
     }
     
     $scope.newItem = function(e) {
@@ -22,11 +23,13 @@ angular.module('controllers.contato', ['ionic'])
     }
     
     $scope.editItem = function() {
-        $scope.form.openModal();
         $scope.menu.closeMenu();
+        $scope.form.openModal();
     }
     
     $scope.deleteItem = function() {
+        $scope.menu.closeMenu();
+        
         var confirmPopup = $ionicPopup.confirm({
                 title: 'Confirme',
                 okText: 'Sim',
@@ -39,15 +42,9 @@ angular.module('controllers.contato', ['ionic'])
             if (res) {
                 $scope.contatos.delete($scope.selection);
                 $scope.contatos.post();
+                $state.go('app.contatos');
             }
         });
-        
-        $scope.menu.closeMenu();
-    }
-    
-    $scope.callContact = function(contato) {
-        window.open('tel:'+ contato.telefone);
-//        document.location.href = 'tel:' + contato.telefone;
     }
     
     $scope.postContato = function(record, callback) {
@@ -59,11 +56,10 @@ angular.module('controllers.contato', ['ionic'])
         $scope.contatos.post(function() {
             callback();
         });
-        
     }
     
     $scope.saveItem = function(item) {
-        if (!$scope.ojsForm.$valid) {
+        if (!item.nome || item.nome.trim() === '') {
             return;
         }
         $scope.postContato(item, function() {

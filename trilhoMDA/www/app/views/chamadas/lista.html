@@ -9,7 +9,7 @@
     <ion-content>
         <div ng-if="celula && celula.membros.length > 0">
             <ojs-list is-empty="chamadas.data.length === 0">
-                <div class="item" collection-repeat="item in chamadas.data" on-hold="showMenu(item, $event)">
+                <div class="item" collection-repeat="item in chamadas.data" on-double-tap="showMenu(item, $event)">
                     {{item.data | date:'dd/MM/yyyy'}}
                     <span class="item-note">{{item.membros.length + item.visitantes.length}} pessoa(s)</span>
                 </div>

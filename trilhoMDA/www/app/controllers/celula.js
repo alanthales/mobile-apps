@@ -75,7 +75,7 @@ angular.module('controllers.celula', ['ionic'])
     }
     
     $scope.saveCelula = function(celula) {
-        if (!$scope.ojsForm.$valid) {
+        if (!celula.nome || celula.nome.trim() === '') {
             return;
         }
         $scope.postCelula(celula);

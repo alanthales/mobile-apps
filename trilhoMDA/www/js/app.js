@@ -6,7 +6,7 @@ var db = new DbFactory('trilhoMDA', DbProxies.LOCALSTORAGE);
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('trilhoMDA', [
-    'ionic', 'db.dao', 'ojs.directives', 'tabs.swipable', 'controllers.home', 'controllers.contato',
+    'ionic', 'db.dao', 'ojs.directives', 'tabs.swipable', 'controllers.home', 'controllers.contatos',
     'controllers.celula', 'controllers.chamada', 'controllers.trilho'
 ])
 
@@ -52,10 +52,20 @@ angular.module('trilhoMDA', [
         views: {
             'tab-contatos': {
                 templateUrl: 'app/views/contatos/lista.html',
-                controller: 'ContatoCtrl'
+                controller: 'ContatosCtrl'
             }
         }
     })
+    
+//    .state('app.contato', {
+//        url: '/contato/:id',
+//        views: {
+//            'tab-contatos': {
+//                templateUrl: 'app/views/contatos/detalhe.html',
+//                controller: 'ContatoCtrl'
+//            }
+//        }
+//    })
     
     .state('app.celula', {
         url: '/celula',
@@ -67,8 +77,8 @@ angular.module('trilhoMDA', [
         }
     })
     
-    .state('app.chamada', {
-        url: '/chamada',
+    .state('app.chamadas', {
+        url: '/chamadas',
         views: {
             'tab-chamada': {
                 templateUrl: 'app/views/chamadas/lista.html',
@@ -77,8 +87,8 @@ angular.module('trilhoMDA', [
         }
     })
     
-    .state('app.trilho', {
-        url: '/trilho',
+    .state('app.trilhos', {
+        url: '/trilhos',
         views: {
             'tab-trilho': {
                 templateUrl: 'app/views/trilhos/lista.html',
