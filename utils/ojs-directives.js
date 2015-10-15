@@ -107,14 +107,14 @@ angular.module('ojs.directives', ['ionic'])
         link: function(scope, elem, attrs, ctrl) {
             if (!ctrl) return;
 
-            var parser = function(value) {
+            var decimals = attrs.decimals ? parseInt(attrs.decimals) : 1,
+                parser = function(value) {
                     return value;
                 },
                 formatter = function() {};
             
             function currencyParser(value) {
 				var actualNumber = value.replace(/[^\d]+/g,''),
-                    decimals = parseInt(attrs.decimals),
                     formatedValue;
                 
 				actualNumber = actualNumber.replace(/^[0]+([1-9])/,'$1');
@@ -139,7 +139,11 @@ angular.module('ojs.directives', ['ionic'])
                 case 'text':
                     if (attrs.decimals && attrs.decimals.trim() !== '') {
                         formatter = function(value) {
-                            return $filter('number')(ctrl.$modelValue);
+                            if (ctrl.$isEmpty(value)) {
+                                return value;
+                            }
+                            return parseFloat(value).toFixed(decimals).toString();
+//                            return $filter('number')(ctrl.$modelValue);
                         };
                         parser = currencyParser;
                     }
