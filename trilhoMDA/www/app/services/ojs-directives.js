@@ -43,7 +43,6 @@ angular.module('ojs.directives', ['ionic'])
 .directive('ojsModal', ['$ionicModal', function($ionicModal) {
 	return {
 		restrict: 'E',
-//		require: '^?ionContent',
 		link: function(scope, elm, attrs) {
             var parentScope = scope.$parent;
             
@@ -71,14 +70,13 @@ angular.module('ojs.directives', ['ionic'])
 .directive("ojsPopMenu", ['$ionicPopover', function($ionicPopover) {
     return {
         restrict: 'E',
-//        require: '?ionContent',
 		link: function(scope, elm, attrs) {
             var parentScope = scope.$parent;
             
             parentScope.$on('$ionicView.enter', function() {
                 $ionicPopover.fromTemplateUrl(attrs.template, {
                     scope: scope,
-                    animation: 'fade-in'
+                    animation: 'scale-in'
                 }).then(function(popover) {
                     parentScope.$ojsPopMenu = popover;
                 });

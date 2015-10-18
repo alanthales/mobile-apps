@@ -2,7 +2,7 @@
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button></ion-nav-back-button>
         <ion-nav-buttons side="right">
-            <button class="right button button-icon {{celula.id ? 'ion-android-create' : 'ion-android-add'}}" ng-click="frmCelula.openModal()" stop-event="click"></button>
+            <button class="right button button-icon {{celula.id ? 'ion-android-create' : 'ion-android-add'}}" on-tap="frmCelula.openModal()" ion-stop-event="click"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
