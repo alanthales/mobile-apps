@@ -12,7 +12,7 @@ angular.module('controllers.contatos', ['ionic'])
     }, { sort: 'nome' });
     
     $scope.showMenu = function(item, event) {
-        $scope.selection = item;
+        $scope.selection = $dao.cloneObject(item);
         $scope.menu.openMenu(event);
 //        $state.go('app.contato', { id: item.id });
     }

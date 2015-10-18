@@ -8,6 +8,7 @@
         "D:/User/workspace/mobile-apps/trilhoMDA/www/app/controllers/chamada.js",
         "D:/User/workspace/mobile-apps/trilhoMDA/plugins/com.ionic.keyboard/www/keyboard.js",
         "D:/User/workspace/mobile-apps/trilhoMDA/plugins/cordova-plugin-device/src/blackberry10/index.js",
-        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/services/ojs-directives.js"
+        "D:/User/workspace/mobile-apps/trilhoMDA/www/app/services/ojs-directives.js",
+        "D:/User/workspace/mobile-apps/trilhoMDA/platforms/android/cordova/lib/build.js"
     ]
 }

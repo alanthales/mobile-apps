@@ -73,7 +73,7 @@ angular.module('controllers.trilho', ['ionic'])
     }
     
     $scope.showMenu = function(item, e) {
-        $scope.selection = item;
+        $scope.selection = $dao.cloneObject(item);
         $scope.menu.openMenu(e);
     }
     
