@@ -6,6 +6,7 @@
   </description>
   <author email="alanthales@gmail.com" href="http://github.com/alanthales/">
       Alan Thales Carvalho
+  </author>
   <content src="index.html"/>
   <access origin="tel:*" launch-external="yes"/>
   <allow-navigation href="http://*/*"/>
