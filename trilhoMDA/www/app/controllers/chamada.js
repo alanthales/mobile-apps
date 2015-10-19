@@ -8,6 +8,18 @@ angular.module('controllers.chamada', ['ionic'])
         $scope.celula = results[0] || undefined;
     });
     
+    $scope.countPresents = function(chamada) {
+        var count = 0;
+        if (chamada) {
+            count = chamada.membros.filter(
+                function(item) {
+                    return item.presente;
+                }).length;
+            count += chamada.visitantes.length;
+        }
+        return count;
+    }
+    
     $scope.newChamada = function() {
         var celula = $scope.celula,
             record, i;

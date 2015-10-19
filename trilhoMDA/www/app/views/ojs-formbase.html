@@ -1,7 +1,7 @@
 <div class="modal">
     <ion-header-bar>
         <h1 class="title">{{title}}</h1>
-        <button class="right button button-icon ion-android-close" ng-click="closeForm()"></button>
+        <button class="right button button-icon ion-android-close" ng-click="closeForm()" stop-event="click"></button>
     </ion-header-bar>
     <ion-content>
         <form name="ojsForm" ng-submit="saveRecord(record)" class="ojs-form">

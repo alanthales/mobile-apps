@@ -11,7 +11,7 @@
             <ojs-list is-empty="chamadas.data.length === 0">
                 <div class="item" collection-repeat="item in chamadas.data" on-double-tap="showMenu(item, $event)">
                     {{item.data | date:'dd/MM/yyyy'}}
-                    <span class="item-note">{{item.membros.length + item.visitantes.length}} pessoa(s)</span>
+                    <span class="item-note">{{countPresents(item)}} pessoa(s)</span>
                 </div>
             </ojs-list>
         </div>
