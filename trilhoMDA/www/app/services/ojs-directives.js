@@ -83,7 +83,7 @@ angular.module('ojs.directives', ['ionic'])
                     
                     $ionicPopover.fromTemplateUrl(attrs.template, {
                         scope: scope,
-                        animation: 'fade-out',
+                        animation: 'fade-in',
                         backdropClickToClose: false,
                         hardwareBackButtonClose: false
                     }).then(function(popover) {
