@@ -43,7 +43,7 @@ angular.module('ojs.directives', ['ionic'])
 .directive('ojsModal', ['$ionicModal', function($ionicModal) {
 	return {
 		restrict: 'E',
-		require: '^?ionContent',
+//		require: '^?ionContent',
 		link: function(scope, elm, attrs) {
             var parentScope = scope.$parent;
             
@@ -71,29 +71,33 @@ angular.module('ojs.directives', ['ionic'])
 .directive("ojsPopMenu", ['$ionicPopover', function($ionicPopover) {
     return {
         restrict: 'E',
-        require: '^?ionContent',
+//        require: '?ionContent',
 		link: function(scope, elm, attrs) {
             var parentScope = scope.$parent;
             
+            parentScope.$on('$ionicView.enter', function() {
+                $ionicPopover.fromTemplateUrl(attrs.template, {
+                    scope: scope,
+                    animation: 'fade-in'
+                }).then(function(popover) {
+                    parentScope.$ojsPopMenu = popover;
+                });
+            });
+            
+            parentScope.$on('$ionicView.leave', function() {
+                parentScope.$ojsPopMenu.remove();
+            });
+            
             parentScope[attrs.name] = {
                 openMenu: function(e) {
-                    if (navigator.vibrate) {
-                        navigator.vibrate(200);
+                    if (window.navigator.vibrate) {
+                        window.navigator.vibrate(200);
                     }
-                    
-                    $ionicPopover.fromTemplateUrl(attrs.template, {
-                        scope: scope,
-                        animation: 'fade-in',
-                        backdropClickToClose: false,
-                        hardwareBackButtonClose: false
-                    }).then(function(popover) {
-                        parentScope.$ojsPopMenu = popover;
-                        parentScope.$ojsPopMenu.show(e);
-                    });
+                    parentScope.$ojsPopMenu.show(e);
                 },
 
                 closeMenu: function() {
-                    parentScope.$ojsPopMenu.remove();
+                    parentScope.$ojsPopMenu.hide();
                 }
             }
         }
@@ -143,7 +147,6 @@ angular.module('ojs.directives', ['ionic'])
                                 return value;
                             }
                             return parseFloat(value).toFixed(decimals).toString();
-//                            return $filter('number')(ctrl.$modelValue);
                         };
                         parser = currencyParser;
                     }
@@ -168,14 +171,20 @@ angular.module('ojs.directives', ['ionic'])
         templateUrl: './app/views/ojs-select.html',
 
         link: function (scope, element, attrs) {
-            $ionicModal.fromTemplateUrl(attrs.popupTmpl, {
-                scope: scope
-            }).then(function(modal) {
-                var bar = angular.element(modal.$el.find('ion-header-bar')[0]);
-                bar.addClass('bar-' + attrs.uiClass);
-                scope.selModal = modal;
+            scope.$on('$ionicView.enter', function() {
+                $ionicModal.fromTemplateUrl(attrs.popupTmpl, {
+                    scope: scope
+                }).then(function(modal) {
+                    var bar = angular.element(modal.$el.find('ion-header-bar')[0]);
+                    bar.addClass('bar-' + attrs.uiClass);
+                    scope.selModal = modal;
+                });
             });
 
+            scope.$on('$ionicView.leave', function() {
+                scope.selModal.remove();
+            });
+            
             scope.showItems = function (event) {
                 event.preventDefault();
                 scope.selModal.show();
@@ -184,10 +193,6 @@ angular.module('ojs.directives', ['ionic'])
             scope.hideItems = function () {
                 scope.selModal.hide();
             }
-
-            scope.$on('$destroy', function() {
-                scope.selModal.remove();
-            });
 
             scope.selectValue = function(value) {
                 scope.value = value;
