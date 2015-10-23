@@ -7,6 +7,44 @@ DbProxies = {
     SQLITE: 1
 }
 
+
+/*
+    HashMap Class
+    Autor: Alan Thales, 10/2015
+*/
+function HashMap() {
+    var collection = [];
+
+    collection = (Array.apply( collection, arguments ) || collection);
+
+    collection.mapTable = function(key) {
+        return this.map(function(item) {
+            return item[key];
+        });
+    }
+
+    collection.indexOfKey = function(key, value) {
+        return this.mapTable(key).indexOf(value);
+    },
+
+    collection.put = function(index, obj) {
+        this[index] = obj;
+    },
+
+    collection.putRange = function(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            this.put(i, arr[i]);
+        }
+    }
+    
+    return collection;
+}
+
+
+/*
+    DbProxy Parent Class
+    Autor: Alan Thales, 09/2015
+*/
 function DbProxy() {
     this.createDatabase = function() {}
 }
@@ -18,22 +56,14 @@ function DbProxy() {
 */
 LocalStorageProxy.prototype = new DbProxy();
 LocalStorageProxy.prototype.constructor = LocalStorageProxy;
-//LocalStorageProxy.prototype.parent = DbProxy.prototype;
 
 function LocalStorageProxy() {}
 
-LocalStorageProxy.prototype.getIndex = function(table, id) {
-    var hashtable = table.map(function(record) {
-            return record.id;
-        });
-    return hashtable.indexOf(parseInt(id));
-}
-    
 LocalStorageProxy.prototype._get = function(key) {
     var table = window.localStorage[key],
-        results = [];
+        results = new HashMap();
     if (table) {
-        results = JSON.parse(table);
+        results.putRange( JSON.parse(table) );
     }
     return results;
 }
@@ -87,7 +117,7 @@ LocalStorageProxy.prototype._saveAll = function(key, table, callback) {
 
 LocalStorageProxy.prototype.save = function(key, record, callback) {
     var table = this._get(key),
-        index = this.getIndex(table, record.id);
+        index = table.indexOfKey('id', record.id);
     if (index === -1) {
         table.push(record);
     } else {
@@ -99,7 +129,7 @@ LocalStorageProxy.prototype.save = function(key, record, callback) {
 LocalStorageProxy.prototype.remove = function(key, record, callback) {
     var id = typeof record === "object" ? record.id : record,
         table = this._get(key),
-        index = this.getIndex(table, id);
+        index = table.indexOfKey('id', id);
     table.splice(index, 1);
     this._saveAll(key, table, callback);
 }
@@ -145,22 +175,20 @@ function SQLiteProxy(dbName) {
         db = window.openDatabase(dbName, "SQLite Database", "1.0", 5*1024*1024);
     }
     
-    this._maps = [];
+    this._maps = new HashMap();
     this.getDb = function() {
         return db;
     }
 }
 
 SQLiteProxy.prototype.getFields = function(table) {
-    var hashtable = this._maps.map(function(maps) {
-            return maps.table;
-        }),
-        index = hashtable.indexOf(table);
+    var index = this._maps.indexOfKey('table', table);
     return this._maps[index].fields;
 }
 
 SQLiteProxy.prototype.createDatabase = function(maps, callback) {
-    this._maps = maps;
+    this._maps.length = 0;
+    this._maps.putRange(maps);
     
     this.getDb().transaction(function(tx) {
         var cb = callback && typeof callback === "function" ? callback : function() {},
@@ -204,7 +232,7 @@ SQLiteProxy.prototype.getRecords = function(options, callback) {
             hashtable = fields.map(function(field) {
                 return field.name;
             }),
-            table = [],
+            table = new HashMap(),
             i, record, field, index;
         
         tx.executeSql(sql, [], function(tx, results) {
@@ -328,9 +356,9 @@ function DataSet(proxy, table) {
     this._updateds = [];
     
     this.active = false;
-    this.data = [];
     this.limit = 1000;
     this.sortBy = "";
+    this.data = new HashMap();
     
     this.getProxy = function() {
         return prx;
@@ -371,15 +399,8 @@ DataSet.prototype.close = function() {
     this._deleteds.length = 0;
 }
 
-DataSet.prototype.getHashTable = function() {
-    return this.data.map(function(record) {
-        return record.id;
-    });
-}
-
 DataSet.prototype.getById = function(id) {
-    var hashtable = this.getHashTable(),
-        index = hashtable.indexOf(parseInt(id));
+    var index = this.data.indexOfKey('id', parseInt(id));
     return this.data[index];
 }
 
@@ -390,8 +411,7 @@ DataSet.prototype.insert = function(record) {
     if (record && !record.id) {
         record.id = (new Date()).getTime();
     }
-    var hashtable = this.getHashTable();
-        index = hashtable.indexOf(record.id);
+    var index = this.data.indexOfKey('id', record.id);
     if (index === -1) {
         this._inserteds.push(record);
         this.data.push(record);
@@ -402,8 +422,7 @@ DataSet.prototype.update = function(record) {
     if (!this.active) {
         throw "Invalid operation on closed dataset";
     }
-    var hashtable = this.getHashTable();
-        index = hashtable.indexOf(record.id);
+    var index = this.data.indexOfKey('id', record.id);
     if (!this._updateds[index]) {
         this._updateds.push(record);
     } else {
@@ -416,8 +435,7 @@ DataSet.prototype.delete = function(record) {
     if (!this.active) {
         throw "Invalid operation on closed dataset";
     }
-    var hashtable = this.getHashTable();
-        index = hashtable.indexOf(record.id);
+    var index = this.data.indexOfKey('id', record.id);
     if (!this._deleteds[index]) {
         this._deleteds.push(record);
     }
@@ -475,7 +493,7 @@ function DbFactory (opts, proxyType) {
     }
 }
 
-DbFactory.prototype.initializeDb = function(maps, callback) {
+DbFactory.prototype.createDatabase = function(maps, callback) {
     this.getProxy().createDatabase(maps, callback);
 }
 
