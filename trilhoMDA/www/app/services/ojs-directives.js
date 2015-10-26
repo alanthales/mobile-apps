@@ -169,17 +169,15 @@ angular.module('ojs.directives', ['ionic'])
         templateUrl: './app/views/ojs-select.html',
 
         link: function (scope, element, attrs) {
-            scope.$on('$ionicView.enter', function() {
-                $ionicModal.fromTemplateUrl(attrs.popupTmpl, {
-                    scope: scope
-                }).then(function(modal) {
-                    var bar = angular.element(modal.$el.find('ion-header-bar')[0]);
-                    bar.addClass('bar-' + attrs.uiClass);
-                    scope.selModal = modal;
-                });
+            $ionicModal.fromTemplateUrl(attrs.popupTmpl, {
+                scope: scope
+            }).then(function(modal) {
+                var bar = angular.element(modal.$el.find('ion-header-bar')[0]);
+                bar.addClass('bar-' + attrs.uiClass);
+                scope.selModal = modal;
             });
 
-            scope.$on('$ionicView.leave', function() {
+            scope.$on('$destroy', function() {
                 scope.selModal.remove();
             });
             

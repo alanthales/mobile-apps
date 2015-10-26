@@ -54,6 +54,7 @@ angular.module('controllers.contatos', ['ionic'])
             $scope.contatos.insert(record);
         }
         $scope.contatos.post(function() {
+            $scope.contatos.refresh();
             callback();
         });
     }
