@@ -1,44 +1,46 @@
-<ojs-form title="Chamada da célula" save-record="saveItem(selection)" close-form="form.closeModal()" ui-class="balanced">
-    <label class="item item-input item-stacked-label">
-        <span class="input-label">Data</span>
-        <input type="date" ng-model="selection.data" required format>
-    </label>
-    
-    <label class="item item-input item-stacked-label">
-        <span class="input-label">Total de oferta</span>
-        <input type="tel" placeholder="0,00" ng-model="selection.oferta" required format decimals="2">
-    </label>
-    
-    <div class="padding-top">
-        <div class="item item-divider">
-            Membros presentes
-        </div>
-        
-        <div class="item item-checkbox" ng-repeat="item in selection.membros track by $id($index)">
-            <label class="checkbox checkbox-balanced">
-                <input type="checkbox" ng-model="item.presente" ng-checked="item.presente">
-            </label>
-            {{contatos.getById(item.id).nome}}
-        </div>
-    </div>
-    
-    <div class="padding-top">
-        <div class="item item-divider">
-            Visitantes
+<div class="modal">
+    <ojs-form title="Chamada da célula" save-record="saveItem(selection)" close-form="form.closeModal()" ui-class="balanced">
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Data</span>
+            <input type="date" ng-model="selection.data" required format>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Total de oferta</span>
+            <input type="tel" placeholder="0,00" ng-model="selection.oferta" required format decimals="2">
+        </label>
+
+        <div class="padding-top">
+            <div class="item item-divider">
+                Membros presentes
+            </div>
+
+            <div class="item item-checkbox" ng-repeat="item in selection.membros track by $id($index)">
+                <label class="checkbox checkbox-balanced">
+                    <input type="checkbox" ng-model="item.presente" ng-checked="item.presente">
+                </label>
+                {{contatos.getById(item.id).nome}}
+            </div>
         </div>
 
-        <div class="item item-button-right" ng-repeat="item in selection.visitantes track by $id($index)">
-            {{contatos.getById(item).nome}}
-            <button type="button" class="button button-clear button-assertive" ng-click="deleteVisitante(item)">
-                <i class="icon ion-android-remove-circle"></i>
-            </button>
+        <div class="padding-top">
+            <div class="item item-divider">
+                Visitantes
+            </div>
+
+            <div class="item item-button-right" ng-repeat="item in selection.visitantes track by $id($index)">
+                {{contatos.getById(item).nome}}
+                <button type="button" class="button button-clear button-assertive" ng-click="deleteVisitante(item)">
+                    <i class="icon ion-android-remove-circle"></i>
+                </button>
+            </div>
+
+            <a class="item item-icon-left balanced" ng-click="frmVisitante.openModal()">
+                <i class="icon ion-android-person-add"></i>
+                Adicionar visitante
+            </a>
         </div>
 
-        <a class="item item-icon-left balanced" ng-click="frmVisitante.openModal()">
-            <i class="icon ion-android-person-add"></i>
-            Adicionar visitante
-        </a>
-    </div>
-    
-    <input type="hidden" ng-model="selection.celulaId" ng-value="selection.celulaId">
-</ojs-form>
+        <input type="hidden" ng-model="selection.celulaId" ng-value="selection.celulaId">
+    </ojs-form>
+</div>
