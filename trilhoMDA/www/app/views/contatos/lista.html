@@ -2,8 +2,9 @@
     <ion-nav-bar class="bar-assertive">
         <ion-nav-back-button></ion-nav-back-button>
         <ion-nav-buttons side="right">
-            <button class="right button button-icon ion-android-add" on-tap="newItem()"></button>
-            <button class="right button button-icon ion-android-contacts" on-tap="import()"></button>
+            <button class="right button button-icon ion-android-add" ng-click="newItem()"></button>
+            <button class="right button button-icon ion-android-contacts" ng-click="import()"></button>
+            <button class="right button button-icon ion-help-circled" ng-click="donate.openModal()" ion-stop-event="click"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
@@ -41,4 +42,5 @@
     </ion-content>
 
     <ojs-modal name="form" template="./app/views/contatos/cadastro.html"></ojs-modal>
+    <ojs-modal name="donate" template="./app/views/donate.html"></ojs-modal>
 </ion-view>

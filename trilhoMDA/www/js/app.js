@@ -43,7 +43,7 @@ angular.module('trilhoMDA', [
     .state('app', {
         url: '/app',
         abstract: true,
-        templateUrl: 'app/tabs.html',
+        templateUrl: 'app/views/tabs.html',
         controller: 'AppCtrl'
     })
 

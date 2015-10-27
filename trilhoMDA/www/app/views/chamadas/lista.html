@@ -2,7 +2,7 @@
     <ion-nav-bar class="bar-balanced">
         <ion-nav-back-button></ion-nav-back-button>
         <ion-nav-buttons side="right">
-            <button class="right button button-icon ion-android-add" on-tap="newChamada()" ion-stop-event="click"></button>
+            <button class="right button button-icon ion-android-add" ng-click="newChamada()" ion-stop-event="click"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
 
@@ -27,7 +27,7 @@
             </div>
         </div>
         
-        <ojs-pop-menu name="menu" template="./app/views/ojs-popmenu.html"></ojs-pop-menu>
+        <ojs-pop-menu name="menu" template="./app/views/templates/ojs-popmenu.html"></ojs-pop-menu>
         <ojs-modal name="frmVisitante" template="./app/views/chamadas/visitante.html"></ojs-modal>
     </ion-content>
     
