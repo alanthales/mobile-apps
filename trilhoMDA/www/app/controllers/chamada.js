@@ -20,7 +20,10 @@ angular.module('controllers.chamada', ['ionic'])
         return count;
     }
     
-    $scope.newChamada = function() {
+    $scope.newChamada = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
         var celula = $scope.celula,
             record, i;
         

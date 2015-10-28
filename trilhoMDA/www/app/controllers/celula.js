@@ -1,6 +1,6 @@
 angular.module('controllers.celula', ['ionic'])
 
-.controller('CelulaCtrl', function($scope, $dao, $ionicPopup) {
+.controller('CelulaCtrl', function($scope, $dao, $ionicPopup, $state) {
     $scope.celulas = $dao.getCelulas(function(results) {
         var celula = results[0] || {};
         if (!celula.membros) {
@@ -80,5 +80,9 @@ angular.module('controllers.celula', ['ionic'])
         }
         $scope.postCelula(celula);
         $scope.frmCelula.closeModal();
+    }
+    
+    $scope.stats = function() {
+        $state.go('app.estatisticas', { celulaId: $scope.celula.id });
     }
 });

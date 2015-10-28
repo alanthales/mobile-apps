@@ -7,7 +7,7 @@ var db = new DbFactory('trilhoMDA', DbProxies.LOCALSTORAGE);
 // 'starter.controllers' is found in controllers.js
 angular.module('trilhoMDA', [
     'ionic', 'db.dao', 'ojs.directives', 'tabs.swipable', 'controllers.home', 'controllers.contatos',
-    'controllers.celula', 'controllers.chamada', 'controllers.trilho'
+    'controllers.celula', 'controllers.chamada', 'controllers.trilho', 'controllers.estatisticas'
 ])
 
 .run(function($ionicPlatform) {
@@ -73,6 +73,16 @@ angular.module('trilhoMDA', [
             'tab-celula': {
                 templateUrl: 'app/views/celulas/lista.html',
                 controller: 'CelulaCtrl'
+            }
+        }
+    })
+    
+    .state('app.estatisticas', {
+        url: '/estatisticas/:celulaId',
+        views: {
+            'tab-celula': {
+                templateUrl: 'app/views/celulas/estatisticas.html',
+                controller: 'EstatisticasCtrl'
             }
         }
     })

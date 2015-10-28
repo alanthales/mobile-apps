@@ -8,6 +8,7 @@ angular.module('controllers.home', ['ionic'])
                 $scope.tabColor = 'assertive';
                 break;
             case 'app.celula':
+            case 'app.estatisticas':
                 $scope.tabColor = 'positive';
                 break;
             case 'app.chamada':

@@ -75,8 +75,8 @@ angular.module('ojs.directives', ['ionic'])
             
             parentScope.$on('$ionicView.enter', function() {
                 $ionicPopover.fromTemplateUrl(attrs.template, {
-                    scope: scope,
-                    animation: 'fade-in'
+                    scope: scope
+//                    animation: 'fade-in'
                 }).then(function(popover) {
                     parentScope.$ojsPopMenu = popover;
                 });
@@ -169,25 +169,27 @@ angular.module('ojs.directives', ['ionic'])
         templateUrl: './app/views/templates/ojs-select.html',
 
         link: function (scope, element, attrs) {
+            var name = attrs.name || 'selModal';
+            
             $ionicModal.fromTemplateUrl(attrs.popupTmpl, {
                 scope: scope
             }).then(function(modal) {
                 var bar = angular.element(modal.$el.find('ion-header-bar')[0]);
                 bar.addClass('bar-' + attrs.uiClass);
-                scope.selModal = modal;
+                scope[name] = modal;
             });
 
             scope.$on('$destroy', function() {
-                scope.selModal.remove();
+                scope[name].remove();
             });
             
             scope.showItems = function (event) {
                 event.preventDefault();
-                scope.selModal.show();
+                scope[name].show();
             }
 
             scope.hideItems = function () {
-                scope.selModal.hide();
+                scope[name].hide();
             }
 
             scope.selectValue = function(value) {

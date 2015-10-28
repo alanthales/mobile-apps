@@ -32,7 +32,10 @@ angular.module('tabs.swipable', ['ionic'])
 }])
 
 .directive('hideTabs', function() {
-    var style = angular.element('<style>').html('.hide-tab {display: none}');
+    var style = angular.element('<style>').html([
+            '.hide-tab {display: none}',
+            '.content-top {top: 36px}'
+        ].join(' '));
     
     document.head.appendChild(style[0]);
     
@@ -40,11 +43,14 @@ angular.module('tabs.swipable', ['ionic'])
 		restrict: 'A',
 		require: 'ionView',
 		link: function(scope, elm, attrs, ctrl) {
-            var tabs = angular.element(document.querySelector('.tab-nav'));
+            var tabs = angular.element(document.querySelector('.tab-nav')),
+                content = elm.find('ion-content');
             scope.$on('$ionicView.beforeEnter', function() {
+                content.addClass('content-top');
                 tabs.addClass('hide-tab');
             });
             scope.$on('$ionicView.beforeLeave', function() {
+                content.removeClass('content-top');
                 tabs.removeClass('hide-tab');
             });
         }

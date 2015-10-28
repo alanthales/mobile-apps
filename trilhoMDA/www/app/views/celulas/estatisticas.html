@@ -1,0 +1,41 @@
+<ion-view cache-view="false" view-title="Estatísticas" hide-tabs>
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="list list-inset">
+            <div class="item item-avatar">
+                <div class="item-image positive-bg">{{celula.nome.charAt(0)}}</div>
+                <h2>{{celula.nome}}</h2>
+                <p>
+                    {{celula.membros.length}} membros
+                </p>
+            </div>
+            
+            <div class="item">
+                <p>
+                    <span class="subdued">Média de ofertas: {{estat.ofertas | currency:"R$"}}</span>
+                </p>
+                <p>
+                    <span class="subdued">Média de visitantes: {{estat.visitantes | currency:"":1}}</span>
+                </p>
+            </div>
+
+            <div class="item item-divider" ng-show="estat.osmais.length">
+                Os mais freqüentes
+            </div>
+
+            <div class="item" ng-repeat="membro in estat.osmais">
+                {{contatos.getById(membro).nome}}
+            </div>
+            
+            <div class="item item-divider" ng-show="estat.osmenos.length">
+                Os menos freqüentes
+            </div>
+
+            <div class="item" ng-repeat="membro in estat.osmenos">
+                {{contatos.getById(membro).nome}}
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

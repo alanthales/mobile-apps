@@ -53,7 +53,10 @@ angular.module('controllers.trilho', ['ionic'])
         return $scope.atributos[index].descricao;
     }
     
-    $scope.newTrilho = function() {
+    $scope.newTrilho = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
         var celula = $scope.celula,
             attrs = $scope.atributos,
             record, i;

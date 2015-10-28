@@ -4,7 +4,6 @@
         <ion-nav-buttons side="right">
             <button class="right button button-icon ion-android-add" ng-click="newItem()"></button>
             <button class="right button button-icon ion-android-contacts" ng-click="import()"></button>
-            <button class="right button button-icon ion-alert" ng-click="donate.openModal()" ion-stop-event="click"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
@@ -26,9 +25,9 @@
                 <p>{{item.telefone}}</p>
             </div>
         </ojs-list>
-        
-        <div class="list list-inset">
-            <div class="item item-divider">
+
+        <div class="list list-inset" ng-show="true">
+            <div class="padding-top item item-divider">
                 Ajude-nos a manter o projeto
             </div>
             <div class="item">
