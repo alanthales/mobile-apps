@@ -86,9 +86,8 @@ angular.module('controllers.contatos', ['ionic'])
                     okType: 'button-assertive'
                 });
 
-                alertPopup.then(function() {
-                    $ionicLoading.hide();
-                });
+                $ionicLoading.hide();
+                alertPopup.then();
 
                 return;
             }

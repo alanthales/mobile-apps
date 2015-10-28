@@ -50,6 +50,7 @@ angular.module('controllers.chamada', ['ionic'])
     $scope.showMenu = function(item, e) {
         $scope.selection = $dao.cloneObject(item);
         $scope.menu.openMenu(e);
+        console.log($scope.selection);
     }
     
     $scope.editItem = function() {

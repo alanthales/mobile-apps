@@ -34,7 +34,7 @@ angular.module('db.dao', ['ionic'])
                 }
                 return out;
             }
-            if (obj && typeof obj === 'object') {
+            if (obj && !(obj instanceof Date) && (typeof obj === 'object')) {
                 var out = {}, i;
                 for ( i in obj ) {
                     out[i] = arguments.callee(obj[i]);

@@ -6,15 +6,6 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="list list-inset">
-            <div class="item item-divider">
-                Ajude-nos a manter o projeto
-            </div>
-            <div class="item">
-                Toque <a href="#" class="energized" ng-click="donate.openModal()">aqui</a> para ajudar.
-            </div>
-        </div>
-        
         <div ng-if="celula && celula.membros.length > 0">
             <ojs-list is-empty="trilhos.data.length === 0">
                 <div class="item" collection-repeat="item in trilhos.data" on-double-tap="showMenu(item, $event)">
@@ -32,6 +23,15 @@
                 <a href="#/app/celula" class="button button-energized ion-android-add">
                     Cadastrar célula
                 </a>
+            </div>
+        </div>
+        
+        <div class="list list-inset">
+            <div class="item item-divider">
+                Ajude-nos a manter o projeto
+            </div>
+            <div class="item">
+                Toque <a href="#" class="energized" ng-click="donate.openModal()">aqui</a> para ajudar.
             </div>
         </div>
         
