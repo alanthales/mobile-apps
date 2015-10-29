@@ -39,8 +39,8 @@
                     Os mais freqüentes
                 </div>
 
-                <div class="item" ng-repeat="membro in estat.osmais">
-                    {{contatos.getById(membro).nome}}
+                <div class="item" ng-repeat="membro in estat.osmais track by $index">
+                    {{contatos.getById(membro.id).nome}}
                 </div>
             </div>
 
@@ -49,8 +49,8 @@
                     Os menos freqüentes
                 </div>
 
-                <div class="item" ng-repeat="membro in estat.osmenos">
-                    {{contatos.getById(membro).nome}}
+                <div class="item" ng-repeat="membro in estat.osmenos track by $index">
+                    {{contatos.getById(membro.id).nome}}
                 </div>
             </div>
         </div>
