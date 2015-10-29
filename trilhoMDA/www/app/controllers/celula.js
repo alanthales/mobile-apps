@@ -40,7 +40,7 @@ angular.module('controllers.celula', ['ionic'])
         if (index !== -1) {
             alertPopup = $ionicPopup.alert({
                 title: 'Atenção',
-                template: 'Este contato já é membro da célula'
+                template: 'Este contato já é membro da célula.'
             });
             
             alertPopup.then();
@@ -83,6 +83,15 @@ angular.module('controllers.celula', ['ionic'])
     }
     
     $scope.stats = function() {
-        $state.go('app.estatisticas', { celulaId: $scope.celula.id });
+        $dao.getChamadas(function(results) {
+            if (results.length === 0) {
+                $ionicPopup.alert({
+                    title: 'Atenção',
+                    template: 'Não há chamadas para calcular as estatísticas.'
+                }).then();
+                return;
+            }
+            $state.go('app.estatisticas', { celulaId: $scope.celula.id });
+        });
     }
 });

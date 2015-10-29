@@ -1,12 +1,16 @@
 <ion-view cache-view="false" view-title="Estatísticas" hide-tabs>
     <ion-nav-bar class="bar-positive">
-        <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-back-button class="button-clear">
+            <i class="icon ion-ios-arrow-left"></i>Voltar
+        </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content>
         <div class="list list-inset">
-            <div class="item item-avatar">
-                <div class="item-image positive-bg">{{celula.nome.charAt(0)}}</div>
-                <h2>{{celula.nome}}</h2>
+            <div class="item">
+                <h1>{{celula.nome}}</h1>
+                <p>
+                    {{contatos.getById(celula.lider).nome}}
+                </p>
                 <p>
                     {{celula.membros.length}} membros
                 </p>
@@ -14,27 +18,40 @@
             
             <div class="item">
                 <p>
-                    <span class="subdued">Média de ofertas: {{estat.ofertas | currency:"R$"}}</span>
+                    <span class="subdued">
+                        <i class="icon ion-android-calendar"></i> Multiplicação: <span class="float-right">{{celula.datamulti | date:'dd/MM/yyyy'}}</span>
+                    </span>
                 </p>
                 <p>
-                    <span class="subdued">Média de visitantes: {{estat.visitantes | currency:"":1}}</span>
+                    <span class="subdued">
+                        <i class="icon ion-cash"></i> Média de ofertas: <span class="float-right">{{estat.ofertas | currency:"R$"}}</span>
+                    </span>
+                </p>
+                <p>
+                    <span class="subdued">
+                        <i class="icon ion-person"></i> Média de visitantes: <span class="float-right">{{estat.visitantes | currency:"":1}}</span>
+                    </span>
                 </p>
             </div>
 
-            <div class="item item-divider" ng-show="estat.osmais.length">
-                Os mais freqüentes
+            <div class="padding-top" ng-if="estat.osmais.length">
+                <div class="item item-divider">
+                    Os mais freqüentes
+                </div>
+
+                <div class="item" ng-repeat="membro in estat.osmais">
+                    {{contatos.getById(membro).nome}}
+                </div>
             </div>
 
-            <div class="item" ng-repeat="membro in estat.osmais">
-                {{contatos.getById(membro).nome}}
-            </div>
-            
-            <div class="item item-divider" ng-show="estat.osmenos.length">
-                Os menos freqüentes
-            </div>
+            <div class="padding-top" ng-if="estat.osmenos.length">
+                <div class="item item-divider">
+                    Os menos freqüentes
+                </div>
 
-            <div class="item" ng-repeat="membro in estat.osmenos">
-                {{contatos.getById(membro).nome}}
+                <div class="item" ng-repeat="membro in estat.osmenos">
+                    {{contatos.getById(membro).nome}}
+                </div>
             </div>
         </div>
     </ion-content>
