@@ -110,10 +110,4 @@ angular.module('controllers.contatos', ['ionic'])
             alert(err);
         });
     }
-    
-    $scope.goDonate = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.open(e.target.dataset.action, "_system");
-    }
 });

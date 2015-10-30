@@ -133,4 +133,10 @@ angular.module('controllers.trilho', ['ionic'])
             $scope.form.closeModal();
         });
     }
+    
+    $scope.goDonate = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.open(e.target.dataset.action, "_system");
+    }
 });
