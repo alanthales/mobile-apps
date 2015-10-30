@@ -37,7 +37,9 @@ angular.module('trilhoMDA', [
     });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    $ionicConfigProvider.backButton.previousTitleText(false).text('').icon('ion-android-arrow-back');
+    
     $stateProvider
 
     .state('app', {

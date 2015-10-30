@@ -17,7 +17,7 @@
                 <span class="item-note">{{contato.datanasc | date: 'dd/MM/yyyy'}}</span>
             </div>
         </div>
-        
+
         <ojs-list is-empty="contatos.data.length === 0">
             <div class="item item-avatar" collection-repeat="item in contatos.data" on-double-tap="showMenu(item, $event)">
                 <div class="item-image assertive-bg">{{item.nome.charAt(0)}}</div>
@@ -26,15 +26,6 @@
             </div>
         </ojs-list>
 
-        <div class="list list-inset" ng-show="true">
-            <div class="padding-top item item-divider">
-                Ajude-nos a manter o projeto
-            </div>
-            <div class="item">
-                Clique <a href="#" class="assertive" ng-click="donate.openModal()">aqui</a> para ajudar.
-            </div>
-        </div>
-        
 <!--
         <div class="padding" ng-if="contatos.data.length > 0">
             <div class="item item-icon-left">
@@ -50,5 +41,4 @@
     </ion-content>
 
     <ojs-modal name="form" template="./app/views/contatos/cadastro.html"></ojs-modal>
-    <ojs-modal name="donate" template="./app/views/donate.html"></ojs-modal>
 </ion-view>

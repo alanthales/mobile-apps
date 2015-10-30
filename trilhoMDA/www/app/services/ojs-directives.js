@@ -174,8 +174,10 @@ angular.module('ojs.directives', ['ionic'])
             $ionicModal.fromTemplateUrl(attrs.popupTmpl, {
                 scope: scope
             }).then(function(modal) {
-                var bar = angular.element(modal.$el.find('ion-header-bar')[0]);
-                bar.addClass('bar-' + attrs.uiClass);
+                var bars = modal.$el.find('ion-header-bar');
+//                    heabar = angular.element(bars[0]),
+//                    subbar = angular.element(bars[1]);
+                bars.addClass('bar-' + attrs.uiClass);
                 scope[name] = modal;
             });
 

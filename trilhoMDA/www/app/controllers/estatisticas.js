@@ -30,6 +30,11 @@ angular.module('controllers.estatisticas', ['ionic'])
             
             for (j = 0; j < results[i].membros.length; j++) {
                 obj = results[i].membros[j];
+                
+                if (obj.id === $scope.celula.lider || obj.id === $scope.celula.supervisor) {
+                    continue;
+                }
+                
                 idx = membros.indexOfKey('id', obj.id);
                 
                 if (idx === -1) {
@@ -49,21 +54,11 @@ angular.module('controllers.estatisticas', ['ionic'])
         $scope.estat.ofertas = ofertas / l;
         $scope.estat.visitantes = visitantes / l;
         
-//        for (j in membros) {
-//            if (membros[j] > 0) {
-//                $scope.estat.osmais.push(j);
-//            }
-//            if (membros[j] < 0) {
-//                $scope.estat.osmenos.push(j);
-//            }
-//        }
+        membros.sort(function(a, b){return b.peso - a.peso});
         
-        membros.sort(function(a, b){return a.peso - b.peso});
+        $scope.estat.osmais = membros.filter(function(item) { return item.peso > 0 }).slice(0,3);
+        $scope.estat.osmenos = membros.filter(function(item) { return item.peso < 0 }).slice(-3);
         
-        $scope.estat.osmais = membros.slice(-3);
-        $scope.estat.osmenos = membros.slice(0, 3);
-        
-        console.log($scope.estat.osmais);
-        console.log($scope.estat.osmenos);
+        $scope.estat.osmenos.sort(function(a,b){return a.peso - b.peso});
     });
 });
