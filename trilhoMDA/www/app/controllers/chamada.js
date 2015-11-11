@@ -114,4 +114,8 @@ angular.module('controllers.chamada', ['ionic'])
             $scope.selection.visitantes.splice(index, 1);
         }
     }
+    
+    $scope.goDonate = function(e) {
+        window.open(e.target.dataset.action, "_system");
+    }
 });
