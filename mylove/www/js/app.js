@@ -28,6 +28,12 @@ angular.module('mylove', ['ionic'])
     $urlRouterProvider.otherwise('/');
 })
 
-.controller('HomeCtrl', function($scope, $ionicSlideBoxDelegate) {
-    
+.controller('HomeCtrl', function($scope, $ionicSlideBoxDelegate, $ionicPopup) {
+    $scope.help = function() {
+        $ionicPopup.alert({
+            title: 'Ajuda',
+            template: 'Deslize para passar os slides.',
+            okType: 'button-assertive'
+        }).then();
+    }
 });
