@@ -6,15 +6,6 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="padding-bottom list">
-            <div class="item item-divider">
-                Ajude-nos a manter o projeto
-            </div>
-            <div class="item">
-                Toque <a href="#" class="balanced" ng-click="donate.openModal()">aqui</a> para ajudar.
-            </div>
-        </div>
-        
         <div ng-if="celula && celula.membros.length > 0">
             <ojs-list is-empty="chamadas.data.length === 0">
                 <div class="item" collection-repeat="item in chamadas.data" on-double-tap="showMenu(item, $event)">
@@ -39,6 +30,5 @@
         <ojs-modal name="frmVisitante" template="./app/views/chamadas/visitante.html"></ojs-modal>
     </ion-content>
     
-    <ojs-modal name="donate" template="./app/views/donate.html"></ojs-modal>
     <ojs-modal name="form" template="./app/views/chamadas/cadastro.html"></ojs-modal>
 </ion-view>

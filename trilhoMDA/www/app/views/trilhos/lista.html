@@ -6,15 +6,6 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="padding-bottom list">
-            <div class="item item-divider">
-                Ajude-nos a manter o projeto
-            </div>
-            <div class="item">
-                Toque <a href="#" class="energized" ng-click="donate.openModal()">aqui</a> para ajudar.
-            </div>
-        </div>
-        
         <div ng-if="celula && celula.membros.length > 0">
             <ojs-list is-empty="trilhos.data.length === 0">
                 <div class="item" collection-repeat="item in trilhos.data" on-double-tap="showMenu(item, $event)">
@@ -38,6 +29,5 @@
         <ojs-pop-menu name="menu" template="./app/views/templates/ojs-popmenu.html"></ojs-pop-menu>
     </ion-content>
     
-    <ojs-modal name="donate" template="./app/views/donate.html"></ojs-modal>
     <ojs-modal name="form" template="./app/views/trilhos/cadastro.html"></ojs-modal>
 </ion-view>
