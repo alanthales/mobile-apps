@@ -1,0 +1,63 @@
+.home-bg {
+    background: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.scroll-bar-indicator {
+	display: none;
+}
+
+.bg-transparent {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(120, 120, 120, 0.25);
+}
+
+.row.home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row.home .col {
+    text-align: center;
+    margin: 3px;
+    color: white;
+    max-width: 160px;
+    padding: 10px 0 10px 0;
+    box-shadow: 2px 2px 5px #888;
+}
+
+.row.home .col .icon {
+    font-size: 230%;
+    position: relative;
+    top: 9%;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.igreja {
+    background-color: rgba(56, 126, 245, 0.85);
+}
+
+.aconteceu {
+    background-color: rgba(70, 130, 180, 0.85);
+}
+
+.biblia {
+    background-color: rgba(56, 126, 245, 0.70);
+}
+
+.pregacoes {
+    background-color: rgba(70, 130, 180, 0.70);
+}
+
+.videos {
+    background-color: rgba(56, 126, 245, 0.55);
+}
+
+.eventos {
+    background-color: rgba(70, 130, 180, 0.55);
+}

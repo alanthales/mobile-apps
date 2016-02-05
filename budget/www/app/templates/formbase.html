@@ -1,0 +1,16 @@
+<div>
+    <ion-header-bar ng-transclude="header">
+        <h1 class="title">{{title}}</h1>
+        <button class="right button button-icon ion-android-close" ng-click="closeForm()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <form name="formbase" ng-submit="saveRecord(record)" class="form-base">
+            <div class="list list-inset" ng-transclude="body">
+            </div>
+        </form>        
+    </ion-content>
+    <ion-footer-bar ng-transclude-"footer">
+        <button type="submit" class="right button">Confirmar</button>
+        <button type="button" class="right button button-stable" ng-click="closeForm()">Cancelar</button>
+    </ion-footer-bar>
+</div>

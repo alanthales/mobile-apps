@@ -1,0 +1,46 @@
+.my-menu {
+    border-color: #333;
+    background-color: #444;
+    color: #fff;
+}
+
+.my-menu .item, .my-menu .item-content, .my-menu .item-complex {
+    background-color: rgba(0,0,0,0);
+}
+
+.my-menu .item {
+    border: none;
+}
+
+.my-menu .padding.list .item {
+    border-bottom: 1px solid #333;
+}
+
+.my-menu .padding.list .item:first-child {
+    border-top: 1px solid #333;
+}
+
+.user-list {
+    margin: 10px;
+}
+
+.user-list h2, .user-list p {
+    color: #f0f0f0;
+}
+
+.user-list h2 {
+    font-weight: bold;
+    text-overflow: ellipsis;
+}
+
+.icon-small {
+    font-size: 20px !important;
+}
+
+.item-avatar .item-image {
+    background-color: #4a87ee;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 35px;
+}

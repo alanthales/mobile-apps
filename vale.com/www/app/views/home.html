@@ -1,0 +1,14 @@
+<ion-view view-title="vale.com">
+    <ion-content class="home-bg">
+        <div class="bg-transparent">
+            <div class="row home" ng-repeat="item in menu">
+                <div class="col {{item.a.class}}">
+                    <i class="icon {{item.a.icon}} light"></i> {{item.a.title}}
+                </div>
+                <div ng-if="item.b" class="col {{item.b.class}}">
+                    <i class="icon {{item.b.icon}} light"></i> {{item.b.title}}
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,35 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left">
+        <ion-content class="my-menu">
+            <div class="user-list">
+                <div class="item item-avatar">
+                    <div class="item-image">{{$root.user.nome.charAt(0)}}</div>
+                    <h2>{{$root.user.nome}}</h2>
+                    <p>Bem vindo</p>
+                </div>
+            </div>
+            <div class="padding list">
+                <a class="item item-icon-left" menu-close href="#/app/dashboard">
+                    <i class="icon icon-small ion-grid"></i>
+                    Dashboard
+                </a>
+                <a class="item item-icon-left" menu-close href="#/app/marcadores">
+                    <i class="icon icon-small ion-pricetags"></i>
+                    Marcadores
+                </a>
+                <a class="item item-icon-left" menu-close href="#/app/despesas">
+                    <i class="icon icon-small ion-cash"></i>
+                    Despesas
+                </a>
+                <a class="item item-icon-left" menu-close href="#/app/config">
+                    <i class="icon icon-small ion-gear-b"></i>
+                    Configuração
+                </a>
+            </div>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

@@ -1,0 +1,21 @@
+<ion-view view-title="Marcadores">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <button class="button button-icon button-clear ion-plus-round"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item ng-if="marcadores.data == 0">
+                Toque <i class="icon ion-plus"></i> para incluir...
+            </ion-item>
+            <ion-item ng-if="marcadores.data > 0" ng-collection="item in marcadores.data">
+                {{item.descricao}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
