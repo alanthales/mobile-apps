@@ -1,6 +1,6 @@
 angular.module('budget.dao', ['ionic'])
 
-.factory('$dao', function() {
+.factory('daoFactory', function() {
     var db = db = new DbFactory('budget', DbProxies.LOCALSTORAGE),
         marcadores = db.createDataSet('marcadores'),
         despesas = db.createDataSet('despesas');

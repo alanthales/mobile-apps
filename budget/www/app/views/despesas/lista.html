@@ -1,4 +1,4 @@
-<ion-view view-title="Marcadores">
+<ion-view view-title="Despesas">
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button></ion-nav-back-button>
         <ion-nav-buttons side="left">
@@ -10,11 +10,11 @@
     </ion-nav-bar>
     <ion-content>
         <div class="list">
-            <div class="item" ng-if="marcadores.data.length === 0">
+            <div class="item" ng-if="despesas.data.length === 0">
                 Toque <i class="icon ion-plus-round"></i> para incluir...
             </div>
-            <div class="item" collection-repeat="item in marcadores.data" on-double-tap="popoverMenu(item, $event)">
-                {{item.descricao}}
+            <div class="item" collection-repeat="item in despesas.data">
+                {{item.valor}}
             </div>
         </div>
         <popover-menu name="menu" template="./app/templates/popovermenu.html"></popover-menu>

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('budget', ['ionic', 'budget.dao', 'budget.dashboard', 'budget.marcadores'])
+angular.module('budget', ['ionic', 'budget.dao', 'budget.directives', 'budget.dashboard', 'budget.marcadores', 'budget.despesas'])
 
 .run(function($ionicPlatform, $rootScope) {
     $rootScope.user = {
@@ -34,7 +34,7 @@ angular.module('budget', ['ionic', 'budget.dao', 'budget.dashboard', 'budget.mar
     .state('app', {
         url: '/app',
         abstract: true,
-        templateUrl: './app/templates/menu.html'
+        templateUrl: './app/templates/sidemenu.html'
     })
 
     .state('app.dashboard', {
@@ -53,6 +53,16 @@ angular.module('budget', ['ionic', 'budget.dao', 'budget.dashboard', 'budget.mar
             'menuContent': {
                 templateUrl: './app/views/marcadores/lista.html',
                 controller: 'MarcadoresCtrl'
+            }
+        }
+    })
+
+    .state('app.despesas', {
+        url: '/despesas',
+        views: {
+            'menuContent': {
+                templateUrl: './app/views/despesas/lista.html',
+                controller: 'DespesasCtrl'
             }
         }
     });
