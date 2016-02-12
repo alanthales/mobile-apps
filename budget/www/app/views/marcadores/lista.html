@@ -5,7 +5,7 @@
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
         <ion-nav-buttons side="right">
-            <button class="button button-icon button-clear ion-plus-round" ng-click="novoItem()"></button>
+            <button class="button button-icon button-clear ion-plus-round" ng-click="newItem()"></button>
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
@@ -13,10 +13,10 @@
             <div class="item" ng-if="marcadores.data.length === 0">
                 Toque <i class="icon ion-plus-round"></i> para incluir...
             </div>
-            <div class="item" collection-repeat="item in marcadores.data" on-double-tap="popoverMenu(item, $event)">
+            <div class="item" collection-repeat="item in marcadores.data" on-double-tap="menu.openMenu(item, $event)">
                 {{item.descricao}}
             </div>
         </div>
-        <popover-menu name="menu" template="./app/templates/popovermenu.html"></popover-menu>
+        <ojs-popover name="menu" template="./app/templates/popovermenu.html"></ojs-popover>
     </ion-content>
 </ion-view>

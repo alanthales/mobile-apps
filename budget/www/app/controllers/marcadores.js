@@ -1,5 +1,5 @@
 angular.module('budget.marcadores', [])
-.controller('MarcadoresCtrl', function($scope, $ionicModal, daoFactory) {
+.controller('MarcadoresCtrl', function($scope, $ionicModal, $ionicPopup, daoFactory) {
     $scope.selection = {};
     
     $scope.marcadores = daoFactory.getMarcadores();
@@ -15,19 +15,34 @@ angular.module('budget.marcadores', [])
         $scope.modal.hide();
     }
 
-    $scope.popoverMenu = function(item, event) {
-        $scope.selection = $scope.marcadores.cloneObject(item);
-        $scope.menu.openMenu(event);
-    }
-
-    $scope.novoItem = function() {
+    $scope.newItem = function() {
         $scope.selection = {};
         $scope.modal.show();
     }
     
     $scope.editItem = function() {
+        $scope.selection = $scope.marcadores.cloneObject($scope.menu.selectedItem);
         $scope.modal.show();
         $scope.menu.closeMenu();
+    }
+    
+    $scope.deleteItem = function() {
+        $scope.menu.closeMenu();
+        
+        var confirmPopup = $ionicPopup.confirm({
+                title: 'Confirme',
+                okText: 'Sim',
+                okType: 'button-positive',
+                cancelText: 'Não',
+                template: 'Deseja realmente excluir este marcador?'
+            });
+        
+        confirmPopup.then(function(res) {
+            if (res) {
+                $scope.marcadores.delete($scope.menu.selectedItem);
+                $scope.marcadores.post();
+            }
+        });
     }
     
     $scope.saveItem = function(item) {

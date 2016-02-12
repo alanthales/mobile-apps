@@ -4,7 +4,10 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('budget', ['ionic', 'budget.dao', 'budget.directives', 'budget.dashboard', 'budget.marcadores', 'budget.despesas'])
+angular.module('budget', [
+    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.dao', 'budget.directives', 'budget.dashboard', 'budget.marcadores',
+    'budget.despesas'
+])
 
 .run(function($ionicPlatform, $rootScope) {
     $rootScope.user = {
