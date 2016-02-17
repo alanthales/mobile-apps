@@ -1,5 +1,5 @@
 angular.module('budget.despesas', [])
-.controller('DespesasCtrl', function($scope, $ionicModal, $ionicPopup, daoFactory) {
+.controller('DespesasCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, daoFactory) {
     $scope.datepickerObject = {
         titleLabel: 'Selecione uma data',  //Optional
         todayLabel: 'Hoje',  //Optional
@@ -11,7 +11,7 @@ angular.module('budget.despesas', [])
 //        inputDate: new Date(),  //Optional
 //        disabledDates: disabledDates, //Optional
         weekDaysList: ["D", "S", "T", "Q", "Q", "S", "S"], //Optional
-        monthList: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"], //Optional
+        monthList: $rootScope.listaMes, //Optional
         templateType: 'popup', //Optional
         showTodayButton: 'true', //Optional
         modalHeaderColor: 'bar-positive', //Optional
