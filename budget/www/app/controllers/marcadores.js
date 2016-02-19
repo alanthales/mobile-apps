@@ -21,7 +21,7 @@ angular.module('budget.marcadores', [])
     }
     
     $scope.editItem = function() {
-        $scope.selection = $scope.marcadores.cloneObject($scope.menu.selectedItem);
+        $scope.selection = HashMap.cloneObject($scope.menu.selectedItem);
         $scope.modal.show();
         $scope.menu.closeMenu();
     }

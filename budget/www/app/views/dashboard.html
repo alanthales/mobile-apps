@@ -6,19 +6,22 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="list card">
+        <div class="list card" ng-repeat="total in totalMes track by $index" ng-if="$index === 0 || (total.ano !== totalMes[$index-1].ano || total.mes !== totalMes[$index-1].mes)">
             <div class="item item-avatar">
-                <div class="item-image">{{$root.listaMes[hoje.getMonth()].charAt(0)}}</div>
-                <h2>Despesas do mês</h2>
-                <p>{{$root.listaMes[hoje.getMonth()]}}, {{hoje.getFullYear()}}</p>
+                <div class="item-image bg-blue">{{$root.listaMes[total.mes].charAt(0)}}</div>
+                <h2 class="positive">{{$root.listaMes[total.mes]}}, {{total.ano}}</h2>
+                <p>Total das despesas</p>
             </div>
 
-            <div class="item item-body">
-                <p ng-repeat="item in atuais">
-                    <span class="marcador" ng-repeat="mark in item.marcadores">
+            <div class="item">
+                <p ng-repeat="item in totalMes.query({ ano: total.ano, mes: total.mes}) track by $index">
+                    {{saveIndex($index)}}
+                    <span class="marcador {{myIndex === 0 ? 'bg-red' : 'bg-gray'}}" ng-repeat="mark in item.marcadores">
                         {{marcadores.getById(mark).descricao}}
                     </span>
-                    {{item.valor | currency:"R$"}}
+                    <span class="item-right">
+                        {{item.valor | currency:"R$"}}
+                    </span>
                 </p>
             </div>
         </div>

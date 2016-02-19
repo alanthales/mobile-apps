@@ -6,7 +6,7 @@
                     <span class="input-label">Data</span>
                     <p>
                         <i class="icon ion-calendar"></i>
-                        {{selection.data | date:datepickerObject.dateFormat}}
+                        {{getDate(selection) | date:datepickerObject.dateFormat}}
                     </p>
                 </label>
             </ionic-datepicker>

@@ -1,15 +1,17 @@
 angular.module('budget.dashboard', [])
 .controller('DashboardCtrl', function($scope, daoFactory) {
-    $scope.marcadores = daoFactory.getMarcadores();
     $scope.hoje = new Date();
-    
-    var dtini = (new Date($scope.hoje.getFullYear(), $scope.hoje.getMonth(), 1)).toISOString(),
-        dtfin = (new Date($scope.hoje.getFullYear(), $scope.hoje.getMonth() + 1, 0)).toISOString();
+
+    $scope.marcadores = daoFactory.getMarcadores();
     
     daoFactory.getDespesas(function(results) {
-        $scope.atuais = results
-            .query({ data: { $gte: dtini, $lte: dtfin } })
-            .groupBy({ $sum: 'valor' }, ['marcadores'])
-            .orderBy({ field: 'valor', order: 'desc' });
+        $scope.totalMes = results
+            .query({ ano: { $lte: $scope.hoje.getFullYear() }, mes: { $lte: $scope.hoje.getMonth() } })
+            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
+            .orderBy({ ano: 'desc', mes: 'desc', valor: 'desc' });
     });
+    
+    $scope.saveIndex = function(index) {
+        $scope.myIndex = index;
+    };
 });

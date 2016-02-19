@@ -38,7 +38,6 @@
 }
 
 .item-avatar .item-image {
-    background-color: #4a87ee;
     color: #fff;
     font-size: 20px;
     font-weight: 500;
@@ -48,10 +47,26 @@
 .marcador {
     font-size: 11px;
     color: #fff;
-    background-color: #999;
     padding: 0 2px 1px 2px;
     border-radius: 3px;
     margin-right: 2px;
+}
+
+.bg-gray {
+    background-color: #999;
+}
+
+.bg-red {
+    background-color: #ef473a;
+}
+
+.bg-blue {
+    background-color: #4a87ee;
+}
+
+.item-right {
+    float: right;
+    font-size: 14px;
 }
 
 p i.icon {

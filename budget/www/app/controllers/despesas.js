@@ -19,7 +19,9 @@ angular.module('budget.despesas', [])
         from: new Date(1100, 0, 1), //Optional
         callback: function (val) {  //Mandatory
             if (val) {
-                $scope.selection.data = val;
+                $scope.selection.dia = val.getDate();
+                $scope.selection.mes = val.getMonth();
+                $scope.selection.ano = val.getFullYear();
             }
         },
         dateFormat: 'dd/MM/yyyy', //Optional
@@ -43,14 +45,21 @@ angular.module('budget.despesas', [])
     }
 
     $scope.newItem = function() {
-        $scope.selection = { data: new Date(), marcadores: [] };
-        $scope.datepickerObject.inputDate = $scope.selection.data;
+        var hoje = new Date();
+        $scope.selection = {
+            dia: hoje.getDate(),
+            mes: hoje.getMonth(),
+            ano: hoje.getFullYear(),
+            marcadores: []
+        };
+        $scope.datepickerObject.inputDate = hoje;
         $scope.modal.show();
     }
     
     $scope.editItem = function() {
-        $scope.selection = $scope.despesas.cloneObject($scope.menu.selectedItem);
-        $scope.datepickerObject.inputDate = new Date($scope.selection.data);
+        var item = $scope.selection;
+        $scope.selection = HashMap.cloneObject($scope.menu.selectedItem);
+        $scope.datepickerObject.inputDate = new Date(item.ano, item.mes, item.dia);
         $scope.modal.show();
         $scope.menu.closeMenu();
     }
@@ -88,5 +97,9 @@ angular.module('budget.despesas', [])
         } else {
             marcadores.push(marcador.id);
         }
+    }
+    
+    $scope.getDate = function(item) {
+        return new Date(item.ano, item.mes, item.dia);
     }
 });
