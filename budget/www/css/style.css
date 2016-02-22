@@ -34,7 +34,11 @@
 }
 
 .icon-small {
-    font-size: 20px !important;
+    font-size: 19px !important;
+}
+
+.ion-equal:before {
+    content: "=";
 }
 
 .item-avatar .item-image {
@@ -64,11 +68,15 @@
     background-color: #4a87ee;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .item-right {
     float: right;
     font-size: 14px;
 }
 
-p i.icon {
+label.item p i.icon {
     margin-top: -8px;
 }

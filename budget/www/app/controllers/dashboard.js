@@ -17,20 +17,21 @@ angular.module('budget.dashboard', [])
             .query({ ano: $scope.dtAnterior.getFullYear(), mes: $scope.dtAnterior.getMonth() })
             .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
             .orderBy({ valor: 'desc' });
+        
+        $scope.mesAtual.forEach(function(item) {
+            var resultado = $scope.mesAnterior.query({ marcadores: { $contain: item.marcadores } });
+            if (!resultado.length) {
+                item.class = 'positive';
+                item.icon = 'ion-plus-round';
+            } else if (item.valor > resultado[0].valor) {
+                item.class = 'assertive';
+                item.icon = 'ion-arrow-up-b';
+            } else if (item.valor < resultado[0].valor) {
+                item.class = 'balanced';
+                item.icon = 'ion-arrow-down-b';
+            } else {
+                item.icon = 'ion-equal';
+            }
+        });
     });
-    
-    $scope.getClass = function(item) {
-        console.log('getClass');
-        var resultado = $scope.mesAnterior.query({ marcadores: { $contain: item.marcadores } });
-        if (!resultado.length) {
-            return 'positive';
-        }
-        if (item.valor > resultado[0].valor) {
-            return 'assertive';
-        }
-        if (item.valor < resultado[0].valor) {
-            return 'balanced';
-        }
-        return ''
-    }
 });

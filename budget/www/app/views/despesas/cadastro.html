@@ -16,17 +16,15 @@
                 <input type="tel" placeholder="0,00" ng-model="selection.valor" required format decimals="2">
             </label>
 
-            <div class="padding-top">
-                <div class="item item-divider">
-                    Marcadores
-                </div>
+            <div class="item item-divider">
+                Marcadores
+            </div>
 
-                <div class="item item-checkbox" ng-repeat="item in marcadores.data track by $index">
-                    <label class="checkbox checkbox-positive">
-                        <input type="checkbox" ng-checked="selection.marcadores.indexOf(item.id) >= 0" ng-click="addMark(item)">
-                    </label>
-                    {{item.descricao}}
-                </div>
+            <div class="item item-checkbox" ng-repeat="item in marcadores.data track by $index">
+                <label class="checkbox checkbox-positive">
+                    <input type="checkbox" ng-checked="selection.marcadores.indexOf(item.id) >= 0" ng-click="addMark(item)">
+                </label>
+                {{item.descricao}}
             </div>
         </div>
     </form-base>

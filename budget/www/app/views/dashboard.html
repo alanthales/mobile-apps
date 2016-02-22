@@ -1,4 +1,4 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Dashboard" cache-view="false">
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button></ion-nav-back-button>
         <ion-nav-buttons side="left">
@@ -18,10 +18,14 @@
                     <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
                         {{marcadores.getById(mark).descricao}}
                     </span>
-                    <span class="item-right" ng-class="getClass(item)">
-                        {{item.valor | currency:"R$"}}
+                    <span class="item-right {{item.class}}">
+                        {{item.valor | currency:"R$"}} <i class="icon icon-small {{item.icon}}"></i>
                     </span>
                 </p>
+            </div>
+            
+            <div class="item bold">
+                <span class="item-right">Total: {{mesAtual.compute({ $sum: "valor"}).valor | currency:"R$"}}</span>
             </div>
         </div>
         
@@ -41,6 +45,10 @@
                         {{item.valor | currency:"R$"}}
                     </span>
                 </p>
+            </div>
+            
+            <div class="item bold">
+                <span class="item-right">Total: {{mesAnterior.compute({ $sum: "valor"}).valor | currency:"R$"}}</span>
             </div>
         </div>
     </ion-content>
