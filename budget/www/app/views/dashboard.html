@@ -6,19 +6,38 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="list card" ng-repeat="total in totalMes track by $index" ng-if="$index === 0 || (total.ano !== totalMes[$index-1].ano || total.mes !== totalMes[$index-1].mes)">
+        <div class="list card" ng-if="mesAtual.length">
             <div class="item item-avatar">
-                <div class="item-image bg-blue">{{$root.listaMes[total.mes].charAt(0)}}</div>
-                <h2 class="positive">{{$index === 0 ? 'Mês Atual' : 'Mês Anterior'}}</h2>
-                <p>{{$root.listaMes[total.mes]}}, {{total.ano}}</p>
+                <div class="item-image bg-blue">{{$root.listaMes[mesAtual[0].mes].charAt(0)}}</div>
+                <h2 class="positive">Mês Atual</h2>
+                <p>{{$root.listaMes[mesAtual[0].mes]}}, {{mesAtual[0].ano}}</p>
             </div>
 
             <div class="item">
-                <p ng-repeat="item in totalMes.query({ ano: total.ano, mes: total.mes}) track by $index">
+                <p ng-repeat="item in mesAtual track by $index">
                     <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
                         {{marcadores.getById(mark).descricao}}
                     </span>
-                    <span class="item-right" ng-class="$index === 0 ? 'assertive' : ''">
+                    <span class="item-right" ng-class="getClass(item)">
+                        {{item.valor | currency:"R$"}}
+                    </span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="list card" ng-if="mesAnterior.length">
+            <div class="item item-avatar">
+                <div class="item-image bg-blue">{{$root.listaMes[mesAnterior[0].mes].charAt(0)}}</div>
+                <h2 class="positive">Mês Anterior</h2>
+                <p>{{$root.listaMes[mesAnterior[0].mes]}}, {{mesAnterior[0].ano}}</p>
+            </div>
+
+            <div class="item">
+                <p ng-repeat="item in mesAnterior track by $index">
+                    <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
+                        {{marcadores.getById(mark).descricao}}
+                    </span>
+                    <span class="item-right">
                         {{item.valor | currency:"R$"}}
                     </span>
                 </p>
