@@ -14,14 +14,16 @@
             </div>
 
             <div class="item">
-                <p ng-repeat="item in mesAtual track by $index">
-                    <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
-                        {{marcadores.getById(mark).descricao}}
-                    </span>
-                    <span class="item-right {{item.class}}">
+                <div class="set" ng-repeat="item in mesAtual track by $index">
+                    <div class="item-right {{item.class}}">
                         {{item.valor | currency:"R$"}} <i class="icon icon-small {{item.icon}}"></i>
-                    </span>
-                </p>
+                    </div>
+                    <div class="marcadores">
+                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
+                            {{marcadores.getById(mark).descricao}}
+                        </span>
+                    </div>
+                </div>
             </div>
             
             <div class="item bold">
