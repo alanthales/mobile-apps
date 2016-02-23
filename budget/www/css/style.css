@@ -62,7 +62,7 @@
     font-size: 12px;
     color: #fff;
     padding: 1px 2px;
-    border-radius: 3px;
+    border-radius: .4em;
     margin-right: 2px;
 }
 
@@ -84,7 +84,11 @@ label.item p i.icon {
 }
 
 .item-set {
-    margin: .2em 0;
-/*    padding-top: .25em;*/
+    margin: .1em 0;
     line-height: 1em;
+}
+
+.item-set i.icon:not(.ion-equal) {
+    position: relative;
+    top: 2px;
 }

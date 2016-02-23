@@ -18,11 +18,13 @@
                     {{getDate(item) | date:'dd/MM/yyyy'}}
                     <span class="item-right">{{item.valor | currency:'R$'}}</span>
                 </h2>
-                <p>
-                    <span class="marcador bg-gray" ng-repeat="marcador in item.marcadores track by $index">
-                        {{marcadores.getById(marcador).descricao}}
-                    </span>
-                </p>
+                <div class="item-set">
+                    <div class="marcadores">
+                        <span class="marcador bg-gray" ng-repeat="marcador in item.marcadores track by $index">
+                            {{marcadores.getById(marcador).descricao}}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <ojs-popover name="menu" template="./app/templates/popovermenu.html"></ojs-popover>

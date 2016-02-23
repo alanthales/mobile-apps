@@ -7,8 +7,8 @@
     </ion-nav-bar>
     <ion-content>
         <div class="list card" ng-if="mesAtual.length">
-            <div class="item item-avatar">
-                <div class="item-image calm-bg">{{$root.listaMes[mesAtual[0].mes].charAt(0)}}</div>
+            <div class="item ">
+<!--                <div class="item-image calm-bg">{{$root.listaMes[mesAtual[0].mes].charAt(0)}}</div>-->
                 <h2 class="calm">Mês Atual</h2>
                 <p>{{$root.listaMes[mesAtual[0].mes]}}, {{mesAtual[0].ano}}</p>
             </div>
@@ -32,8 +32,8 @@
         </div>
         
         <div class="list card" ng-if="mesAnterior.length">
-            <div class="item item-avatar">
-                <div class="item-image calm-bg">{{$root.listaMes[mesAnterior[0].mes].charAt(0)}}</div>
+            <div class="item">
+<!--                <div class="item-image calm-bg">{{$root.listaMes[mesAnterior[0].mes].charAt(0)}}</div>-->
                 <h2 class="calm">Mês Anterior</h2>
                 <p>{{$root.listaMes[mesAnterior[0].mes]}}, {{mesAnterior[0].ano}}</p>
             </div>
