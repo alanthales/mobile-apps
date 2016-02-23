@@ -30,6 +30,7 @@ angular.module('budget.dashboard', [])
                 item.class = 'balanced';
                 item.icon = 'ion-arrow-down-b';
             } else {
+                item.class = 'bold';
                 item.icon = 'ion-equal';
             }
         });
