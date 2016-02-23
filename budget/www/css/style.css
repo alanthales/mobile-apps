@@ -48,10 +48,20 @@
     line-height: 35px;
 }
 
+.marcadores {
+    overflow: hidden; 
+    white-space: normal;
+}
+
 .marcador {
-    font-size: 11px;
+    display: inline-block;
+    max-width: 100%;   
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
     color: #fff;
-    padding: 0 2px 1px 2px;
+    padding: 1px 2px;
     border-radius: 3px;
     margin-right: 2px;
 }
@@ -71,4 +81,10 @@
 
 label.item p i.icon {
     margin-top: -8px;
+}
+
+.item-set {
+    margin: .2em 0;
+/*    padding-top: .25em;*/
+    line-height: 1em;
 }
