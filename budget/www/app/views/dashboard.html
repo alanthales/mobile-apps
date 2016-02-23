@@ -1,5 +1,5 @@
 <ion-view view-title="Dashboard" cache-view="false">
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-calm">
         <ion-nav-back-button></ion-nav-back-button>
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-android-menu" menu-toggle="left"></button>
@@ -8,8 +8,8 @@
     <ion-content>
         <div class="list card" ng-if="mesAtual.length">
             <div class="item item-avatar">
-                <div class="item-image bg-blue">{{$root.listaMes[mesAtual[0].mes].charAt(0)}}</div>
-                <h2 class="positive">Mês Atual</h2>
+                <div class="item-image calm-bg">{{$root.listaMes[mesAtual[0].mes].charAt(0)}}</div>
+                <h2 class="calm">Mês Atual</h2>
                 <p>{{$root.listaMes[mesAtual[0].mes]}}, {{mesAtual[0].ano}}</p>
             </div>
 
@@ -24,15 +24,15 @@
                 </p>
             </div>
             
-            <div class="item bold">
+            <div class="item calm">
                 <span class="item-right">Total: {{mesAtual.compute({ $sum: "valor"}).valor | currency:"R$"}}</span>
             </div>
         </div>
         
         <div class="list card" ng-if="mesAnterior.length">
             <div class="item item-avatar">
-                <div class="item-image bg-blue">{{$root.listaMes[mesAnterior[0].mes].charAt(0)}}</div>
-                <h2 class="positive">Mês Anterior</h2>
+                <div class="item-image calm-bg">{{$root.listaMes[mesAnterior[0].mes].charAt(0)}}</div>
+                <h2 class="calm">Mês Anterior</h2>
                 <p>{{$root.listaMes[mesAnterior[0].mes]}}, {{mesAnterior[0].ano}}</p>
             </div>
 
@@ -47,7 +47,7 @@
                 </p>
             </div>
             
-            <div class="item bold">
+            <div class="item calm">
                 <span class="item-right">Total: {{mesAnterior.compute({ $sum: "valor"}).valor | currency:"R$"}}</span>
             </div>
         </div>

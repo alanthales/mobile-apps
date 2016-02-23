@@ -32,7 +32,7 @@ angular.module('budget.marcadores', [])
         var confirmPopup = $ionicPopup.confirm({
                 title: 'Confirme',
                 okText: 'Sim',
-                okType: 'button-positive',
+                okType: 'button-calm',
                 cancelText: 'Não',
                 template: 'Deseja realmente excluir este marcador?'
             });

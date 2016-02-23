@@ -3,19 +3,19 @@ angular.module('budget.despesas', [])
     $scope.datepickerObject = {
         titleLabel: 'Selecione uma data',  //Optional
         todayLabel: 'Hoje',  //Optional
-        closeLabel: 'Fechar',  //Optional
+        closeLabel: 'Sair',  //Optional
         setLabel: 'OK',  //Optional
         setButtonType : 'button-positive',  //Optional
         todayButtonType : 'button-assertive',  //Optional
-//        closeButtonType : 'button-light',  //Optional
+        closeButtonType : 'button-outline',  //Optional
 //        inputDate: new Date(),  //Optional
 //        disabledDates: disabledDates, //Optional
         weekDaysList: ["D", "S", "T", "Q", "Q", "S", "S"], //Optional
         monthList: $rootScope.listaMes, //Optional
         templateType: 'popup', //Optional
         showTodayButton: 'true', //Optional
-        modalHeaderColor: 'bar-positive', //Optional
-        modalFooterColor: 'bar-positive', //Optional
+        modalHeaderColor: 'bar-calm', //Optional
+        modalFooterColor: 'bar-calm', //Optional
         from: new Date(1100, 0, 1), //Optional
         callback: function (val) {  //Mandatory
             if (val) {
@@ -70,7 +70,7 @@ angular.module('budget.despesas', [])
         var confirmPopup = $ionicPopup.confirm({
                 title: 'Confirme',
                 okText: 'Sim',
-                okType: 'button-positive',
+                okType: 'button-calm',
                 cancelText: 'Não',
                 template: 'Deseja realmente excluir esta despesa?'
             });
