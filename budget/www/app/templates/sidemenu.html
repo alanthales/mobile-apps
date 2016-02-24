@@ -25,6 +25,9 @@
                     <i class="icon icon-small ion-cash"></i>
                     Despesas
                 </a>
+                <a class="item item-icon-left sub-item" ng-repeat="item in marcadores.data" menu-close href="#/app/despmarcador/{{item.id}}">
+                    {{item.descricao}}
+                </a>
                 <a class="item item-icon-left" menu-close href="#/app/config">
                     <i class="icon icon-small ion-gear-b"></i>
                     Configuração

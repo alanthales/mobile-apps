@@ -33,14 +33,21 @@ angular.module('budget.despesas', [])
     $scope.marcadores = daoFactory.getMarcadores();
     $scope.despesas   = daoFactory.getDespesas();
     
-    $ionicModal.fromTemplateUrl('./app/views/despesas/cadastro.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.modal = modal;
+    $scope.$on('$ionicView.enter', function() {
+        $ionicModal.fromTemplateUrl('./app/views/despesas/cadastro.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+    });
+        
+    $scope.$on('$ionicView.leave', function() {
+        $scope.modal.remove();
     });
     
     $scope.closeForm = function() {
+        console.log($scope.modal);
         $scope.modal.hide();
     }
 

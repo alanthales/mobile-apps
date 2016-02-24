@@ -5,6 +5,8 @@ angular.module('budget.dao', ['ionic'])
         marcadores = db.createDataSet('marcadores'),
         despesas = db.createDataSet('despesas');
     
+    marcadores.sort = { descricao: 'asc' };
+    
     return {
         getDB: function() {
             return db;

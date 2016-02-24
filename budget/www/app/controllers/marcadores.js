@@ -4,11 +4,17 @@ angular.module('budget.marcadores', [])
     
     $scope.marcadores = daoFactory.getMarcadores();
     
-    $ionicModal.fromTemplateUrl('./app/views/marcadores/cadastro.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.modal = modal;
+    $scope.$on('$ionicView.enter', function() {
+        $ionicModal.fromTemplateUrl('./app/views/marcadores/cadastro.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+    });
+        
+    $scope.$on('$ionicView.leave', function() {
+        $scope.modal.remove();
     });
     
     $scope.closeForm = function() {
@@ -48,6 +54,7 @@ angular.module('budget.marcadores', [])
     $scope.saveItem = function(item) {
         $scope.marcadores.save(item);
         $scope.marcadores.post();
+        $scope.marcadores.refresh();
         $scope.modal.hide();
     }
 });

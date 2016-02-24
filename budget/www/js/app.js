@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('budget', [
-    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.dao', 'budget.directives', 'budget.dashboard', 'budget.marcadores',
-    'budget.despesas'
+    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.dao', 'budget.directives', 'budget.sidemenu', 'budget.dashboard',
+    'budget.marcadores', 'budget.despesas', 'budget.despmarc'
 ])
 
 .run(function($ionicPlatform, $rootScope) {
@@ -39,7 +39,8 @@ angular.module('budget', [
     .state('app', {
         url: '/app',
         abstract: true,
-        templateUrl: './app/templates/sidemenu.html'
+        templateUrl: './app/templates/sidemenu.html',
+        controller: 'SideMenuCtrl'
     })
 
     .state('app.dashboard', {
@@ -70,17 +71,17 @@ angular.module('budget', [
                 controller: 'DespesasCtrl'
             }
         }
-    });
+    })
 
-//    .state('app.single', {
-//        url: '/playlists/:playlistId',
-//        views: {
-//            'menuContent': {
-//                templateUrl: 'templates/playlist.html',
-//                controller: 'PlaylistCtrl'
-//            }
-//        }
-//    });
+    .state('app.despmarcador', {
+        url: '/despmarcador/:marcadorId',
+        views: {
+            'menuContent': {
+                templateUrl: './app/views/despesas/marcador.html',
+                controller: 'DespMarcadorCtrl'
+            }
+        }
+    });
     
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/dashboard');

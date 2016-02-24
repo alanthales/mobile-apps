@@ -1,0 +1,25 @@
+<ion-view view-title="{{marcador}}">
+    <ion-nav-bar class="bar-calm">
+        <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="list">
+            <div class="item" ng-if="!despesas.length" style="text-align:center">
+                <i class="icon ion-happy-outline"></i>
+                Nada com este marcador
+            </div>
+            <div ng-repeat="item in despesas">
+                <div class="item item-divider" ng-if="$index === 0 || item.mes !== despesas[$index-1].mes">
+                    {{$root.listaMes[item.mes]}}
+                </div>
+                <div class="item">
+                    {{getDate(item) | date:'dd/MM/yyyy'}}
+                    <span class="item-right">{{item.valor | currency:'R$'}}</span>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

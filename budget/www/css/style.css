@@ -8,6 +8,19 @@
     background-color: rgba(0,0,0,0);
 }
 
+.my-menu .sub-item {
+    background-color: rgba(255,255,255,0.04);
+    padding: 5px 0 8px 45px;
+    font-size: 1em;
+}
+
+.my-menu .sub-item:before {
+    content: "-";
+    position: relative;
+    top: 4px;
+    font-size: 200%;
+}
+
 .my-menu .item {
     border: none;
 }

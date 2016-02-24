@@ -75,10 +75,10 @@ angular.module('ojs.directives', [])
             });
             
             parentScope[attrs.name] = {
-                openMenu: function(item, e) {
+                openMenu: function(item, e, vibrate) {
                     this.selectedItem = item;
                     
-                    if (window.navigator.vibrate) {
+                    if (vibrate && window.navigator.vibrate) {
                         window.navigator.vibrate(200);
                     }
                     
