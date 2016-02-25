@@ -87,6 +87,14 @@
     font-weight: bold;
 }
 
+.justify {
+    text-align: justify;
+}
+
+.item-text-wrap p {
+    margin-bottom: 10px;
+}
+
 .item-right {
     float: right;
     font-size: 14px;
