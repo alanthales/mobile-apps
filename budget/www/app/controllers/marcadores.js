@@ -7,7 +7,9 @@ angular.module('budget.marcadores', [])
     $scope.$on('$ionicView.enter', function() {
         $ionicModal.fromTemplateUrl('./app/views/marcadores/cadastro.html', {
             scope: $scope,
-            animation: 'slide-in-up'
+            animation: 'slide-in-up',
+            backdropClickToClose: false,
+            hardwareBackButtonClose: false
         }).then(function(modal) {
             $scope.modal = modal;
         });

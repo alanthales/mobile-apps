@@ -4,14 +4,18 @@
     color: #fff;
 }
 
-.my-menu .item, .my-menu .item-content, .my-menu .item-complex {
+.my-menu .item:not(.sub-item), .my-menu .item-content, .my-menu .item-complex {
     background-color: rgba(0,0,0,0);
 }
 
+.my-menu .item {
+    border: none;
+}
+
 .my-menu .sub-item {
-    background-color: rgba(255,255,255,0.04);
-    padding: 5px 0 8px 45px;
-    font-size: 1em;
+    background-color: rgba(255,255,255,0.1);
+    padding: 5px 0 8px 15%;
+    font-size: 95%;
 }
 
 .my-menu .sub-item:before {
@@ -21,15 +25,11 @@
     font-size: 200%;
 }
 
-.my-menu .item {
-    border: none;
-}
-
-.my-menu .padding.list .item {
+.my-menu .list .item {
     border-bottom: 1px solid #333;
 }
 
-.my-menu .padding.list .item:first-child {
+.my-menu .list .item:first-child {
     border-top: 1px solid #333;
 }
 

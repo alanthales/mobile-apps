@@ -6,14 +6,17 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="list">
-            <div class="item" ng-if="!despesas.length" style="text-align:center">
-                <i class="icon ion-happy-outline"></i>
-                Nada com este marcador
+        <div class="list card" ng-if="!despesas.length">
+            <div class="item item-icon-left" style="text-align:center">
+                <i class="icon ion-alert-circled"></i>
+                Nenhuma despesa
             </div>
-            <div ng-repeat="item in despesas">
+        </div>
+        <div class="list">
+            <div ng-repeat="item in despesas | limitTo:limitData">
                 <div class="item item-divider" ng-if="$index === 0 || item.mes !== despesas[$index-1].mes">
                     {{$root.listaMes[item.mes]}}
+                    <span class="item-right">{{getTotal(item.ano, item.mes) | currency:'R$'}}</span>
                 </div>
                 <div class="item">
                     {{getDate(item) | date:'dd/MM/yyyy'}}
@@ -21,5 +24,6 @@
                 </div>
             </div>
         </div>
+        <ion-infinite-scroll ng-if="despesas.length > limitData" on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>
