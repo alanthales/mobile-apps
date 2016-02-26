@@ -1,0 +1,59 @@
+<ion-view view-title="Finances Together">
+    <ion-slide-box class="calm-bg" show-pager="false" ng-init="disableSlide()" active-slide="actualSlide">
+        <ion-slide>
+            <h3>Bem vindo ao Finances Together!</h3>
+            <div id="logo">
+                <i class="icon icon-xlarge ion-arrow-graph-up-right"></i>
+            </div>
+            <p>
+                Para ter sucesso no casamento e nos negócios, a vida financeira tem que estar em equilíbrio.
+            </p>
+            <div class="bottom">
+                <button type="button" class="button button-icon button-calm" ng-click="slideTo(1)">
+                    Próximo <i class="icon ion-arrow-right-a"></i>
+                </button>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <h3>Juntos somos mais fortes</h3>
+            <div id="logo">
+                <i class="icon icon-xlarge ion-android-share-alt"></i>
+            </div>
+            <p>
+                O Finances Together é uma maneira inteligente para economizar e enriquecer em conjunto.
+            </p>
+            <p>
+                Vamos começar?
+            </p>
+            <div class="bottom">
+                <button type="button" class="button button-icon button-calm" ng-click="slideTo(2)">
+                    Próximo <i class="icon ion-arrow-right-a"></i>
+                </button>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <h3>Fale sobre você...</h3>
+            <div id="logo">
+                <i class="icon icon-xlarge ion-help-circled"></i>
+            </div>
+            <form name="cadForm" novalidate ng-submit="validate(cadForm)">
+                <div class="list padding-top">
+                    <label class="item item-input" ng-class="{'has-errors': cadForm.nome.$dirty && cadForm.nome.$invalid, 'no-errors': cadForm.nome.$valid}">
+                        <input type="text" name="nome" placeholder="Nome" ng-model="$root.user.nome" required>
+                    </label>
+                    <label class="item item-input" ng-class="{'has-errors': cadForm.fone.$dirty && cadForm.fone.$invalid, 'no-errors': cadForm.fone.$valid}">
+                        <input type="tel" name="fone" placeholder="Telefone" ng-model="$root.user.fone" required>
+                    </label>
+                    <label class="item item-input" ng-class="{'has-errors': cadForm.email.$dirty && cadForm.email.$invalid, 'no-errors': cadForm.email.$valid}">
+                        <input type="email" name="email" placeholder="E-mail" ng-model="$root.user.email" required>
+                    </label>
+                </div>
+                <div class="bottom">
+                    <button type="submit" class="button button-icon button-calm">
+                        <i class="icon ion-checkmark"></i> Concluir
+                    </button>
+                </div>
+            </form>
+        </ion-slide>
+    </ion-slide-box>
+</ion-view>

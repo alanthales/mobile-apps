@@ -5,17 +5,13 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('budget', [
-    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.dao', 'budget.directives', 'budget.sidemenu', 'budget.dashboard',
-    'budget.marcadores', 'budget.despesas', 'budget.despmarc'
+    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.dao', 'budget.directives', 'budget.bemvindo', 'budget.sidemenu',
+    'budget.dashboard', 'budget.marcadores', 'budget.despesas', 'budget.despmarc'
 ])
 
 .run(function($ionicPlatform, $rootScope) {
-    $rootScope.user = {
-        id: (new Date()).getTime(),
-        nome: 'Alan Thales',
-        email: 'alanthales@gmail.com',
-        fone: '35991845570'
-    };
+    var _user = window.localStorage.getItem("usuario");
+    $rootScope.user = _user ? JSON.parse( _user ) : {};
     
     $rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     
@@ -41,6 +37,12 @@ angular.module('budget', [
         abstract: true,
         templateUrl: './app/templates/sidemenu.html',
         controller: 'SideMenuCtrl'
+    })
+
+    .state('bemvindo', {
+        url: '/',
+        templateUrl: './app/views/bemvindo.html',
+        controller: 'BemVindoCtrl'
     })
 
     .state('app.dashboard', {
@@ -82,7 +84,6 @@ angular.module('budget', [
             }
         }
     });
-    
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/dashboard');
+
+    $urlRouterProvider.otherwise('/');
 });
