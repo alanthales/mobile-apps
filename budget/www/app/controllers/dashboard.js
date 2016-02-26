@@ -1,5 +1,7 @@
 angular.module('budget.dashboard', [])
-.controller('DashboardCtrl', function($scope, daoFactory) {
+.controller('DashboardCtrl', function($scope, daoFactory, $ionicHistory) {
+    $ionicHistory.clearHistory();
+    
     $scope.dtHoje = new Date();
     $scope.dtAnterior = new Date();
     

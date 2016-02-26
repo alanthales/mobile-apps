@@ -1,4 +1,5 @@
 // Ionic Starter App
+var _user = window.localStorage.getItem("usuario");
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -10,7 +11,6 @@ angular.module('budget', [
 ])
 
 .run(function($ionicPlatform, $rootScope) {
-    var _user = window.localStorage.getItem("usuario");
     $rootScope.user = _user ? JSON.parse( _user ) : {};
     
     $rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -85,5 +85,9 @@ angular.module('budget', [
         }
     });
 
-    $urlRouterProvider.otherwise('/');
+    if (_user) {
+        $urlRouterProvider.otherwise('/app/dashboard');
+    } else {
+        $urlRouterProvider.otherwise('/');
+    }
 });

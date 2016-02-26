@@ -39,10 +39,10 @@
             <form name="cadForm" novalidate ng-submit="validate(cadForm)">
                 <div class="list padding-top">
                     <label class="item item-input" ng-class="{'has-errors': cadForm.nome.$dirty && cadForm.nome.$invalid, 'no-errors': cadForm.nome.$valid}">
-                        <input type="text" name="nome" placeholder="Nome" ng-model="$root.user.nome" required>
+                        <input type="text" name="nome" placeholder="Nome" ng-model="$root.user.nome" required minlength="3">
                     </label>
                     <label class="item item-input" ng-class="{'has-errors': cadForm.fone.$dirty && cadForm.fone.$invalid, 'no-errors': cadForm.fone.$valid}">
-                        <input type="tel" name="fone" placeholder="Telefone" ng-model="$root.user.fone" required>
+                        <input type="tel" name="fone" placeholder="Telefone" ng-model="$root.user.fone" required minlength="9">
                     </label>
                     <label class="item item-input" ng-class="{'has-errors': cadForm.email.$dirty && cadForm.email.$invalid, 'no-errors': cadForm.email.$valid}">
                         <input type="email" name="email" placeholder="E-mail" ng-model="$root.user.email" required>

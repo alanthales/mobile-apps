@@ -16,7 +16,7 @@
             <div ng-repeat="item in despesas | limitTo:limitData">
                 <div class="item item-divider" ng-if="$index === 0 || item.mes !== despesas[$index-1].mes">
                     {{$root.listaMes[item.mes]}}
-                    <span class="item-right">{{getTotal(item.ano, item.mes) | currency:'R$'}}</span>
+                    <span class="item-right">={{getTotal(item.ano, item.mes) | currency:'R$'}}</span>
                 </div>
                 <div class="item">
                     {{getDate(item) | date:'dd/MM/yyyy'}}

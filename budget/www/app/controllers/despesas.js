@@ -93,6 +93,7 @@ angular.module('budget.despesas', [])
     }
 
     $scope.saveItem = function(item) {
+        item.marcadores.sort();
         $scope.despesas.save(item);
         $scope.despesas.post();
         $scope.modal.hide();

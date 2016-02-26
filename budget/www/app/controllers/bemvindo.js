@@ -1,9 +1,5 @@
 angular.module('budget.bemvindo', [])
 .controller('BemVindoCtrl', function($scope, $rootScope, $ionicSlideBoxDelegate, $state) {
-    if ($rootScope.user) {
-        $state.go('app.dashboard');
-    }
-    
     $scope.actualSlide = 0;
     
     $scope.disableSlide = function() {

@@ -3,7 +3,7 @@
         <div class="list">
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Descrição</span>
-                <input type="text" placeholder="Água, Luz, etc." ng-model="selection.descricao" required>
+                <input type="text" placeholder="Água, Luz, etc." ng-model="selection.descricao" ng-class="{'has-errors': cadForm.nome.$dirty && cadForm.nome.$invalid, 'no-errors': cadForm.nome.$valid}" required>
             </label>
         </div>
     </form-base>

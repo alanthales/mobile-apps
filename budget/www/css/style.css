@@ -19,9 +19,9 @@
 }
 
 .my-menu .sub-item:before {
-    content: "-";
+    content: "°";
     position: relative;
-    top: 4px;
+    top: 10px;
     font-size: 200%;
 }
 
@@ -96,10 +96,6 @@
 
 .bg-gray {
     background-color: #999;
-}
-
-.bg-white {
-    background-color: #fff;
 }
 
 .bold {
