@@ -6,11 +6,11 @@ angular.module('budget.sidemenu', [])
     $scope.openSub = function(evt, key) {
         $scope.selections[$scope.selections.length] = {
             key: key, 
-            title: evt.currentTarget.getElementsByClassName('title')[0].textContent
+            title: 'Voltar'
         };
     }
+    
     $scope.backToBefore = function() {
         $scope.selections.pop();
-        $scope.submenu = $scope.selections.length > 1;
     }    
 });

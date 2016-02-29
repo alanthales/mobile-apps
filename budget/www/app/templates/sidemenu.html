@@ -17,8 +17,8 @@
                     <i class="icon icon-small ion-chevron-left"></i>
                     {{selections[selections.length-1].title}}
                 </a>              
-                <div ng-switch on="selections[selections.length-1].key">  
-                    <div ng-switch-default>     
+                <div class="animate-switch-container" ng-switch on="selections[selections.length-1].key">  
+                    <div class="animate-switch" ng-switch-default>     
                         <a class="item item-icon-left" menu-close href="#/app/dashboard">
                             <i class="icon icon-small ion-grid"></i>
                             Dashboard
@@ -31,16 +31,15 @@
                             <i class="icon icon-small ion-cash"></i>
                             Despesas
                         </a>
+                        <a class="item sub-item" ng-click="openSub($event, 'rel');">
+                            Agrupadas
+                        </a>                        
                         <a class="item item-icon-left" menu-close href="#/app/config">
                             <i class="icon icon-small ion-gear-b"></i>
                             Configuração
                         </a>
-                        <a class="item item-icon-right" ng-click="openSub($event, 'rel');">
-                            <i class="icon icon-small ion-chevron-right"></i>
-                            <span class="title">Resultados</span>
-                        </a>                        
                     </div>
-                    <div ng-switch-when="rel">
+                    <div class="animate-switch" ng-switch-when="rel">
                         <a class="item item-icon-left" ng-repeat="item in marcadores.data" menu-close href="#/app/despmarcador/{{item.id}}">
                             <i class="icon icon-small ion-android-radio-button-on"></i>
                             {{item.descricao}}
