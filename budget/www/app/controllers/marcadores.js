@@ -54,6 +54,9 @@ angular.module('budget.marcadores', [])
     }
     
     $scope.saveItem = function(item) {
+        if (!$scope.formbase.$valid) {
+            return;
+        }
         $scope.marcadores.save(item);
         $scope.marcadores.post();
         $scope.marcadores.refresh();

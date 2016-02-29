@@ -13,7 +13,7 @@
                 </div>
             </div>    
             <div class="list">            
-                <a class="item item-icon-left" ng-if="selections.length > 0" ng-click="backToBefore()"> 
+                <a class="item item-icon-left" ng-if="selections.length" ng-click="backToBefore()"> 
                     <i class="icon icon-small ion-chevron-left"></i>
                     {{selections[selections.length-1].title}}
                 </a>              
@@ -31,7 +31,7 @@
                             <i class="icon icon-small ion-cash"></i>
                             Despesas
                         </a>
-                        <a class="item sub-item" ng-click="openSub($event, 'rel');">
+                        <a class="item sub-item" ng-if="marcadores.data.length" ng-click="openSub($event, 'rel');">
                             Agrupadas
                         </a>                        
                         <a class="item item-icon-left" menu-close href="#/app/config">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="animate-switch" ng-switch-when="rel">
                         <a class="item item-icon-left" ng-repeat="item in marcadores.data" menu-close href="#/app/despmarcador/{{item.id}}">
-                            <i class="icon icon-small ion-android-radio-button-on"></i>
+                            <i class="icon icon-small ion-pricetag"></i>
                             {{item.descricao}}
                         </a>
                     </div>
