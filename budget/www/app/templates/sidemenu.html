@@ -11,27 +11,42 @@
                     <h2>{{$root.user.nome}}</h2>
                     <p>Bem vindo</p>
                 </div>
-            </div>
-            <div class="list">
-                <a class="item item-icon-left" menu-close href="#/app/dashboard">
-                    <i class="icon icon-small ion-grid"></i>
-                    Dashboard
-                </a>
-                <a class="item item-icon-left" menu-close href="#/app/marcadores">
-                    <i class="icon icon-small ion-pricetags"></i>
-                    Marcadores
-                </a>
-                <a class="item item-icon-left" menu-close href="#/app/despesas">
-                    <i class="icon icon-small ion-cash"></i>
-                    Despesas
-                </a>
-                <a class="item sub-item item-icon-left" ng-repeat="item in marcadores.data" menu-close href="#/app/despmarcador/{{item.id}}">
-                    {{item.descricao}}
-                </a>
-                <a class="item item-icon-left" menu-close href="#/app/config">
-                    <i class="icon icon-small ion-gear-b"></i>
-                    Configuração
-                </a>
+            </div>    
+            <div class="list">            
+                <a class="item item-icon-left" ng-if="selections.length > 0" ng-click="backToBefore()"> 
+                    <i class="icon icon-small ion-chevron-left"></i>
+                    {{selections[selections.length-1].title}}
+                </a>              
+                <div ng-switch on="selections[selections.length-1].key">  
+                    <div ng-switch-default>     
+                        <a class="item item-icon-left" menu-close href="#/app/dashboard">
+                            <i class="icon icon-small ion-grid"></i>
+                            Dashboard
+                        </a>
+                        <a class="item item-icon-left" menu-close href="#/app/marcadores">
+                            <i class="icon icon-small ion-pricetags"></i>
+                            Marcadores
+                        </a>
+                        <a class="item item-icon-left" menu-close href="#/app/despesas">
+                            <i class="icon icon-small ion-cash"></i>
+                            Despesas
+                        </a>
+                        <a class="item item-icon-left" menu-close href="#/app/config">
+                            <i class="icon icon-small ion-gear-b"></i>
+                            Configuração
+                        </a>
+                        <a class="item item-icon-right" ng-click="openSub($event, 'rel');">
+                            <i class="icon icon-small ion-chevron-right"></i>
+                            <span class="title">Resultados</span>
+                        </a>                        
+                    </div>
+                    <div ng-switch-when="rel">
+                        <a class="item item-icon-left" ng-repeat="item in marcadores.data" menu-close href="#/app/despmarcador/{{item.id}}">
+                            <i class="icon icon-small ion-android-radio-button-on"></i>
+                            {{item.descricao}}
+                        </a>
+                    </div>
+                </div>
             </div>
         </ion-content>
     </ion-side-menu>
