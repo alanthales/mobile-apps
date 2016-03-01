@@ -20,7 +20,7 @@
                 <div class="animate-switch-container" ng-switch on="selections[selections.length-1].key">  
                     <div class="animate-switch" ng-switch-default>     
                         <a class="item item-icon-left" menu-close href="#/app/dashboard">
-                            <i class="icon icon-small ion-grid"></i>
+                            <i class="icon icon-small ion-clipboard"></i>
                             Dashboard
                         </a>
                         <a class="item item-icon-left" menu-close href="#/app/marcadores">
@@ -28,11 +28,12 @@
                             Marcadores
                         </a>
                         <a class="item item-icon-left" menu-close href="#/app/despesas">
-                            <i class="icon icon-small ion-cash"></i>
-                            Despesas
+                            <i class="icon icon-small ion-edit"></i>
+                            Lançamentos
                         </a>
-                        <a class="item sub-item" ng-if="marcadores.data.length" ng-click="openSub($event, 'rel');">
-                            Agrupadas
+                        <a class="item item-icon-left" ng-if="marcadores.data.length" ng-click="openSub($event, 'rel')">
+                            <i class="icon icon-small ion-pound"></i>
+                            Despesas
                         </a>                        
                         <a class="item item-icon-left" menu-close href="#/app/config">
                             <i class="icon icon-small ion-gear-b"></i>
