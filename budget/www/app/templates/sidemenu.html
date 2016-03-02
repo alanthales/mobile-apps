@@ -41,7 +41,7 @@
                         </a>
                     </div>
                     <div class="animate-switch" ng-switch-when="rel">
-                        <a class="item item-icon-left" ng-repeat="item in marcadores.data" menu-close href="#/app/despmarcador/{{item.id}}">
+                        <a class="item item-icon-left" ng-repeat="item in marcadores.data track by $index" menu-close href="#/app/despmarcador/{{item.id}}">
                             <i class="icon icon-small ion-pricetag"></i>
                             {{item.descricao}}
                         </a>

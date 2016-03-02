@@ -6,11 +6,13 @@ var _user = window.localStorage.getItem('usuario');
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('budget', [
-    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.dao', 'budget.directives', 'budget.bemvindo', 'budget.sidemenu',
-    'budget.dashboard', 'budget.marcadores', 'budget.despesas', 'budget.despmarc'
+    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.dao', 'budget.simpleDB', 'budget.directives', 'budget.bemvindo',
+    'budget.sidemenu', 'budget.dashboard', 'budget.marcadores', 'budget.despesas', 'budget.despmarc'
 ])
 
 .run(function($ionicPlatform, $rootScope) {
+    AWS.config.update({accessKeyId: 'akid', secretAccessKey: 'secret'});
+    
     $rootScope.user = _user ? JSON.parse( _user ) : {};
     
     $rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
