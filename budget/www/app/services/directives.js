@@ -15,4 +15,14 @@ angular.module('budget.directives', ['ionic'])
             scope.$parent.$parent.$parent[attrs.name] = scope[attrs.name];
         }
     }
+})
+.directive('backButton', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            title: '@',
+            goBack: '&'
+        },
+        template: '<a class="item item-icon-left" ng-click="goBack()"><i class="icon icon-small ion-chevron-left"></i>{{title}}</a>'
+    }
 });

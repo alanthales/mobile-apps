@@ -12,13 +12,9 @@
                     <p>Bem vindo</p>
                 </div>
             </div>    
-            <div class="list">            
-                <a class="item item-icon-left" ng-if="selections.length" ng-click="backToBefore()"> 
-                    <i class="icon icon-small ion-chevron-left"></i>
-                    {{selections[selections.length-1].title}}
-                </a>              
-                <div class="animate-switch-container" ng-switch on="selections[selections.length-1].key">  
-                    <div class="animate-switch" ng-switch-default>     
+            <div class="list">  
+                <div class="slide-right-left" ng-class="{reverse: ahead}" ng-switch="selections[selections.length-1]">                       
+                    <div ng-switch-default>     
                         <a class="item item-icon-left" menu-close href="#/app/dashboard">
                             <i class="icon icon-small ion-clipboard"></i>
                             Dashboard
@@ -31,8 +27,9 @@
                             <i class="icon icon-small ion-edit"></i>
                             Lançamentos
                         </a>
-                        <a class="item item-icon-left" ng-if="marcadores.data.length" ng-click="openSub($event, 'rel')">
-                            <i class="icon icon-small ion-pound"></i>
+                        <a class="item item-icon-left item-icon-right" ng-if="marcadores.data.length" ng-click="openSub('rel')">
+                            <i class="icon icon-small ion-ios-calculator"></i>
+                            <i class="icon icon-small ion-chevron-right"></i>
                             Despesas
                         </a>                        
                         <a class="item item-icon-left" menu-close href="#/app/config">
@@ -40,12 +37,13 @@
                             Configuração
                         </a>
                     </div>
-                    <div class="animate-switch" ng-switch-when="rel">
+                    <div ng-switch-when="rel">
+                        <back-button title="Voltar" go-back="goBack()"></back-button>
                         <a class="item item-icon-left" ng-repeat="item in marcadores.data track by $index" menu-close href="#/app/despmarcador/{{item.id}}">
                             <i class="icon icon-small ion-pricetag"></i>
                             {{item.descricao}}
                         </a>
-                    </div>
+                    </div>            
                 </div>
             </div>
         </ion-content>
