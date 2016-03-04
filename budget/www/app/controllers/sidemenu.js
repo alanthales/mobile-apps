@@ -3,14 +3,13 @@ angular.module('budget.sidemenu', [])
     $scope.marcadores = daoFactory.getMarcadores();
     $scope.selections = [];
     
-    $scope.openSub = function(evt, key) {
-        $scope.selections[$scope.selections.length] = {
-            key: key, 
-            title: 'Voltar'
-        };
+    $scope.openSub = function(key) {
+        $scope.ahead = true;
+        $scope.selections[$scope.selections.length] = key;
     }
     
-    $scope.backToBefore = function() {
+    $scope.goBack = function() {
         $scope.selections.pop();
+        $scope.ahead = false;
     }    
 });

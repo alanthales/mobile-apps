@@ -161,25 +161,34 @@ label.item p i.icon {
     border-bottom: 3px solid #B83E2C !important;
 }
 
-.animate-switch-container {
+.slide-right-left>.ng-animate {
+	-webkit-transition:all ease-in-out 250ms;
+	-moz-transition:all ease-in-out 250ms;
+	transition:all ease-in-out 250ms;
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0
 }
 
-.animate-switch {
-    position: absolute;
-    width: 100%;
+.slide-right-left.reverse>.ng-enter,
+.slide-right-left>.ng-leave.ng-leave-active {
+	-webkit-transform:translate3d(100%,0,0);
+	-moz-transform:translate3d(100%,0,0);
+	transform:translate3d(100%,0,0)
 }
 
-.animate-switch.ng-animate {
-    -webkit-transition: 300ms cubic-bezier(0.000, 0.000, 0.580, 1.000) all;
-    transition: 300ms cubic-bezier(0.000, 0.000, 0.580, 1.000) all;
+.slide-right-left.reverse>.ng-enter.ng-enter-active,
+.slide-right-left>.ng-enter.ng-enter-active {
+	-webkit-transform:translate3d(0,0,0);
+	-moz-transform:translate3d(0,0,0);
+	transform:translate3d(0,0,0)
 }
 
-.animate-switch.ng-leave.ng-leave-active,
-.animate-switch.ng-enter {
-    left: -100%;
-}
-
-.animate-switch.ng-leave,
-.animate-switch.ng-enter.ng-enter-active {
-    left: 0;
+.slide-right-left.reverse>.ng-leave.ng-leave-active,
+.slide-right-left>.ng-enter {
+	-webkit-transform:translate3d(-100%,0,0);
+	-moz-transform:translate3d(-100%,0,0);
+	transform:translate3d(-100%,0,0)
 }
