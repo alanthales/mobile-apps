@@ -1,7 +1,13 @@
 angular.module('budget.syncSDB', ['ionic'])
 
 .factory('SyncSDB', function() {
-    var _db = new AWS.SimpleDB({ region: 'sa-east-1' });
+    var key = atob('QUtJQUlPM0NFQkdNQkNRNkVRV0E='),
+        secret = atob('U1BYVlFWSkc0aEttMno2OUtrTWw4UnNtSUMxV2pyVVkxZmh3MmprTw=='),
+        _db;
+
+    AWS.config.update({ accessKeyId: key, secretAccessKey: secret });
+    
+    _db = new AWS.SimpleDB({ region: 'sa-east-1' });
     
     var _parseItem = function(item) {
         var result = { id: item.Name };
@@ -22,11 +28,13 @@ angular.module('budget.syncSDB', ['ionic'])
             items = [];
 
         _db.select(params, function(err, data) {
-            console.log('select', data);
             if (err) {
-                throw err.stack;
+                console.log( JSON.stringify(err) );
+                throw err.message;
                 return;
             }
+            
+            console.log( JSON.stringify(data) );
             
             if (!data.Items) {
                 callback(items);
@@ -43,7 +51,7 @@ angular.module('budget.syncSDB', ['ionic'])
     
     var _putItems = function(table, items, callback) {
         var params = { DomainName: _getDomain(table), Items: [] },
-            obj, prop;
+            obj, value, prop;
         
         items.forEach(function(item) {
             obj = { Attributes: [], Name: item.id.toString() };
@@ -51,8 +59,9 @@ angular.module('budget.syncSDB', ['ionic'])
                 if (prop === 'id') {
                     continue;
                 }
+                value = item[prop] ? item[prop].toString() : '';
                 obj.Attributes.push({
-                    Name: prop, Value: item[prop], Replace: true
+                    Name: prop, Value: value, Replace: true
                 });
             }
             params.Items.push(obj);
@@ -60,10 +69,10 @@ angular.module('budget.syncSDB', ['ionic'])
         
         _db.batchPutAttributes(params, function(err, data) {
             if (err) {
-                throw err.stack;
+                console.log( JSON.stringify(err) );
+                throw err.message;
                 return;
             }
-            console.log('batchPutAttributes', data);
             callback();
         });
     };
@@ -78,13 +87,12 @@ angular.module('budget.syncSDB', ['ionic'])
         var self = this,
             toSave = toInsert.concat(toUpdate),
             total = toSave.length + toDelete.length,
-            cb = callback && typeof callback === "function" ? callback : function() {},
             i;
 
         function progress() {
             total--;
             if (total === 0) {
-                cb();
+                callback();
             }
         }
 
@@ -94,6 +102,7 @@ angular.module('budget.syncSDB', ['ionic'])
 
         for (i = 0; i < toDelete.length; i++) {
 //            self.remove(key, toDelete[i], progress);
+            progress();
         }
     }
     

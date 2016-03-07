@@ -6,16 +6,32 @@ var _user = window.localStorage.getItem('usuario');
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('budget', [
-    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.syncSDB', 'budget.dao', 'budget.directives', 'budget.bemvindo',
-    'budget.sidemenu', 'budget.dashboard', 'budget.marcadores', 'budget.despesas', 'budget.despmarc'
+    'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.directives', 'budget.syncSDB', 'budget.dao',
+    'budget.bemvindo', 'budget.sidemenu', 'budget.dashboard', 'budget.marcadores', 'budget.despesas',
+    'budget.despmarc'
 ])
 
-.run(function($ionicPlatform, $rootScope) {
-    AWS.config.update({accessKeyId: 'AKIAIO3CEBGMBCQ6EQWA', secretAccessKey: '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'});
+.run(function($ionicPlatform, $rootScope, $interval, daoFactory) {
+    var timer;
     
     $rootScope.user = _user ? JSON.parse( _user ) : {};
-    
     $rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+    function syncData() {
+        daoFactory.getMarcadores().sync();
+        daoFactory.getDespesas().sync();
+    };
+    
+    function onConnect() {
+        timer = $interval(syncData, 30000);
+    };
+    
+    function onDisconnect() {
+        if (timer) {
+            $interval.cancel(timer);
+            timer = null;
+        }
+    };
     
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -27,6 +43,20 @@ angular.module('budget', [
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
+        }
+        if (navigator.connection) {
+            var states = {}
+            
+            states[Connection.WIFI] = 'Wifi connection';
+            states[Connection.CELL_3G] = '3G connection';
+            states[Connection.CELL_4G] = '4G connection';
+            
+            document.addEventListener('online', onConnect, false);
+            document.addEventListener('offline', onDisconnect, false);
+            
+            if (navigator.connection.type in states) {
+                onConnect();
+            }
         }
     });
 })

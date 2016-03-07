@@ -3,6 +3,7 @@ angular.module('budget.marcadores', [])
     $scope.selection = {};
     
     $scope.marcadores = daoFactory.getMarcadores();
+    $scope.marcadores.sync();
     
     $scope.$on('$ionicView.enter', function() {
         $ionicModal.fromTemplateUrl('./app/views/marcadores/cadastro.html', {

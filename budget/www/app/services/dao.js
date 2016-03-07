@@ -1,4 +1,4 @@
-angular.module('budget.dao', ['ionic'])
+angular.module('budget.dao', ['ionic', 'budget.syncSDB'])
 
 .factory('daoFactory', function(SyncSDB) {
     var db = new DbFactory('budget', DbProxies.LOCALSTORAGE, new SyncSDB()),
