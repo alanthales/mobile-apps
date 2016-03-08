@@ -49,7 +49,6 @@ angular.module('budget.despesas', [])
     });
     
     $scope.closeForm = function() {
-        console.log($scope.modal);
         $scope.modal.hide();
     }
 

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ojs.budget" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>Finances Together</name>
-  <description>
-      An Ionic Framework and Cordova project.
+  <description>
+      An Ionic Framework and Cordova project.
   </description>
-  <author email="alanthales@gmail.com" href="http://github.com/alanthales/">
-      Alan Thales Carvalho
+  <author email="alanthales@gmail.com" href="http://github.com/alanthales/">
+      Alan Thales Carvalho
   </author>
   <content src="index.html"/>
+  <access origin="*://sdb.*.amazonaws.com/*" />
   <allow-navigation href="*://*.paypal.com/*"/>
   <allow-intent href="*://*.paypal.com/*"/>
   <preference name="webviewbounce" value="false"/>
