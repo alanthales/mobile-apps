@@ -162,33 +162,107 @@ label.item p i.icon {
 }
 
 .slide-right-left>.ng-animate {
-	-webkit-transition:all ease-in-out 250ms;
-	-moz-transition:all ease-in-out 250ms;
-	transition:all ease-in-out 250ms;
+    -webkit-animation-duration: 250ms;
+    animation-duration: 250ms;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;     
 	position:absolute;
 	top:0;
 	right:0;
 	bottom:0;
-	left:0
+	left:0;
 }
 
-.slide-right-left.reverse>.ng-enter,
-.slide-right-left>.ng-leave.ng-leave-active {
-	-webkit-transform:translate3d(100%,0,0);
-	-moz-transform:translate3d(100%,0,0);
-	transform:translate3d(100%,0,0)
+.slide-right-left>.ng-leave {
+    -webkit-animation-name: leftRightLeave;
+    animation-name: leftRightLeave;
 }
 
-.slide-right-left.reverse>.ng-enter.ng-enter-active,
-.slide-right-left>.ng-enter.ng-enter-active {
-	-webkit-transform:translate3d(0,0,0);
-	-moz-transform:translate3d(0,0,0);
-	transform:translate3d(0,0,0)
+@-webkit-keyframes leftRightLeave {
+    from {
+        -webkit-transform: translate3d(0,0,0);
+    }
+    to {
+        -webkit-transform: translate3d(100%,0,0);
+    }
 }
 
-.slide-right-left.reverse>.ng-leave.ng-leave-active,
+@keyframes leftRightLeave {
+    from {
+        transform: translate3d(0,0,0);
+    }
+    to {
+        transform: translate3d(100%,0,0);
+    }
+}
+
+.slide-right-left.reverse>.ng-leave {
+    -webkit-animation-name: RightleftLeave;
+    animation-name: RightleftLeave;
+}
+
+@-webkit-keyframes RightleftLeave {
+    from {
+        -webkit-transform: translate3d(0,0,0);
+    }
+    to {
+        -webkit-transform: translate3d(-100%,0,0);
+    }
+}
+
+@keyframes RightleftLeave {
+    from {
+        transform: translate3d(0,0,0);
+    }
+    to {
+        transform: translate3d(-100%,0,0);
+    }
+}
+
 .slide-right-left>.ng-enter {
-	-webkit-transform:translate3d(-100%,0,0);
-	-moz-transform:translate3d(-100%,0,0);
-	transform:translate3d(-100%,0,0)
+    -webkit-animation-name: leftRightEnter;
+    animation-name: leftRightEnter;
+}
+
+@-webkit-keyframes leftRightEnter {
+    from {
+        -webkit-transform: translate3d(-100%,0,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+
+@keyframes leftRightEnter {
+    from {
+        transform: translate3d(-100%,0,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
+}
+
+.slide-right-left.reverse>.ng-enter {
+    -webkit-animation-name: RightleftEnter;
+    animation-name: RightleftEnter;
+}
+
+@-webkit-keyframes RightleftEnter {
+    from {
+        -webkit-transform: translate3d(100%,0,0);
+    }
+    to {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+
+@keyframes RightleftEnter {
+    from {
+        transform: translate3d(100%,0,0);
+    }
+    to {
+        transform: translate3d(0,0,0);
+    }
 }
