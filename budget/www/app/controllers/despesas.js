@@ -58,7 +58,8 @@ angular.module('budget.despesas', [])
             dia: hoje.getDate(),
             mes: hoje.getMonth(),
             ano: hoje.getFullYear(),
-            marcadores: []
+            marcadores: [],
+            usuario: $rootScope.user.id
         };
         $scope.datepickerObject.inputDate = hoje;
         $scope.modal.show();
@@ -92,6 +93,9 @@ angular.module('budget.despesas', [])
     }
 
     $scope.saveItem = function(item) {
+        if (!$scope.formbase.$valid) {
+            return;
+        }
         item.marcadores.sort();
         $scope.despesas.save(item);
         $scope.despesas.post();

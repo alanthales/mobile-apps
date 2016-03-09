@@ -148,7 +148,6 @@ angular.module('budget.syncSDB', ['ionic'])
             i;
 
         function error(err) {
-            console.log( JSON.stringify(err) );
             throw err.message;
         };
         
@@ -160,13 +159,13 @@ angular.module('budget.syncSDB', ['ionic'])
         }
 
         if (toSave.length > 0) {
-            _putItems(table, toSave, progress);
+            _putItems(table, toSave, progress, error);
         } else {
             progress();
         }
 
         if (toDelete.length > 0) {
-            _deleteItems(table, toDelete, progress);
+            _deleteItems(table, toDelete, progress, error);
         } else {
             progress();
         }
@@ -174,7 +173,6 @@ angular.module('budget.syncSDB', ['ionic'])
     
     CreateSync.prototype.getNews = function(table, callback) {
         _getAll(table, callback, function(err) {
-            console.log( JSON.stringify(err) );
             throw err.message;
         });
     }

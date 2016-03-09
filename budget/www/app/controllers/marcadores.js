@@ -1,5 +1,5 @@
 angular.module('budget.marcadores', [])
-.controller('MarcadoresCtrl', function($scope, $ionicModal, $ionicPopup, daoFactory) {
+.controller('MarcadoresCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, daoFactory) {
     $scope.selection = {};
     
     $scope.marcadores = daoFactory.getMarcadores();
@@ -25,7 +25,7 @@ angular.module('budget.marcadores', [])
     }
 
     $scope.newItem = function() {
-        $scope.selection = {};
+        $scope.selection = { usuario: $rootScope.user.id };
         $scope.modal.show();
     }
     
