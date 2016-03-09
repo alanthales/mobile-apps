@@ -39,13 +39,16 @@
             <form name="cadForm" novalidate ng-submit="validate(cadForm)">
                 <div class="list padding-top">
                     <label class="item item-input" ng-class="{'has-errors': cadForm.nome.$dirty && cadForm.nome.$invalid, 'no-errors': cadForm.nome.$valid}">
-                        <input type="text" name="nome" placeholder="Nome" ng-model="$root.user.nome" required minlength="3">
+                        <input type="text" name="nome" placeholder="Nome" ng-model="$root.user.nome" required minlength="3" maxlength="80">
                     </label>
                     <label class="item item-input" ng-class="{'has-errors': cadForm.fone.$dirty && cadForm.fone.$invalid, 'no-errors': cadForm.fone.$valid}">
-                        <input type="tel" name="fone" placeholder="Telefone" ng-model="$root.user.fone" required minlength="9">
+                        <input type="tel" name="fone" placeholder="Telefone" ng-model="$root.user.fone" required minlength="9" maxlength="13">
                     </label>
                     <label class="item item-input" ng-class="{'has-errors': cadForm.email.$dirty && cadForm.email.$invalid, 'no-errors': cadForm.email.$valid}">
                         <input type="email" name="email" placeholder="E-mail" ng-model="$root.user.id" required>
+                    </label>
+                    <label class="item item-input" ng-class="{'has-errors': cadForm.senha.$dirty && cadForm.senha.$invalid, 'no-errors': cadForm.senha.$valid}">
+                        <input type="password" name="senha" placeholder="Senha" ng-model="$root.user.senha" required minlength="4" maxlength="30">
                     </label>
                 </div>
                 <div class="bottom">
