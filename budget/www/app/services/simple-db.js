@@ -9,12 +9,29 @@ angular.module('budget.syncSDB', ['ionic'])
     
     _db = new AWS.SimpleDB({ region: 'sa-east-1' });
     
-    var _parseItem = function(item) {
-        var result = { id: item.Name };
-        
+    var _parseItem = function(item, itemId) {
+        var result = { id: item.Name || itemId };
+
         item.Attributes.forEach(function(attr) {
             result[attr.Name] = attr.Value;
         });
+        
+        return result;
+    };
+    
+    var _formatItem = function(item) {
+        var result = [],
+            prop, value;
+        
+        for (prop in item) {
+            if (prop === 'id') {
+                continue;
+            }
+            value = item[prop] ? item[prop].toString() : '';
+            result.push({
+                Name: prop, Value: value, Replace: true
+            });
+        }
         
         return result;
     };
@@ -23,21 +40,36 @@ angular.module('budget.syncSDB', ['ionic'])
         return ['budget_', table].join('');
     };
     
-    var _getAll = function(table, callback) {
+    var _getItem = function(table, itemId, success, error) {
+        var params = { DomainName: _getDomain(table), ItemName: itemId.toString(), ConsistentRead: true },
+            result = {};
+
+        _db.getAttributes(params, function(err, data) {
+            if (err) {
+                console.log( JSON.stringify(err) );
+                error(err);
+                return;
+            }
+            
+            result = _parseItem(data, itemId);
+            
+            success(result);
+        });
+    };
+    
+    var _getAll = function(table, success, error) {
         var params = { SelectExpression: ['select * from', _getDomain(table)].join(' '), ConsistentRead: true },
             items = [];
 
         _db.select(params, function(err, data) {
             if (err) {
                 console.log( JSON.stringify(err) );
-                throw err.message;
+                error(err);
                 return;
             }
             
-            console.log( JSON.stringify(data) );
-            
             if (!data.Items) {
-                callback(items);
+                success(items);
                 return;
             }
             
@@ -45,35 +77,61 @@ angular.module('budget.syncSDB', ['ionic'])
                 items[index] = _parseItem(item);
             });
             
-            callback(items);
+            success(items);
         });
     };
     
-    var _putItems = function(table, items, callback) {
+    var _deleteItems = function(table, items, success, error) {
         var params = { DomainName: _getDomain(table), Items: [] },
-            obj, value, prop;
+            obj;
         
         items.forEach(function(item) {
-            obj = { Attributes: [], Name: item.id.toString() };
-            for (prop in item) {
-                if (prop === 'id') {
-                    continue;
-                }
-                value = item[prop] ? item[prop].toString() : '';
-                obj.Attributes.push({
-                    Name: prop, Value: value, Replace: true
-                });
+            obj = { Name: item.id.toString() };
+            params.Items.push(obj);
+        });
+        
+        _db.batchDeleteAttributes(params, function(err, data) {
+            if (err) {
+                console.log( JSON.stringify(err) );
+                error(err);
+                return;
             }
+            success();
+        });
+    };
+    
+    var _putItem = function(table, item, success, error) {
+        var params = { DomainName: _getDomain(table), ItemName: item.id.toString() };
+
+        params.Attributes = _formatItem(item);
+        
+        _db.putAttributes(params, function(err, data) {
+            if (err) {
+                console.log( JSON.stringify(err) );
+                error(err);
+                return;
+            }
+            success();
+        });
+    };
+    
+    var _putItems = function(table, items, success, error) {
+        var params = { DomainName: _getDomain(table), Items: [] },
+            obj;
+        
+        items.forEach(function(item) {
+            obj = { Name: item.id.toString() };
+            obj.Attributes = _formatItem(item);
             params.Items.push(obj);
         });
         
         _db.batchPutAttributes(params, function(err, data) {
             if (err) {
                 console.log( JSON.stringify(err) );
-                throw err.message;
+                error(err);
                 return;
             }
-            callback();
+            success();
         });
     };
 
@@ -86,9 +144,14 @@ angular.module('budget.syncSDB', ['ionic'])
     CreateSync.prototype.sendData = function(table, toInsert, toUpdate, toDelete, callback) {
         var self = this,
             toSave = toInsert.concat(toUpdate),
-            total = toSave.length + toDelete.length,
+            total = 2, // 2 operaçoes (incluir/atualizar e excluir)
             i;
 
+        function error(err) {
+            console.log( JSON.stringify(err) );
+            throw err.message;
+        };
+        
         function progress() {
             total--;
             if (total === 0) {
@@ -96,18 +159,34 @@ angular.module('budget.syncSDB', ['ionic'])
             }
         }
 
-        for (i = 0; i < toSave.length; i++) {
+        if (toSave.length > 0) {
             _putItems(table, toSave, progress);
+        } else {
+            progress();
         }
 
-        for (i = 0; i < toDelete.length; i++) {
-//            self.remove(key, toDelete[i], progress);
+        if (toDelete.length > 0) {
+            _deleteItems(table, toDelete, progress);
+        } else {
             progress();
         }
     }
     
     CreateSync.prototype.getNews = function(table, callback) {
-        _getAll(table, callback);
+        _getAll(table, callback, function(err) {
+            console.log( JSON.stringify(err) );
+            throw err.message;
+        });
+    }
+    
+    CreateSync.prototype.putItem = function(table, item, success, error) {
+        var cb = function() {};
+        _putItem(table, item, success || cb, error || cb);
+    }
+    
+    CreateSync.prototype.getItem = function(table, itemId, success, error) {
+        var cb = function() {};
+        _getItem(table, itemId, success || cb, error || cb);
     }
     
     return CreateSync;

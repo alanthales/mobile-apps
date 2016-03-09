@@ -1,6 +1,7 @@
 {
     "jscodehints.detectedExclusions": [
         "D:/User/workspace/mobile-apps/budget/www/app/services/simple-db.js",
-        "D:/User/workspace/mobile-apps/budget/www/js/app.js"
+        "D:/User/workspace/mobile-apps/budget/www/js/app.js",
+        "D:/User/workspace/mobile-apps/budget/www/app/controllers/despesas.js"
     ]
 }

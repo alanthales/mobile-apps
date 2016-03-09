@@ -5,7 +5,7 @@ angular.module('budget.despesas', [])
         todayLabel: 'Hoje',  //Optional
         closeLabel: 'Sair',  //Optional
         setLabel: 'OK',  //Optional
-        setButtonType : 'button-positive',  //Optional
+        setButtonType : 'button-calm',  //Optional
         todayButtonType : 'button-assertive',  //Optional
         closeButtonType : 'button-outline',  //Optional
 //        inputDate: new Date(),  //Optional

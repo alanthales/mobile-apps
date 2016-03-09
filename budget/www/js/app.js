@@ -17,9 +17,25 @@ angular.module('budget', [
     $rootScope.user = _user ? JSON.parse( _user ) : {};
     $rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
+    $rootScope.hasConnection = function() {
+        if (!navigator.connection) {
+            return false;
+        }
+        
+        var states = {}
+
+        states[Connection.WIFI] = 'Wifi connection';
+        states[Connection.CELL_3G] = '3G connection';
+        states[Connection.CELL_4G] = '4G connection';
+
+        return navigator.connection.type in states;
+    };
+    
     function syncData() {
-        daoFactory.getMarcadores().sync();
-        daoFactory.getDespesas().sync();
+        if ($rootScope.user.registrado) {
+            daoFactory.getMarcadores().sync();
+            daoFactory.getDespesas().sync();
+        }
     };
     
     function onConnect() {
@@ -44,19 +60,10 @@ angular.module('budget', [
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-        if (navigator.connection) {
-            var states = {}
-            
-            states[Connection.WIFI] = 'Wifi connection';
-            states[Connection.CELL_3G] = '3G connection';
-            states[Connection.CELL_4G] = '4G connection';
-            
-            document.addEventListener('online', onConnect, false);
-            document.addEventListener('offline', onDisconnect, false);
-            
-            if (navigator.connection.type in states) {
-                onConnect();
-            }
+        document.addEventListener('online', onConnect, false);
+        document.addEventListener('offline', onDisconnect, false);
+        if ($rootScope.hasConnection) {
+            onConnect();
         }
     });
 })
