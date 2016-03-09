@@ -39,7 +39,7 @@ angular.module('budget', [
     };
     
     function onConnect() {
-        timer = $interval(syncData, 30000);
+        timer = $interval(syncData, 60*5*1000);
     };
     
     function onDisconnect() {

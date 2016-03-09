@@ -141,6 +141,10 @@ label.item p i.icon {
     font-weight: 300;
 }
 
+.slider-slide p {
+    font-size: 110%;
+}
+
 .slider-slide h3, .slider-pager .slider-pager-page {
     color: #fff;
 }
