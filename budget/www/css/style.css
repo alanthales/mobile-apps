@@ -169,7 +169,7 @@ label.item p i.icon {
     position: relative;
 }
 
-.slide-right-left.ng-animate {
+.slide-right-left-container .slide-right-left.ng-animate {
 	-webkit-transition:all ease-in-out 250ms;
 	transition:all ease-in-out 250ms;
 	position:absolute;

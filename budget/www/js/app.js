@@ -8,7 +8,7 @@ var _user = window.localStorage.getItem('usuario');
 angular.module('budget', [
     'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.directives', 'budget.syncSDB', 'budget.dao',
     'budget.bemvindo', 'budget.sidemenu', 'budget.dashboard', 'budget.marcadores', 'budget.despesas',
-    'budget.despmarc'
+    'budget.despmarc', 'budget.config'
 ])
 
 .run(function($ionicPlatform, $rootScope, $interval, daoFactory) {
@@ -37,6 +37,8 @@ angular.module('budget', [
             daoFactory.getDespesas().sync();
         }
     };
+    
+    $rootScope.syncData = syncData;
     
     function onConnect() {
         timer = $interval(syncData, 60*5*1000);
@@ -120,6 +122,16 @@ angular.module('budget', [
             'menuContent': {
                 templateUrl: './app/views/despesas/marcador.html',
                 controller: 'DespMarcadorCtrl'
+            }
+        }
+    })
+    
+    .state('app.config', {
+        url: '/config',
+        views: {
+            'menuContent': {
+                templateUrl: './app/views/config.html',
+                controller: 'ConfigCtrl as config'
             }
         }
     });

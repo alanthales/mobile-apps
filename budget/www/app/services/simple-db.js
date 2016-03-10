@@ -1,6 +1,6 @@
 angular.module('budget.syncSDB', ['ionic'])
 
-.factory('SyncSDB', function() {
+.factory('SyncSDB', function($rootScope) {
     var key = atob('QUtJQUlPM0NFQkdNQkNRNkVRV0E='),
         secret = atob('U1BYVlFWSkc0aEttMno2OUtrTWw4UnNtSUMxV2pyVVkxZmh3MmprTw=='),
         _db;
@@ -57,8 +57,8 @@ angular.module('budget.syncSDB', ['ionic'])
         });
     };
     
-    var _getAll = function(table, success, error) {
-        var params = { SelectExpression: ['select * from', _getDomain(table)].join(' '), ConsistentRead: true },
+    var _getData = function(sql, success, error) {
+        var params = { SelectExpression: sql, ConsistentRead: true },
             items = [];
 
         _db.select(params, function(err, data) {
@@ -172,7 +172,17 @@ angular.module('budget.syncSDB', ['ionic'])
     }
     
     CreateSync.prototype.getNews = function(table, callback) {
-        _getAll(table, callback, function(err) {
+        var user = $rootScope.user,
+            groups = user.grupo ? HashMap.cloneObject(user.grupo) : [],
+            where, sql;
+        
+        groups = groups.map(function(item) { return item.email; });
+        groups.push(user.id);
+        
+        where = 'where usuario in(\'' + groups.join('\',\'') + '\')',
+        sql = ['select * from', _getDomain(table), where].join(' ');
+        
+        _getData(sql, callback, function(err) {
             throw err.message;
         });
     }

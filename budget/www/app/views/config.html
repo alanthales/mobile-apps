@@ -1,0 +1,50 @@
+<ion-view view-title="Configuração">
+    <ion-nav-bar class="bar-calm">
+        <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-android-menu" menu-toggle="left"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <form name="config.form" method="post" novalidate>
+            <div class="list list-inset">
+                <div class="item item-divider">
+                    Meus dados
+                </div>
+                
+                <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.nome.$dirty && config.form.nome.$invalid, 'no-errors': config.form.nome.$valid}">
+                    <span class="input-label">Nome</span>
+                    <input type="text" name="nome" placeholder="Fulano de tal" ng-model="usuario.nome" required minlength="3" maxlength="80">
+                </label>
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.fone.$dirty && config.form.fone.$invalid, 'no-errors': config.form.fone.$valid}">
+                    <span class="input-label">Fone</span>
+                    <input type="tel" name="fone" placeholder="35991009876" ng-model="usuario.fone" required minlength="9" maxlength="13">
+                </label>
+
+                <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.senha.$dirty && config.form.senha.$invalid, 'no-errors': config.form.senha.$valid}">
+                    <span class="input-label">Senha</span>
+                    <input type="password" name="senha" ng-model="usuario.senha" required minlength="4" maxlength="30">
+                </label>
+            </div>
+            
+            <div class="list list-inset">
+                <div class="item item-divider">
+                    Dependentes
+                </div>
+
+                <div class="user in usuario.grupo track by $index">
+                    {{user.email}}
+                </div>
+
+                <div class="item">
+                    <button type="button" class="button button-small icon-left ion-person-add button-balanced" ng-click="addUser()">Cadastrar</button>
+                </div>
+            </div>
+        </form>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <button type="button" class="button button-calm button-outline" ng-click="cancel()">Cancelar</button>
+        <button type="button" class="button button-calm" ng-disabled="isDirty(config.form)" ng-click="submit(config.form)">Confirmar</button>
+    </ion-footer-bar>
+</ion-view>

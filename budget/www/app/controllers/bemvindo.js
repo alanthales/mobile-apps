@@ -1,5 +1,5 @@
 angular.module('budget.bemvindo', [])
-.controller('BemVindoCtrl', function($scope, $rootScope, $ionicSlideBoxDelegate, $state, $ionicPopup, daoFactory) {
+.controller('BemVindoCtrl', function($scope, $rootScope, $ionicSlideBoxDelegate, $state, $ionicPopup, $ionicLoading, daoFactory) {
     $scope.actualSlide = 0;
     
     $scope.disableSlide = function() {
@@ -15,11 +15,12 @@ angular.module('budget.bemvindo', [])
             cb = callback;
         
         if (!sync) {
+            $ionicLoading.hide();
             return;
         }
         
         function error(err) {
-            console.log( JSON.stringify(err) );
+            $ionicLoading.hide();
             $ionicPopup.alert({
                 title: 'Erro!',
                 okType: 'button-calm',
@@ -29,6 +30,7 @@ angular.module('budget.bemvindo', [])
         
         sync.getItem('usuarios', user.id, function(item) {
             if (item && item.senha && item.senha !== user.senha) {
+                $ionicLoading.hide();
                 $ionicPopup.alert({
                     title: 'Atenção!',
                     okType: 'button-calm',
@@ -59,10 +61,16 @@ angular.module('budget.bemvindo', [])
             return;
         };
         
+        $ionicLoading.show({
+            template: 'Aguarde...'
+        });
+        
         registerUser($rootScope.user, function() {
             $rootScope.user.registrado = true;
             window.localStorage.setItem('usuario', JSON.stringify( $rootScope.user ));
+            $rootScope.syncData();
+            $ionicLoading.hide();
             $state.go('app.dashboard');
-        });
+     });
     }
 });
