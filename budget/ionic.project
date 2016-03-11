@@ -13,6 +13,10 @@
     {
       "path": "/sdb",
       "proxyUrl": "https://sdb.sa-east-1.amazonaws.com"
+    },
+    {
+      "path": "/send",
+      "proxyUrl": "https://api.sendinblue.com/v2.0"
     }
   ]  
 }

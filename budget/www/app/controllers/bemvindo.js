@@ -1,5 +1,5 @@
 angular.module('budget.bemvindo', [])
-.controller('BemVindoCtrl', function($scope, $rootScope, $ionicSlideBoxDelegate, $state, $ionicPopup, $ionicLoading, daoFactory) {
+.controller('BemVindoCtrl', function($scope, $rootScope, $ionicSlideBoxDelegate, $state, $ionicPopup, $ionicLoading, daoFactory, utils) {
     $scope.actualSlide = 0;
     
     $scope.disableSlide = function() {
@@ -56,21 +56,25 @@ angular.module('budget.bemvindo', [])
             $ionicPopup.alert({
                 title: 'Atenção!',
                 okType: 'button-calm',
-                template: 'Verifique os campos em vermelho'
+                template: 'Verifique os campos em branco/vermelho'
             }).then();
             return;
         };
         
         $ionicLoading.show({
-            template: 'Aguarde...'
+            template: '<ion-spinner icon="bubbles"></ion-spinner>',
+            hideOnStateChange: true
         });
         
         registerUser($rootScope.user, function() {
             $rootScope.user.registrado = true;
-            window.localStorage.setItem('usuario', JSON.stringify( $rootScope.user ));
+            $rootScope.user.grupo = [];
+            
+            utils.sender.email(utils.WelcomeTmpl, $rootScope.user.id, $rootScope.user.nome, 'Bem vindo');
+            utils.lStorage.setItem('usuario', $rootScope.user);
+                             
             $rootScope.syncData();
-            $ionicLoading.hide();
             $state.go('app.dashboard');
-     });
+        });
     }
 });

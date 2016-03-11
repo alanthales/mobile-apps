@@ -8,7 +8,7 @@ var _user = window.localStorage.getItem('usuario');
 angular.module('budget', [
     'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.directives', 'budget.syncSDB', 'budget.dao',
     'budget.bemvindo', 'budget.sidemenu', 'budget.dashboard', 'budget.marcadores', 'budget.despesas',
-    'budget.despmarc', 'budget.config'
+    'budget.despmarc', 'budget.config', 'budget.utils'
 ])
 
 .run(function($ionicPlatform, $rootScope, $interval, daoFactory) {

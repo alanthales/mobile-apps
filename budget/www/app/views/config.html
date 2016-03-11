@@ -33,8 +33,8 @@
                     Dependentes
                 </div>
 
-                <div class="user in usuario.grupo track by $index">
-                    {{user.email}}
+                <div class="item" ng-repeat="item in usuario.grupo track by $index">
+                    {{item.nome}}
                 </div>
 
                 <div class="item">
@@ -43,8 +43,8 @@
             </div>
         </form>
     </ion-content>
-    <ion-footer-bar class="bar-light">
-        <button type="button" class="button button-calm button-outline" ng-click="cancel()">Cancelar</button>
-        <button type="button" class="button button-calm" ng-disabled="isDirty(config.form)" ng-click="submit(config.form)">Confirmar</button>
+    <ion-footer-bar class="bar-light" ng-hide="!isDirty(config.form)" ng-show="usuario.grupo.length">
+        <button type="button" class="button button-calm button-outline" ng-click="cancel()">Discartar</button>
+        <button type="button" class="button button-calm" ng-click="submit(config.form)">Salvar</button>
     </ion-footer-bar>
 </ion-view>

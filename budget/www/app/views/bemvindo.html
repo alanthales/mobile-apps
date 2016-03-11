@@ -32,11 +32,12 @@
             </div>
         </ion-slide>
         <ion-slide>
-            <h3>Fale sobre você...</h3>
-            <div id="logo">
-                <i class="icon icon-xlarge ion-help-circled"></i>
-            </div>
             <form name="cadForm" novalidate ng-submit="validate(cadForm)">
+                <ion-content class="padding">
+                <h3>Fale sobre você...</h3>
+                <div id="logo">
+                    <i class="icon icon-xlarge ion-help-circled"></i>
+                </div>
                 <div class="list padding-top">
                     <label class="item item-input" ng-class="{'has-errors': cadForm.nome.$dirty && cadForm.nome.$invalid, 'no-errors': cadForm.nome.$valid}">
                         <input type="text" name="nome" placeholder="Nome" ng-model="$root.user.nome" required minlength="3" maxlength="80">
@@ -51,6 +52,7 @@
                         <input type="password" name="senha" placeholder="Senha" ng-model="$root.user.senha" required minlength="4" maxlength="30">
                     </label>
                 </div>
+                </ion-content>
                 <div class="bottom">
                     <button type="submit" class="button button-icon button-calm">
                         <i class="icon ion-checkmark"></i> Concluir
