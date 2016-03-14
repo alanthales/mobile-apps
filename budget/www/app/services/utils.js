@@ -1,19 +1,33 @@
+var _credentials = {
+    accessKeyId: atob('QUtJQUlPM0NFQkdNQkNRNkVRV0E='),
+    secretAccessKey: atob('U1BYVlFWSkc0aEttMno2OUtrTWw4UnNtSUMxV2pyVVkxZmh3MmprTw==')
+};
+
+AWS.config.update(_credentials);
+
 angular.module('budget.utils', ['ionic'])
 
 .factory('utils', function($http) {
     var local = window.localStorage,
         session = window.sessionStorage,
-        urlSIB = window.cordova ? 'https://api.sendinblue.com/v2.0' : '/send',
-        config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'api-key': 'DkTMys3BKLQfhOY5'
-            }
-        };
+        ses = new AWS.SES();
 
+    var _replace = function(text, obj) {
+        var result = text,
+            tag, prop;
+        for (prop in ojb) {
+            tag = '{' + prop + '}';
+            result = result.replace(tag, obj[prop]);
+        }
+        return result;
+    };
     
     return {
-        WelcomeTmpl: 1,
+        WelcomeMail: [
+            '<p>Olá <strong>{nome}</strong>,</p>',
+            '<p>Seja bem vindo ao Finances Together!</p>',
+            '<p>Sua senha para acessar o aplicativo: <strong>{senha}</strong></p>'
+        ].join(''),
         
         lStorage: {
             setItem: function(key, value) {
@@ -36,70 +50,39 @@ angular.module('budget.utils', ['ionic'])
         },
         
         sender: {
-            email: function(tmplId, toEmail, toName, subject, success, error) {
-                var url = urlSIB + '/template/' + tmplId,
-                    data = {
-                        to: toEmail,
-                        attr: {'NOME': toName, 'ASSUNTO': subject},
-                        headers: {'Content-Type': 'text/html;charset=iso-8859-1'}
+            email: function(toEmail, obj, subject, body, success, error) {
+                var html = _replace(body, obj),
+                    params = {
+                        Destination: {
+                            ToAddresses: [toEmail]
+                        },
+                        Message: {
+                            Body: {
+                                Html: {
+                                    Data: html
+                                }
+                            },
+                            Subject: {
+                                Data: subject
+                            }
+                        },
+                        Source: 'alanthales@gmail.com'
                     };
                 
-                console.log('email', data);
-                $http.post(url, data, config).then(
-                    function(res) {
-                        if (typeof success === 'function') {
-                            success(res);
-                        }
-                    },
-                    function(err) {
-                        if (typeof error === 'function') {
-                            error(res);
-                        }
-                    });
-            },
-            emailText: function(to, subject, body, success, error) {
-                var url = urlSIB + '/email',
-                    data = {
-                        to: to,
-                        from: ['noreply@ftogether.com'],
-                        subject: subject,
-                        html: body
-                    };
+                console.log('sender.email', params);
                 
-                console.log('emailText', data);
-                $http.post(url, data, config).then(
-                    function(res) {
-                        if (typeof success === 'function') {
-                            success(res);
-                        }
-                    },
-                    function(err) {
+                ses.sendEmail(params, function(err, data) {
+                    if (err) {
+                        console.log( JSON.stringify(err) );
                         if (typeof error === 'function') {
-                            error(res);
+                            error(err);
                         }
-                    });
-            },
-            sms: function(to, text, success, error) {
-                var url = urlSIB + '/sms',
-                    data = {
-                        to: to,
-                        from: 'ftogether',
-                        text: text,
-                        type: 'transactional'
-                    };
-                
-                console.log('sms', data);
-                $http.post(url, data, config).then(
-                    function(res) {
-                        if (typeof success === 'function') {
-                            success(res);
-                        }
-                    },
-                    function(err) {
-                        if (typeof error === 'function') {
-                            error(res);
-                        }
-                    });
+                        return;
+                    }
+                    if (typeof success === 'function') {
+                        success(data);
+                    }
+                });
             }
         }
     }

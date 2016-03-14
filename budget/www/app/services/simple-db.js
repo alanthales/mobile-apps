@@ -1,13 +1,7 @@
 angular.module('budget.syncSDB', ['ionic'])
 
 .factory('SyncSDB', function($rootScope) {
-    var key = atob('QUtJQUlPM0NFQkdNQkNRNkVRV0E='),
-        secret = atob('U1BYVlFWSkc0aEttMno2OUtrTWw4UnNtSUMxV2pyVVkxZmh3MmprTw=='),
-        _db;
-
-    AWS.config.update({ accessKeyId: key, secretAccessKey: secret });
-    
-    _db = new AWS.SimpleDB({ region: 'sa-east-1' });
+    var _db = new AWS.SimpleDB({ region: 'sa-east-1' });
     
     var _parseItem = function(item, itemId) {
         var result = { id: item.Name || itemId };

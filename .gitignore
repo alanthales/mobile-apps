@@ -2,6 +2,8 @@
 */platforms/
 */plugins/
 */resources/
+!*/resources/icon.png
+!*/resources/splash.png
 */www/lib
 .tmp
 .sass-cache
