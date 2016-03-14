@@ -1,21 +1,20 @@
-var _credentials = {
-    accessKeyId: atob('QUtJQUlPM0NFQkdNQkNRNkVRV0E='),
-    secretAccessKey: atob('U1BYVlFWSkc0aEttMno2OUtrTWw4UnNtSUMxV2pyVVkxZmh3MmprTw==')
-};
-
-AWS.config.update(_credentials);
-
 angular.module('budget.utils', ['ionic'])
 
 .factory('utils', function($http) {
     var local = window.localStorage,
         session = window.sessionStorage,
-        ses = new AWS.SES();
+        sibUrl = window.cordova ? 'https://api.sendinblue.com/v2.0' : '/send',
+        sibConfig = {
+            headers: {
+                'Content-type': 'application/json',
+                'api-key': 'DkTMys3BKLQfhOY5'
+            }
+        };
 
     var _replace = function(text, obj) {
         var result = text,
             tag, prop;
-        for (prop in ojb) {
+        for (prop in obj) {
             tag = '{' + prop + '}';
             result = result.replace(tag, obj[prop]);
         }
@@ -28,6 +27,8 @@ angular.module('budget.utils', ['ionic'])
             '<p>Seja bem vindo ao Finances Together!</p>',
             '<p>Sua senha para acessar o aplicativo: <strong>{senha}</strong></p>'
         ].join(''),
+        
+        replaceWith: _replace,
         
         lStorage: {
             setItem: function(key, value) {
@@ -51,38 +52,28 @@ angular.module('budget.utils', ['ionic'])
         
         sender: {
             email: function(toEmail, obj, subject, body, success, error) {
-                var html = _replace(body, obj),
-                    params = {
-                        Destination: {
-                            ToAddresses: [toEmail]
-                        },
-                        Message: {
-                            Body: {
-                                Html: {
-                                    Data: html
-                                }
-                            },
-                            Subject: {
-                                Data: subject
-                            }
-                        },
-                        Source: 'alanthales@gmail.com'
+                var url = sibUrl + '/email',
+                    html = _replace(body, obj),
+                    data = {
+                        to: toEmail,
+                        from: ["noreply@ftogether.com"],
+                        subject: subject,
+                        html: html
                     };
                 
-                console.log('sender.email', params);
-                
-                ses.sendEmail(params, function(err, data) {
-                    if (err) {
-                        console.log( JSON.stringify(err) );
-                        if (typeof error === 'function') {
-                            error(err);
+                $http.post(url, data, sibConfig).then(
+                    function(res) {
+                        console.log('sender.email success', JSON.stringify(res));
+                        if (typeof success === 'function') {
+                            success(res);
                         }
-                        return;
-                    }
-                    if (typeof success === 'function') {
-                        success(data);
-                    }
-                });
+                    },
+                    function(res) {
+                        console.log('sender.email error', JSON.stringify(res));
+                        if (typeof error === 'function') {
+                            error(res);
+                        }
+                    });
             }
         }
     }

@@ -1,3 +1,10 @@
+var _credentials = {
+    accessKeyId: atob('QUtJQUlPM0NFQkdNQkNRNkVRV0E='),
+    secretAccessKey: atob('U1BYVlFWSkc0aEttMno2OUtrTWw4UnNtSUMxV2pyVVkxZmh3MmprTw==')
+};
+
+AWS.config.update(_credentials);
+
 angular.module('budget.syncSDB', ['ionic'])
 
 .factory('SyncSDB', function($rootScope) {

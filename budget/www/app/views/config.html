@@ -33,18 +33,27 @@
                     Dependentes
                 </div>
 
-                <div class="item" ng-repeat="item in usuario.grupo track by $index">
+                <div class="item item-button-right" ng-repeat="item in usuario.grupo track by $index">
                     {{item.nome}}
+                    <button class="button button-clear button-assertive" ng-click="delUser($index)">
+                        <i class="icon ion-android-remove-circle"></i>
+                    </button>
                 </div>
 
+                <div class="item item-text-wrap" ng-if="!usuario.grupo.length">
+                    <p>
+                        Ao cadastrar um dependente, ele receberá um e-mail com a senha informada para que possa entrar no aplicativo.
+                    </p>
+                </div>
+                
                 <div class="item">
                     <button type="button" class="button button-small icon-left ion-person-add button-balanced" ng-click="addUser()">Cadastrar</button>
                 </div>
             </div>
         </form>
     </ion-content>
-    <ion-footer-bar class="bar-light" ng-hide="!isDirty(config.form)" ng-show="usuario.grupo.length">
+    <ion-footer-bar class="bar-light" ng-hide="!groupModified" ng-show="config.form.$dirty || groupModified">
         <button type="button" class="button button-calm button-outline" ng-click="cancel()">Discartar</button>
-        <button type="button" class="button button-calm" ng-click="submit(config.form)">Salvar</button>
+        <button type="button" class="button button-calm" ng-click="submit()">Salvar</button>
     </ion-footer-bar>
 </ion-view>

@@ -67,10 +67,13 @@ angular.module('budget.bemvindo', [])
         });
         
         registerUser($rootScope.user, function() {
+            var to = {};
+            
             $rootScope.user.registrado = true;
             $rootScope.user.grupo = [];
             
-            utils.sender.email($rootScope.user.id, $rootScope.user, 'Bem vindo', utis.WelcomeMail);
+            to[$rootScope.user.id] = $rootScope.user.nome;
+            utils.sender.email(to, $rootScope.user, 'Bem vindo!', utils.WelcomeMail);
             utils.lStorage.setItem('usuario', $rootScope.user);
                              
             $rootScope.syncData();
