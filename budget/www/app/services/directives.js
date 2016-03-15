@@ -28,6 +28,22 @@ angular.module('budget.directives', ['ionic'])
     }
 })
 
+.directive('markers', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            marks: '='
+        },
+        template: 
+            [
+                '<a class="item item-icon-left" ng-repeat="item in marks track by $index" menu-close href="#/app/despmarcador/{{item.id}}">',
+                    '<i class="icon icon-small ion-pricetag"></i>',
+                    '{{item.descricao}}',
+                '</a>'
+            ].join('')
+    }
+})
+
 .directive('compareTo', function() {
     return {
         require: "ngModel",
@@ -43,5 +59,6 @@ angular.module('budget.directives', ['ionic'])
                 ngModel.$validate();
             });
         }
-    };
-});
+    }
+})
+;
