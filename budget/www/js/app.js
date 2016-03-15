@@ -8,7 +8,7 @@ var _user = window.localStorage.getItem('usuario');
 angular.module('budget', [
     'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.directives', 'budget.syncSDB', 'budget.dao',
     'budget.bemvindo', 'budget.sidemenu', 'budget.dashboard', 'budget.marcadores', 'budget.despesas',
-    'budget.despmarc', 'budget.config', 'budget.utils'
+    'budget.despmarc', 'budget.config', 'budget.utils', 'budget.despdepend'
 ])
 
 .run(function($ionicPlatform, $rootScope, $interval, daoFactory) {
@@ -134,7 +134,17 @@ angular.module('budget', [
                 controller: 'ConfigCtrl as config'
             }
         }
-    });
+    })
+    
+    .state('app.despdependente', {
+        url: '/despdependente/:dependenteId',
+        views: {
+            'menuContent': {
+                templateUrl: './app/views/despesas/dependente.html',
+                controller: 'DespDependenteCtrl'
+            }
+        }
+    });    
 
     if (_user) {
         $urlRouterProvider.otherwise('/app/dashboard');

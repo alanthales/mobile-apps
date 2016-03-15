@@ -1,0 +1,32 @@
+<ion-view view-title="{{dependente}}">
+    <ion-nav-bar class="bar-calm">
+        <ion-nav-back-button></ion-nav-back-button>
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-android-menu" menu-toggle="left"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="list card" ng-repeat="mesDesp in mesesDesp track by $index">
+            <div class="item">
+                <p>{{$root.listaMes[mesDesp.mes]}}, {{mesDesp.ano}}</p>
+            </div>
+
+            <div class="item">
+                <div class="item-set" ng-repeat="item in getDespesas(mesDesp.ano, mesDesp.mes) track by $index">
+                    <div class="item-right">
+                        {{item.valor | currency:"R$"}}
+                    </div>
+                    <div class="marcadores">
+                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
+                            {{marcadores.getById(mark).descricao}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="item calm">
+                <span class="item-right">Total: {{mesDesp.total | currency:"R$"}}</span>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

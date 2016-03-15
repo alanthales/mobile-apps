@@ -59,7 +59,7 @@
                     </div>
                     <div class="slide-right-left" ng-switch-when="dept">
                         <back-button title="Voltar" go-back="goBack()"></back-button>
-                        <a class="item item-icon-left" ng-repeat="dependent in $root.user.grupo track by $index" menu-close href="#/app/despmarcador/{{item.id}}">
+                        <a class="item item-icon-left" ng-repeat="dependent in $root.user.grupo track by $index" menu-close href="#/app/despdependente/{{dependent.email}}">
                             <i class="icon icon-small ion-person"></i>
                             {{dependent.nome}}
                         </a>                        
