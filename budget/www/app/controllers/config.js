@@ -1,5 +1,5 @@
 angular.module('budget.config', [])
-.controller('ConfigCtrl', function($scope, $rootScope, $ionicPopup, utils) {
+.controller('ConfigCtrl', function($scope, $rootScope, $ionicPopup, utils, SyncSDB) {
     $scope.usuario = HashMap.cloneObject($rootScope.user);
     
     $scope.groupModified = false;
@@ -10,8 +10,17 @@ angular.module('budget.config', [])
         $scope.usuario = HashMap.cloneObject($rootScope.user);
     }
 
+    function error(err) {
+        $ionicPopup.alert({
+            title: 'Atenção!',
+            okType: 'button-calm',
+            template: 'Desculpe-nos, mas ocorreu algo inesperado'
+        }).then();
+    }
+    
     $scope.submit = function() {
-        var form = $scope.config.form;
+        var form = $scope.config.form,
+            total = $scope.user.grupo.length;
         
         if (!form.$valid) {
             $ionicPopup.alert({
@@ -21,15 +30,34 @@ angular.module('budget.config', [])
             }).then();
             return;
         }
+
+        if (form.novaSenha.$viewValue !== $rootScope.user.senha && form.senha.$viewValue !== $rootScope.user.senha) {
+            $ionicPopup.alert({
+                title: 'Atenção!',
+                okType: 'button-calm',
+                template: 'A senha atual está incorreta'
+            }).then();
+            return;
+        }
         
-        $rootScope.user = HashMap.cloneObject($scope.usuario);
-        utils.lStorage.setItem('usuario', $rootScope.user);
+        function progress() {
+            if (total > 0) {
+                total--;
+                return;
+            }
+            delete $scope.usuario.senhaAtual;
+            $rootScope.user = HashMap.cloneObject($scope.usuario);
+            utils.lStorage.setItem('usuario', $rootScope.user);
+            document.forms[form.$name].submit();
+        };
         
-        document.forms[form.$name].submit();
+        $scope.usuario.grupo.forEach(function(user) {
+            SyncSDB.putItem('usuarios', user, progress, error);
+        });
     }
     
     $scope.addUser = function() {
-        if (!$rootScope.hasConnection) {
+        if (!utils.hasConnection) {
             $ionicPopup.alert({
                 title: 'Atenção!',
                 okType: 'button-calm',
@@ -38,19 +66,19 @@ angular.module('budget.config', [])
             return;
         }
         
-        $scope.newUser = {};
+        $scope.newUser = { titular: $scope.user.id };
         
         var prompt = $ionicPopup.show({
             template:
                 [
                     '<label class="item item-input">',
-                    '  <input type="text" placeholder="Nome do dependente" ng-model="newUser.nome">',
+                    '  <input type="text" placeholder="Nome completo" ng-model="newUser.nome" required minlength="2" maxlength="80">',
                     '</label>',
                     '<label class="item item-input">',
-                    '  <input type="email" placeholder="E-mail do dependente" ng-model="newUser.email">',
+                    '  <input type="text" placeholder="Login" ng-model="newUser.id" required minlength="3" maxlength="20">',
                     '</label>',
                     '<label class="item item-input">',
-                    '  <input type="password" placeholder="Senha para logar" ng-model="newUser.senha">',
+                    '  <input type="password" placeholder="Senha" ng-model="newUser.senha" required minlength="4" maxlength="30">',
                     '</label>',
                 ].join(''),
             title: 'Novo Dependente',
@@ -61,7 +89,7 @@ angular.module('budget.config', [])
                     text: 'Confirmar',
                     type: 'button-calm',
                     onTap: function(e) {
-                        if (!$scope.newUser.email || !$scope.newUser.senha) {
+                        if (!$scope.newUser.id || !$scope.newUser.nome || !$scope.newUser.senha) {
                             e.preventDefault();
                         } else {
                             return true;
@@ -73,19 +101,37 @@ angular.module('budget.config', [])
         
         prompt.then(function(res) {
             if (res) {
-                var to = {};
-                $scope.usuario.grupo.push($scope.newUser);
-                to[$scope.newUser.email] = $scope.newUser.nome;
-                utils.sender.email(to, $scope.newUser, 'Bem vindo!', utils.WelcomeMail);
-                $scope.groupModified = true;
+                SyncSDB.getItem('usuarios', $scope.newUser.id, function(user) {
+                    if (user) {
+                        $ionicPopup.alert({
+                            title: 'Atenção!',
+                            okType: 'button-calm',
+                            template: 'Já existe um usuário com este login'
+                        }).then();
+                        return;
+                    }
+                    $scope.usuario.grupo.push($scope.newUser);
+                    $scope.groupModified = true;
+                }, error);
             }
         });
     }
     
     $scope.delUser = function(index) {
+        if (!utils.hasConnection) {
+            $ionicPopup.alert({
+                title: 'Atenção!',
+                okType: 'button-calm',
+                template: 'Você deve estar conectado para fazer isso'
+            }).then();
+            return;
+        }
+
         var confirm = $ionicPopup.confirm({
             title: 'Atenção!',
             okType: 'button-calm',
+            okText: 'Sim',
+            cancelText: 'Não',
             template: 'Deseja realmente excluir este dependente?'
         });
         

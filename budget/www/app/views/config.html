@@ -13,18 +13,23 @@
                 </div>
                 
                 <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.nome.$dirty && config.form.nome.$invalid, 'no-errors': config.form.nome.$valid}">
-                    <span class="input-label">Nome</span>
-                    <input type="text" name="nome" placeholder="Fulano de tal" ng-model="usuario.nome" required minlength="3" maxlength="80">
+                    <span class="input-label">Nome completo</span>
+                    <input type="text" name="nome" ng-model="usuario.nome" required minlength="2" maxlength="80">
                 </label>
 
-                <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.fone.$dirty && config.form.fone.$invalid, 'no-errors': config.form.fone.$valid}">
-                    <span class="input-label">Fone</span>
-                    <input type="tel" name="fone" placeholder="35991009876" ng-model="usuario.fone" required minlength="9" maxlength="13">
+                <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.email.$dirty && config.form.email.$invalid, 'no-errors': config.form.email.$valid}">
+                    <span class="input-label">E-mail</span>
+                    <input type="email" name="email" ng-model="usuario.email" required>
                 </label>
 
                 <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.senha.$dirty && config.form.senha.$invalid, 'no-errors': config.form.senha.$valid}">
-                    <span class="input-label">Senha</span>
-                    <input type="password" name="senha" ng-model="usuario.senha" required minlength="4" maxlength="30">
+                    <span class="input-label">Senha Atual</span>
+                    <input type="password" name="senha" ng-model="usuario.senhaAtual">
+                </label>
+                
+                <label class="item item-input item-stacked-label" ng-class="{'has-errors': config.form.novaSenha.$dirty && config.form.novaSenha.$invalid, 'no-errors': config.form.novaSenha.$valid}">
+                    <span class="input-label">Nova Senha</span>
+                    <input type="password" name="novaSenha" ng-model="usuario.senha" required minlength="4" maxlength="30">
                 </label>
             </div>
             
@@ -40,12 +45,6 @@
                     </button>
                 </div>
 
-                <div class="item item-text-wrap" ng-if="!usuario.grupo.length">
-                    <p>
-                        Ao cadastrar um dependente, ele receberá um e-mail com a senha informada para que possa entrar no aplicativo.
-                    </p>
-                </div>
-                
                 <div class="item">
                     <button type="button" class="button button-small icon-left ion-person-add button-balanced" ng-click="addUser()">Cadastrar</button>
                 </div>

@@ -52,8 +52,12 @@ angular.module('budget.syncSDB', ['ionic'])
                 return;
             }
             
-            result = _parseItem(data, itemId);
+            if (!data.Attributes.length) {
+                success(null);
+                return;
+            }
             
+            result = _parseItem(data, itemId);
             success(result);
         });
     };
@@ -177,7 +181,7 @@ angular.module('budget.syncSDB', ['ionic'])
             groups = user.grupo ? HashMap.cloneObject(user.grupo) : [],
             where, sql;
         
-        groups = groups.map(function(item) { return item.email; });
+        groups = groups.map(function(item) { return item.login; });
         groups.push(user.id);
         
         where = 'where usuario in(\'' + groups.join('\',\'') + '\')',
@@ -188,14 +192,24 @@ angular.module('budget.syncSDB', ['ionic'])
         });
     }
     
-    CreateSync.prototype.putItem = function(table, item, success, error) {
+    CreateSync.putItem = function(table, item, success, error) {
         var cb = function() {};
         _putItem(table, item, success || cb, error || cb);
     }
     
-    CreateSync.prototype.getItem = function(table, itemId, success, error) {
+    CreateSync.getItem = function(table, itemId, success, error) {
         var cb = function() {};
         _getItem(table, itemId, success || cb, error || cb);
+    }
+    
+    CreateSync.registerUser = function(user, success, error) {
+        _getItem('usuarios', user.id, function(item) {
+            if (item && item.senha !== user.senha) {
+                error({ code: 901, message: 'user already exist\'s' });
+                return;
+            }
+            _putItem('usuarios', user, success, error);
+        }, error);
     }
     
     return CreateSync;

@@ -11,26 +11,12 @@ angular.module('budget', [
     'budget.despmarc', 'budget.config', 'budget.utils'
 ])
 
-.run(function($ionicPlatform, $rootScope, $interval, daoFactory) {
+.run(function($ionicPlatform, $rootScope, $interval, daoFactory, utils) {
     var timer;
     
     $rootScope.user = _user ? JSON.parse( _user ) : {};
     $rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-    $rootScope.hasConnection = function() {
-        if (!navigator.connection) {
-            return false;
-        }
-        
-        var states = {}
-
-        states[Connection.WIFI] = 'Wifi connection';
-        states[Connection.CELL_3G] = '3G connection';
-        states[Connection.CELL_4G] = '4G connection';
-
-        return navigator.connection.type in states;
-    };
-    
     function syncData() {
         if ($rootScope.user.registrado) {
             daoFactory.getMarcadores().sync();
@@ -41,10 +27,12 @@ angular.module('budget', [
     $rootScope.syncData = syncData;
     
     function onConnect() {
+        console.log('onConnect');
         timer = $interval(syncData, 60*5*1000);
     };
     
     function onDisconnect() {
+        console.log('onDisconnect');
         if (timer) {
             $interval.cancel(timer);
             timer = null;
@@ -64,9 +52,9 @@ angular.module('budget', [
         }
         document.addEventListener('online', onConnect, false);
         document.addEventListener('offline', onDisconnect, false);
-        if ($rootScope.hasConnection) {
-            onConnect();
-        }
+//        if (utils.hasConnection) {
+//            onConnect();
+//        }
     });
 })
 

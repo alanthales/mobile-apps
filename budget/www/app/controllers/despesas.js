@@ -78,8 +78,8 @@ angular.module('budget.despesas', [])
         
         var confirmPopup = $ionicPopup.confirm({
                 title: 'Confirme',
-                okText: 'Sim',
                 okType: 'button-calm',
+                okText: 'Sim',
                 cancelText: 'Não',
                 template: 'Deseja realmente excluir esta despesa?'
             });

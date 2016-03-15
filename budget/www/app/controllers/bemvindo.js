@@ -1,5 +1,5 @@
 angular.module('budget.bemvindo', [])
-.controller('BemVindoCtrl', function($scope, $rootScope, $ionicSlideBoxDelegate, $state, $ionicPopup, $ionicLoading, daoFactory, utils) {
+.controller('BemVindoCtrl', function($scope, $rootScope, $ionicSlideBoxDelegate, $state, $ionicPopup, $ionicLoading, SyncSDB, utils) {
     $scope.actualSlide = 0;
     
     $scope.disableSlide = function() {
@@ -10,40 +10,8 @@ angular.module('budget.bemvindo', [])
         $ionicSlideBoxDelegate.slide(index);
     }
     
-    var registerUser = function(user, callback) {
-        var sync = daoFactory.getDB().getSyncronizer(),
-            cb = callback;
-        
-        if (!sync) {
-            $ionicLoading.hide();
-            return;
-        }
-        
-        function error(err) {
-            $ionicLoading.hide();
-            $ionicPopup.alert({
-                title: 'Erro!',
-                okType: 'button-calm',
-                template: 'Desculpe-nos, mas ocorreu algo inesperado'
-            }).then();
-        };
-        
-        sync.getItem('usuarios', user.id, function(item) {
-            if (item && item.senha && item.senha !== user.senha) {
-                $ionicLoading.hide();
-                $ionicPopup.alert({
-                    title: 'Atenção!',
-                    okType: 'button-calm',
-                    template: 'Já existe um usuário com este e-mail. Caso você já fez este cadastro utilize a mesma senha'
-                }).then();
-                return;
-            }
-            sync.putItem('usuarios', user, cb, error);
-        }, error);
-    }
-    
     $scope.validate = function(form) {
-        if (!$rootScope.hasConnection) {
+        if (!utils.hasConnection) {
             $ionicPopup.alert({
                 title: 'Atenção!',
                 okType: 'button-calm',
@@ -65,19 +33,32 @@ angular.module('budget.bemvindo', [])
             template: '<ion-spinner icon="bubbles"></ion-spinner>',
             hideOnStateChange: true
         });
-        
-        registerUser($rootScope.user, function() {
-            var to = {};
+   
+        SyncSDB.registerUser($rootScope.user,
+            function() {
+                $rootScope.user.registrado = true;
+                $rootScope.user.grupo = [];
+
+//                to[$rootScope.user.id] = $rootScope.user.nome;
+//                utils.sender.email(to, $rootScope.user, 'Bem vindo!', utils.WelcomeMail);
+                utils.lStorage.setItem('usuario', $rootScope.user);
+
+                $rootScope.syncData();
+                $state.go('app.dashboard');
+            },
+            function(err) {
+                var opts = { okType: 'button-calm' };
             
-            $rootScope.user.registrado = true;
-            $rootScope.user.grupo = [];
+                if (err.code === 901) {
+                    opts.title = 'Atenção!';
+                    opts.template = 'Já existe um usuário com este login. Caso você já fez este cadastro utilize a mesma senha';
+                } else {
+                    opts.title = 'Erro!';
+                    opts.template = 'Desculpe-nos, mas ocorreu algo inesperado';
+                }
             
-            to[$rootScope.user.id] = $rootScope.user.nome;
-            utils.sender.email(to, $rootScope.user, 'Bem vindo!', utils.WelcomeMail);
-            utils.lStorage.setItem('usuario', $rootScope.user);
-                             
-            $rootScope.syncData();
-            $state.go('app.dashboard');
-        });
+                $ionicLoading.hide();
+                $ionicPopup.alert(opts).then();
+            });
     }
 });

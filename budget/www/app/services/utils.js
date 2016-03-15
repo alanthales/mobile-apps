@@ -30,6 +30,20 @@ angular.module('budget.utils', ['ionic'])
         
         replaceWith: _replace,
         
+        hasConnection: function() {
+            if (!navigator.connection) {
+                return false;
+            }
+
+            var states = {}
+
+            states[Connection.WIFI] = 'Wifi connection';
+            states[Connection.CELL_3G] = '3G connection';
+            states[Connection.CELL_4G] = '4G connection';
+
+            return navigator.connection.type in states;
+        },
+        
         lStorage: {
             setItem: function(key, value) {
                 local.setItem(key, JSON.stringify(value));

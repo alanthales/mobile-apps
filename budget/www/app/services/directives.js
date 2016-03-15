@@ -16,6 +16,7 @@ angular.module('budget.directives', ['ionic'])
         }
     }
 })
+
 .directive('backButton', function() {
     return {
         restrict: 'E',
@@ -25,4 +26,22 @@ angular.module('budget.directives', ['ionic'])
         },
         template: '<a class="item item-icon-left" ng-click="goBack()"><i class="icon icon-small ion-chevron-left"></i>{{title}}</a>'
     }
+})
+
+.directive('compareTo', function() {
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=compareTo"
+        },
+        link: function(scope, element, attributes, ngModel) {
+            ngModel.$validators.compareTo = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+ 
+            scope.$watch("otherModelValue", function() {
+                ngModel.$validate();
+            });
+        }
+    };
 });
