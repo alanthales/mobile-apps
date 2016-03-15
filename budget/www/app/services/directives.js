@@ -25,4 +25,19 @@ angular.module('budget.directives', ['ionic'])
         },
         template: '<a class="item item-icon-left" ng-click="goBack()"><i class="icon icon-small ion-chevron-left"></i>{{title}}</a>'
     }
+})
+.directive('markers', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            marks: '='
+        },
+        template: 
+            [
+                '<a class="item item-icon-left" ng-repeat="item in marks track by $index" menu-close href="#/app/despmarcador/{{item.id}}">',
+                    '<i class="icon icon-small ion-pricetag"></i>',
+                    '{{item.descricao}}',
+                '</a>'
+            ].join('')
+    }
 });
