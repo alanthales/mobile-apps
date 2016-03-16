@@ -1,7 +1,7 @@
 angular.module('budget.despdepend', [])
 .controller('DespDependenteCtrl', function($scope, $stateParams, daoFactory, $rootScope) {    
-    var despDependent = [];
-    
+    var despDependent = [], desps = {};
+
     $scope.marcadores = daoFactory.getMarcadores();
     
     $scope.dependente =
@@ -18,9 +18,16 @@ angular.module('budget.despdepend', [])
     });
     
     $scope.getDespesas = function(year, month) {
-        return despDependent
+        var key = ''+year+month;
+        
+        if (desps[key])
+            return desps[key];
+        
+        desps[key] = despDependent
             .query({ ano: year, mes: month })
             .groupBy({ $sum: 'valor' }, ['marcadores'])
-            .orderBy({ valor: 'desc' });        
+            .orderBy({ valor: 'desc' });
+        
+        return desps[key];
     }
 });
