@@ -8,13 +8,36 @@ AWS.config.update(_credentials);
 angular.module('budget.syncSDB', ['ionic'])
 
 .factory('SyncSDB', function($rootScope) {
-    var _db = new AWS.SimpleDB({ region: 'sa-east-1' });
+    var _db = new AWS.SimpleDB({ region: 'sa-east-1' }),
+        _regx = new RegExp(/^(\d{4}\-\d\d\-\d\d([tT][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/);
+    
+    var _isJson = function(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    };
     
     var _parseItem = function(item, itemId) {
-        var result = { id: item.Name || itemId };
+        var result = { id: item.Name || itemId },
+            value;
 
         item.Attributes.forEach(function(attr) {
-            result[attr.Name] = attr.Value;
+            value = attr.Value;
+            
+            if (value) {
+                if (_regx.test(value)) {
+                    value = new Date(value);
+                } else if (_isJson(value)) {
+                    value = JSON.parse(value);
+                } else if (value === 'true' || value === 'false') {
+                    value = value === 'true';
+                }
+            }
+            
+            result[attr.Name] = value;
         });
         
         return result;
@@ -28,7 +51,15 @@ angular.module('budget.syncSDB', ['ionic'])
             if (prop === 'id') {
                 continue;
             }
-            value = item[prop] ? item[prop].toString() : '';
+            
+            value = item[prop] || '';
+
+            if (typeof value === 'date') {
+                value = value.toISOString();
+            } else if (typeof value === 'object') {
+                value = JSON.parse(value);
+            }
+            
             result.push({
                 Name: prop, Value: value, Replace: true
             });
