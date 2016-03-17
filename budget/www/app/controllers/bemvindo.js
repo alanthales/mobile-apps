@@ -10,6 +10,14 @@ angular.module('budget.bemvindo', [])
         $ionicSlideBoxDelegate.slide(index);
     }
     
+    $scope.info = function() {
+        $ionicPopup.alert({
+            title: 'Atenção!',
+            okType: 'button-calm',
+            template: 'Se você já fez o cadastro, informe a mesma senha para recuperar os seus dados'
+        }).then();
+    }
+    
     $scope.validate = function(form) {
         if (!utils.hasConnection) {
             $ionicPopup.alert({
@@ -35,7 +43,15 @@ angular.module('budget.bemvindo', [])
         });
    
         SyncSDB.registerUser($rootScope.user,
-            function() {
+            function(user) {
+                if (user && user.senha !== $rootScope.user.senha) {
+                    $ionicPopup.alert({
+                        title: 'Atenção!',
+                        template: 'Já existe um usuário com este login'
+                    }).then();
+                    return;
+                }
+            
                 $rootScope.user.registrado = true;
                 $rootScope.user.grupo = [];
 
@@ -45,18 +61,11 @@ angular.module('budget.bemvindo', [])
                 $state.go('app.dashboard');
             },
             function(err) {
-                var opts = { okType: 'button-calm' };
-            
-                if (err.code === 901) {
-                    opts.title = 'Atenção!';
-                    opts.template = 'Já existe um usuário com este login. Caso você já fez este cadastro utilize a mesma senha';
-                } else {
-                    opts.title = 'Erro!';
-                    opts.template = 'Desculpe-nos, mas ocorreu algo inesperado';
-                }
-            
                 $ionicLoading.hide();
-                $ionicPopup.alert(opts).then();
+                $ionicPopup.alert({
+                    title: 'Erro!',
+                    template: 'Desculpe-nos, mas ocorreu algo inesperado'
+                }).then();
             });
     }
 });

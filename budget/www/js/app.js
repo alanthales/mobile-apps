@@ -11,7 +11,7 @@ angular.module('budget', [
     'budget.despmarc', 'budget.config', 'budget.utils', 'budget.despdepend'
 ])
 
-.run(function($ionicPlatform, $rootScope, $interval, daoFactory, utils) {
+.run(function($ionicPlatform, $rootScope, $interval, daoFactory, SyncSDB, utils) {
     var timer;
     
     $rootScope.user = _user ? JSON.parse( _user ) : {};
@@ -19,20 +19,20 @@ angular.module('budget', [
 
     function syncData() {
         if ($rootScope.user.registrado) {
-            daoFactory.getMarcadores().sync();
-            daoFactory.getDespesas().sync();
+            SyncSDB.updateUser(function() {
+                daoFactory.getMarcadores().sync();
+                daoFactory.getDespesas().sync();
+            });
         }
     };
     
     $rootScope.syncData = syncData;
     
     function onConnect() {
-        console.log('onConnect');
         timer = $interval(syncData, 60*5*1000);
     };
     
     function onDisconnect() {
-        console.log('onDisconnect');
         if (timer) {
             $interval.cancel(timer);
             timer = null;
@@ -52,9 +52,6 @@ angular.module('budget', [
         }
         document.addEventListener('online', onConnect, false);
         document.addEventListener('offline', onDisconnect, false);
-//        if (utils.hasConnection) {
-//            onConnect();
-//        }
     });
 })
 

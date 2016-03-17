@@ -31,7 +31,7 @@ angular.module('budget.syncSDB', ['ionic'])
                 if (_regx.test(value)) {
                     value = new Date(value);
                 } else if (_isJson(value)) {
-                    value = JSON.parse(value);
+                    value = JSON.parse(value, DbProxy.dateParser);
                 } else if (value === 'true' || value === 'false') {
                     value = value === 'true';
                 }
@@ -57,7 +57,7 @@ angular.module('budget.syncSDB', ['ionic'])
             if (typeof value === 'date') {
                 value = value.toISOString();
             } else if (typeof value === 'object') {
-                value = JSON.parse(value);
+                value = JSON.stringify(value);
             }
             
             result.push({
@@ -209,10 +209,10 @@ angular.module('budget.syncSDB', ['ionic'])
     
     CreateSync.prototype.getNews = function(table, callback) {
         var user = $rootScope.user,
-            groups = user.grupo ? HashMap.cloneObject(user.grupo) : [],
+            groups = user.grupo || [],
             where, sql;
         
-        groups = groups.map(function(item) { return item.login; });
+        groups = groups.map(function(item) { return item.id; });
         groups.push(user.id);
         
         where = 'where usuario in(\'' + groups.join('\',\'') + '\')',
@@ -235,12 +235,32 @@ angular.module('budget.syncSDB', ['ionic'])
     
     CreateSync.registerUser = function(user, success, error) {
         _getItem('usuarios', user.id, function(item) {
-            if (item && item.senha !== user.senha) {
-                error({ code: 901, message: 'user already exist\'s' });
+            if (item) {
+                success(item);
                 return;
             }
             _putItem('usuarios', user, success, error);
         }, error);
+    }
+    
+    CreateSync.updateUser = function(success, error) {
+        var user = $rootScope.user,
+            where, sql;
+        
+        where = 'where titular = \'' + user.titular + '\'';
+        sql = ['select * from', _getDomain('usuarios'), where].join(' ');
+        
+        _getData(sql, 
+            function(data) {
+                console.log('updateUser');
+                console.log( JSON.stringify(data) );
+                user.grupo = data;
+                success();
+            },
+            function(err) {
+                console.log('updateUser');
+                console.log( JSON.stringify(err) );
+            });
     }
     
     return CreateSync;

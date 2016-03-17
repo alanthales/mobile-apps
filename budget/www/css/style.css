@@ -51,6 +51,7 @@
     left: 0;
     width: 100%;
     bottom: 10px;
+    z-index: 1000;
 }
 
 .bottom .button-icon i.icon {
@@ -145,7 +146,7 @@ label.item p i.icon {
     font-size: 110%;
 }
 
-.slider-slide h3, .slider-pager .slider-pager-page {
+.slider-slide h3, .slider-slide a, .slider-pager .slider-pager-page {
     color: #fff;
 }
 
