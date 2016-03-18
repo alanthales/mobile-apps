@@ -245,22 +245,18 @@ angular.module('budget.syncSDB', ['ionic'])
     
     CreateSync.updateUser = function(success, error) {
         var user = $rootScope.user,
+            titular = user.titular || user.id,
             where, sql;
         
-        where = 'where titular = \'' + user.titular + '\'';
-        sql = ['select * from', _getDomain('usuarios'), where].join(' ');
-        
-        _getData(sql, 
-            function(data) {
-                console.log('updateUser');
-                console.log( JSON.stringify(data) );
-                user.grupo = data;
-                success();
-            },
-            function(err) {
-                console.log('updateUser');
-                console.log( JSON.stringify(err) );
+        where = "where titular = '" + titular + "' or itemName() = '" + titular + "'";
+        sql = ["select * from", _getDomain("usuarios"), where].join(" ");
+   
+        _getData(sql, function(data) {
+            user.grupo = data.filter(function(item) {
+                return item.id !== user.id;
             });
+            success();
+        }, error);
     }
     
     return CreateSync;

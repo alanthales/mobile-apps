@@ -44,12 +44,17 @@ angular.module('budget.bemvindo', [])
    
         SyncSDB.registerUser($rootScope.user,
             function(user) {
-                if (user && user.senha !== $rootScope.user.senha) {
-                    $ionicPopup.alert({
-                        title: 'Atenção!',
-                        template: 'Já existe um usuário com este login'
-                    }).then();
-                    return;
+                if (user) {
+                    if (user.senha != $rootScope.user.senha) {
+                        $ionicLoading.hide();
+                        $ionicPopup.alert({
+                            title: 'Atenção!',
+                            okType: 'button-calm',
+                            template: 'Já existe um usuário com este login'
+                        }).then();
+                        return;
+                    }
+                    $rootScope.user.titular = user.titular;
                 }
             
                 $rootScope.user.registrado = true;
