@@ -24,7 +24,6 @@ angular.module('budget.despdepend', [])
     });
     
     $scope.loadMore = function() {
-        console.log('passou');
         $scope.limitData += limit;
         $scope.$broadcast('scroll.infiniteScrollComplete');
     };    
