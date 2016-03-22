@@ -1,7 +1,9 @@
 angular.module('budget.despdepend', [])
 .controller('DespDependenteCtrl', function($scope, $stateParams, daoFactory, $rootScope) {    
-    var despDependent = [], desps = {};
-
+    var limit = 12,
+        despDependent = [];
+            
+    $scope.limitData = limit;
     $scope.marcadores = daoFactory.getMarcadores();
     
     $scope.dependente =
@@ -15,19 +17,15 @@ angular.module('budget.despdepend', [])
         $scope.mesesDesp = despDependent        
             .groupBy({ $sum: 'valor', alias: 'total' }, ['ano', 'mes'])
             .orderBy({ ano: 'desc', mes: 'desc' });
+        
+        $scope.despesas = despDependent
+            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
+            .orderBy({ valor: 'desc' });
     });
     
-    $scope.getDespesas = function(year, month) {
-        var key = ''+year+month;
-        
-        if (desps[key])
-            return desps[key];
-        
-        desps[key] = despDependent
-            .query({ ano: year, mes: month })
-            .groupBy({ $sum: 'valor' }, ['marcadores'])
-            .orderBy({ valor: 'desc' });
-        
-        return desps[key];
-    }
+    $scope.loadMore = function() {
+        console.log('passou');
+        $scope.limitData += limit;
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    };    
 });

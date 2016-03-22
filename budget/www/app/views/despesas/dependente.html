@@ -12,12 +12,12 @@
                 Nenhuma despesa
             </div>
         </div>        
-        <div class="list card" ng-repeat="mesDesp in mesesDesp track by $index">
+        <div class="list card" ng-repeat="mesDesp in mesesDesp | limitTo: limitData track by $index">
             <div class="item calm">
                 <span>{{$root.listaMes[mesDesp.mes]}}, {{mesDesp.ano}}</span>
             </div>
             <div class="item">
-                <div class="item-set" ng-repeat="item in getDespesas(mesDesp.ano, mesDesp.mes) track by $index">
+                <div class="item-set" ng-repeat="item in despesas | filter : {ano: mesDesp.ano, mes: mesDesp.mes} : true track by $index">
                     <div class="item-right">
                         {{item.valor | currency:"R$"}}
                     </div>
@@ -32,5 +32,6 @@
                 <span class="item-right">Total: {{mesDesp.total | currency:"R$"}}</span>
             </div>
         </div>
+        <ion-infinite-scroll ng-if="mesesDesp.length > limitData" on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>
