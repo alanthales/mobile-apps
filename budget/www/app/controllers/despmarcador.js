@@ -1,8 +1,8 @@
 angular.module('budget.despmarc', [])
 .controller('DespMarcadorCtrl', function($scope, $stateParams, daoFactory) {
-    var limit = 50;
-    
-    $scope.limitData = limit;
+//    var limit = 50;
+//    
+//    $scope.limitData = limit;
     
     daoFactory.getMarcadores(function(results) {
         var index = results.indexOfKey('id', parseInt($stateParams.marcadorId));
@@ -16,16 +16,16 @@ angular.module('budget.despmarc', [])
             .orderBy({ ano: 'desc', mes: 'desc', dia: 'asc' });
     });
     
-    $scope.loadMore = function() {
-        $scope.limitData += limit;
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-    };
+//    $scope.loadMore = function() {
+//        $scope.limitData += limit;
+//        $scope.$broadcast('scroll.infiniteScrollComplete');
+//    };
     
     $scope.getDate = function(item) {
         return new Date(item.ano, item.mes, item.dia);
     }
     
-    $scope.getTotal = function(ano, mes) {
-        return $scope.despesas.query({ ano: ano, mes: mes }).compute({ $sum: 'valor' }).valor;
-    }
+//    $scope.getTotal = function(ano, mes) {
+//        return $scope.despesas.query({ ano: ano, mes: mes }).compute({ $sum: 'valor' }).valor;
+//    }
 });
