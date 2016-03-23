@@ -119,6 +119,22 @@ angular.module('budget.syncSDB', ['ionic'])
         });
     };
     
+    var _deleteAttr = function(table, itemId, attrName, success, error) {
+        var params = { DomainName: _getDomain(table), ItemName: itemId.toString(), Attributes: [] },
+            obj = { Name: attrName };
+        
+        params.Attributes.push(obj);
+        
+        _db.deleteAttributes(params, function(err, data) {
+            if (err) {
+                console.log( JSON.stringify(err) );
+                error(err);
+                return;
+            }
+            success();
+        });
+    };
+    
     var _deleteItems = function(table, items, success, error) {
         var params = { DomainName: _getDomain(table), Items: [] },
             obj;
@@ -245,6 +261,11 @@ angular.module('budget.syncSDB', ['ionic'])
         _getItem(table, itemId, success || cb, error || cb);
     }
     
+    CreateSync.deleteAttr = function(table, itemId, attrName, success, error) {
+        var cb = function() {};
+        _deleteAttr(table, itemId, attrName, success || cb, error || cb);
+    }
+    
     CreateSync.registerUser = function(user, success, error) {
         _getItem('usuarios', user.id, function(item) {
             if (item) {
@@ -264,7 +285,6 @@ angular.module('budget.syncSDB', ['ionic'])
         sql = ["select * from", _getDomain("usuarios"), where].join(" ");
    
         _getData(sql, function(data) {
-            console.log('updateUser', data);
             user.grupo = data.filter(function(item) {
                 return item.id != user.id;
             });

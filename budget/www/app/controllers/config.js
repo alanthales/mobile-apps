@@ -2,10 +2,7 @@ angular.module('budget.config', [])
 .controller('ConfigCtrl', function($scope, $rootScope, $ionicPopup, utils, SyncSDB) {
     $scope.usuario = HashMap.cloneObject($rootScope.user);
     
-    $scope.groupModified = false;
-    
     $scope.cancel = function() {
-        $scope.groupModified = false;
         $scope.config.form.$setPristine();
         $scope.usuario = HashMap.cloneObject($rootScope.user);
     }
@@ -40,20 +37,10 @@ angular.module('budget.config', [])
             return;
         }
         
-        function progress() {
-            if (total > 0) {
-                total--;
-                return;
-            }
-            delete $scope.usuario.senhaAtual;
-            $rootScope.user = HashMap.cloneObject($scope.usuario);
-            utils.lStorage.setItem('usuario', $rootScope.user);
-            document.forms[form.$name].submit();
-        };
-        
-        $scope.usuario.grupo.forEach(function(user) {
-            SyncSDB.putItem('usuarios', user, progress, error);
-        });
+        delete $scope.usuario.senhaAtual;
+        $rootScope.user = HashMap.cloneObject($scope.usuario);
+        utils.lStorage.setItem('usuario', $rootScope.user);
+        document.forms[form.$name].submit();
     }
     
     $scope.addUser = function() {
@@ -99,20 +86,24 @@ angular.module('budget.config', [])
             ]
         });
         
+        function success(user) {
+            if (user) {
+                $ionicPopup.alert({
+                    title: 'Atenção!',
+                    okType: 'button-calm',
+                    template: 'Já existe um usuário com este login'
+                }).then();
+                return;
+            }
+            SyncSDB.putItem('usuarios', $scope.newUser, function() {
+                $rootScope.user.grupo.push($scope.newUser);
+                utils.lStorage.setItem('usuario', $rootScope.user);
+            }, error);
+        };
+        
         prompt.then(function(res) {
             if (res) {
-                SyncSDB.getItem('usuarios', $scope.newUser.id, function(user) {
-                    if (user) {
-                        $ionicPopup.alert({
-                            title: 'Atenção!',
-                            okType: 'button-calm',
-                            template: 'Já existe um usuário com este login'
-                        }).then();
-                        return;
-                    }
-                    $scope.usuario.grupo.push($scope.newUser);
-                    $scope.groupModified = true;
-                }, error);
+                SyncSDB.getItem('usuarios', $scope.newUser.id, success, error);
             }
         });
     }
@@ -127,31 +118,25 @@ angular.module('budget.config', [])
             return;
         }
 
-        var confirm = $ionicPopup.confirm({
-            title: 'Atenção!',
-            okType: 'button-calm',
-            okText: 'Sim',
-            cancelText: 'Não',
-            template: 'Deseja realmente excluir este dependente?'
-        });
+        var index = index,
+            user = $rootScope.user.grupo[index],
+            confirm = $ionicPopup.confirm({
+                title: 'Atenção!',
+                okType: 'button-calm',
+                okText: 'Sim',
+                cancelText: 'Não',
+                template: 'Deseja realmente excluir este dependente?'
+            });
+        
+        function success() {
+            $rootScope.user.grupo.splice(index, 1);
+            utils.lStorage.setItem('usuario', $rootScope.user);
+        };
         
         confirm.then(function(res) {
             if (res) {
-                $scope.usuario.grupo.splice(index, 1);
-                $scope.groupModified = true;
+                SyncSDB.deleteAttr('usuarios', user.id, 'titular', success, error);
             }
         });
-        
-//        function progress() {
-//            if (total > 0) {
-//                total--;
-//                return;
-//            }
-//            utils.lStorage.setItem('usuario', $rootScope.user);
-//        };
-//        
-//        $scope.usuario.grupo.forEach(function(user) {
-//            SyncSDB.putItem('usuarios', user, progress, error);
-//        });
     }
 });

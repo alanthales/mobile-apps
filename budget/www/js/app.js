@@ -28,7 +28,7 @@ angular.module('budget', [
             if (typeof callback === 'function') {
                 callback();
             }
-        }, function() {});
+        }, onDisconnect);
     };
     
     $rootScope.syncData = syncData;
