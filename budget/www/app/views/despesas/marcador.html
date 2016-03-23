@@ -13,17 +13,16 @@
             </div>
         </div>
         <div class="list">
-            <div ng-repeat="item in despesas | limitTo:limitData">
-                <div class="item item-divider" ng-if="$index === 0 || item.mes !== despesas[$index-1].mes">
-                    {{$root.listaMes[item.mes]}}
-                    <span class="item-right">={{getTotal(item.ano, item.mes) | currency:'R$'}}</span>
+            <div collection-repeat="item in despesas | groupByMonthYear" item-height="item.isDivider ? 37 : 53">
+                <div class="item item-divider ng-hide" ng-show="item.isDivider">
+                    {{$root.listaMes[item.month]}}
+                    <span class="item-right">={{item.total | currency:'R$'}}</span>
                 </div>
-                <div class="item">
+                <div class="item" ng-hide="item.isDivider">
                     {{getDate(item) | date:'dd/MM/yyyy'}}
                     <span class="item-right">{{item.valor | currency:'R$'}}</span>
                 </div>
             </div>
         </div>
-        <ion-infinite-scroll ng-if="despesas.length > limitData" on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>
