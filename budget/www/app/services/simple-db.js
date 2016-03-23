@@ -21,7 +21,7 @@ angular.module('budget.syncSDB', ['ionic'])
     };
     
     var _parseItem = function(item, itemId) {
-        var result = { id: itemId || parseInt(item.Name) },
+        var result = { id: itemId || item.Name },
             value;
 
         item.Attributes.forEach(function(attr) {
@@ -196,7 +196,9 @@ angular.module('budget.syncSDB', ['ionic'])
             }
         }
 
-        toSave.putRange(toUpdate);
+        if (toUpdate.length > 0) {
+            toSave.putRange(toUpdate);
+        }
         
         for (i = 0; i < toInsert.length; i++) {
             if (toSave.indexOfKey('id', parseInt(toInsert[i].id)) < 0) {
@@ -262,6 +264,7 @@ angular.module('budget.syncSDB', ['ionic'])
         sql = ["select * from", _getDomain("usuarios"), where].join(" ");
    
         _getData(sql, function(data) {
+            console.log('updateUser', data);
             user.grupo = data.filter(function(item) {
                 return item.id != user.id;
             });

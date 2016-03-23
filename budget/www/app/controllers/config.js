@@ -141,5 +141,17 @@ angular.module('budget.config', [])
                 $scope.groupModified = true;
             }
         });
+        
+//        function progress() {
+//            if (total > 0) {
+//                total--;
+//                return;
+//            }
+//            utils.lStorage.setItem('usuario', $rootScope.user);
+//        };
+//        
+//        $scope.usuario.grupo.forEach(function(user) {
+//            SyncSDB.putItem('usuarios', user, progress, error);
+//        });
     }
 });

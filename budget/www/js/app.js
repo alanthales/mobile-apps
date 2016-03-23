@@ -17,14 +17,18 @@ angular.module('budget', [
     $rootScope.user = _user ? JSON.parse( _user ) : {};
     $rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-    function syncData() {
-        console.log('syncronizing data...');
-        if ($rootScope.user.registrado) {
-            SyncSDB.updateUser(function() {
-                daoFactory.getMarcadores().sync();
-                daoFactory.getDespesas().sync();
-            });
+    function syncData(callback) {
+        if (!$rootScope.user.registrado) {
+            return;
         }
+        console.log('syncronizing data...');
+        SyncSDB.updateUser(function() {
+            daoFactory.getMarcadores().sync();
+            daoFactory.getDespesas().sync();
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }, function() {});
     };
     
     $rootScope.syncData = syncData;

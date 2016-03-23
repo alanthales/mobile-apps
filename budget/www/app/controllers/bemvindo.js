@@ -60,10 +60,10 @@ angular.module('budget.bemvindo', [])
                 $rootScope.user.registrado = true;
                 $rootScope.user.grupo = [];
 
-                utils.lStorage.setItem('usuario', $rootScope.user);
-
-                $rootScope.syncData();
-                $state.go('app.dashboard');
+                $rootScope.syncData(function() {
+                    utils.lStorage.setItem('usuario', $rootScope.user);
+                    $state.go('app.dashboard');
+                });
             },
             function(err) {
                 $ionicLoading.hide();
