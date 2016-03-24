@@ -21,6 +21,8 @@
             </div>
         </div>
         
+        <donate name="paypal" lnk-class="calm" template="./app/templates/donate.html"></donate>
+        
         <div class="list card" ng-if="mesAtual.length">
             <div class="item ">
                 <h2 class="calm">Mês Atual</h2>
@@ -33,7 +35,7 @@
                         {{item.valor | currency:"R$"}} <i class="icon icon-small {{item.class}} {{item.icon}}"></i>
                     </div>
                     <div class="marcadores">
-                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
+                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores" ng-click="goTo(mark)">
                             {{marcadores.getById(mark).descricao}}
                         </span>
                     </div>

@@ -1,5 +1,5 @@
 angular.module('budget.dashboard', [])
-.controller('DashboardCtrl', function($scope, daoFactory, $ionicHistory) {
+.controller('DashboardCtrl', function($scope, daoFactory, $ionicHistory, $state) {
     $ionicHistory.clearHistory();
     
     $scope.dtHoje = new Date();
@@ -37,4 +37,8 @@ angular.module('budget.dashboard', [])
             }
         });
     });
+    
+    $scope.goTo = function(marcadorId) {
+        $state.go('app.despmarcador', { marcadorId: marcadorId });
+    }
 });

@@ -1,14 +1,14 @@
 <div class="modal">
-    <div class="bar bar-header bar-assertive">
+    <div class="bar bar-header bar-calm">
         <div class="h1 title">Colabore</div>
-        <button class="button button-clear" ng-click="donate.closeModal()">
+        <button class="button button-clear" ng-click="$parent.closeModal()">
             <i class="icon ion-android-close"></i>
         </button>
     </div>
     <ion-content class="has-header">
         <div class="list list-inset">
             <div class="item item-body">
-                <h2 class="assertive">Ajude-nos a manter o aplicativo grátis</h2>
+                <h2 class="calm">Ajude-nos a manter o aplicativo grátis</h2>
                 <p>
                     Você pode doar quando quiser, faça parte deste projeto.
                 </p>
@@ -16,13 +16,13 @@
             
             <div class="item">
                 Para doar R$ 5,00
-                <input type="image" src="img/btn_donate.gif" border="0" name="submit" class="float-right" ng-click="goDonate($event)" data-action="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TCG4ULCARSP3Q">
+                <input type="image" src="img/btn_donate.gif" border="0" name="submit" class="item-right" ng-click="$parent.goDonate($event)" data-action="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MZF3X727NZY88">
                 <img alt="" border="0" src="img/pixel.gif" width="1" height="1">
             </div>
             
             <div class="item">
                 Para doar outro valor
-                <input type="image" src="img/btn_donate.gif" border="0" name="submit" class="float-right" ng-click="goDonate($event)" data-action="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4QAFPKWJ2AD46">
+                <input type="image" src="img/btn_donate.gif" border="0" name="submit" class="item-right" ng-click="$parent.goDonate($event)" data-action="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NEF4BRP9RE3HG">
                 <img alt="" border="0" src="img/pixel.gif" width="1" height="1">
             </div>
 
