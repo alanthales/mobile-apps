@@ -13,12 +13,8 @@
             </div>
         </div>
         <div class="list">
-            <div collection-repeat="item in despesas | groupByMonthYear" item-height="item.isDivider ? 37 : 53">
-                <div class="item item-divider ng-hide" ng-show="item.isDivider">
-                    {{$root.listaMes[item.month]}}
-                    <span class="item-right">={{item.total | currency:'R$'}}</span>
-                </div>
-                <div class="item" ng-hide="item.isDivider">
+        <div collection-repeat="item in despesas | groupByMonthYear:'mes':'ano':'valor'" divider-month-repeat show-total>
+                <div class="item teste">
                     {{getDate(item) | date:'dd/MM/yyyy'}}
                     <span class="item-right">{{item.valor | currency:'R$'}}</span>
                 </div>

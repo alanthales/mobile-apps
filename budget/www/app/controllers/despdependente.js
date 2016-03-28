@@ -12,19 +12,21 @@ angular.module('budget.despdepend', [])
         }).nome;
 
     daoFactory.getDespesas(function(results) {
-        despDependent = results.query({ usuario: $stateParams.dependenteId });
+//        despDependent = results.query({ usuario: $stateParams.dependenteId });
+//        
+//        $scope.mesesDesp = despDependent        
+//            .groupBy({ $sum: 'valor', alias: 'total' }, ['ano', 'mes'])
+//            .orderBy({ ano: 'desc', mes: 'desc' });
         
-        $scope.mesesDesp = despDependent        
-            .groupBy({ $sum: 'valor', alias: 'total' }, ['ano', 'mes'])
-            .orderBy({ ano: 'desc', mes: 'desc' });
+        $scope.despesas = results
+            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'], { usuario: $stateParams.dependenteId })
+            .orderBy({ ano: 'desc', mes: 'desc', valor: 'desc' });
         
-        $scope.despesas = despDependent
-            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
-            .orderBy({ valor: 'desc' });
+//        console.log($scope.despesas)
     });
     
-    $scope.loadMore = function() {
-        $scope.limitData += limit;
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-    };    
+//    $scope.loadMore = function() {
+//        $scope.limitData += limit;
+//        $scope.$broadcast('scroll.infiniteScrollComplete');
+//    };    
 });

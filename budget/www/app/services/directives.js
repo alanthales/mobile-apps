@@ -61,4 +61,27 @@ angular.module('budget.directives', ['ionic'])
         }
     }
 })
-;
+
+.directive('dividerMonthRepeat', function(){
+    return {
+        priority: 1001,
+        compile: compile
+    }
+    
+    function compile(element, attr) {
+        console.log(attr.showYear);
+        var height = attr.itemHeight || '53',
+            showYear = attr.showYear != null,
+            showTotal = attr.showTotal != null,
+            yearSpan = showYear ? ', {{item.year}}' : '',
+            totalSpan = showTotal ? '<span class="item-right">={{item.total | currency:"R$"}}</span>' : '';
+                    
+        attr.$set('itemHeight', 'item.isDivider ? 37 : ' + height);
+        element.children().attr('ng-hide', 'item.isDivider');        
+        element.prepend([
+            '<div class="item item-divider ng-hide" ng-show="item.isDivider">',
+            '   {{$root.listaMes[item.month]}}', yearSpan, totalSpan,             
+            '</div>'
+        ].join(''));        
+    }
+});

@@ -6,18 +6,15 @@
         </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content>
-        <div class="list card" ng-if="!mesesDesp.length">
+        <div class="list card" ng-if="!despesas.length">
             <div class="item item-icon-left">
                 <i class="icon ion-alert-circled"></i>
                 Nenhuma despesa
             </div>
         </div>        
-        <div class="list card" ng-repeat="mesDesp in mesesDesp | limitTo: limitData track by $index">
-            <div class="item calm">
-                <span>{{$root.listaMes[mesDesp.mes]}}, {{mesDesp.ano}}</span>
-            </div>
-            <div class="item">
-                <div class="item-set" ng-repeat="item in despesas | filter : {ano: mesDesp.ano, mes: mesDesp.mes} : true track by $index">
+        <div class="list">
+            <div collection-repeat="item in despesas | groupByMonthYear:'mes':'ano':'valor'" divider-month-repeat show-year show-total>
+                <div class="item">
                     <div class="item-right">
                         {{item.valor | currency:"R$"}}
                     </div>
@@ -25,13 +22,9 @@
                         <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
                             {{marcadores.getById(mark).descricao}}
                         </span>
-                    </div>
+                    </div>                    
                 </div>
-            </div>            
-            <div class="item calm">
-                <span class="item-right">Total: {{mesDesp.total | currency:"R$"}}</span>
             </div>
         </div>
-        <ion-infinite-scroll ng-if="mesesDesp.length > limitData" on-infinite="loadMore()" distance="5%"></ion-infinite-scroll>
     </ion-content>
 </ion-view>
