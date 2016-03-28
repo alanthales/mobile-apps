@@ -60,7 +60,6 @@ angular.module('budget.marcadores', [])
         }
         $scope.marcadores.save(item);
         $scope.marcadores.post();
-        $scope.marcadores.refresh();
         $scope.modal.hide();
     }
 });

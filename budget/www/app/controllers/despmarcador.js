@@ -1,6 +1,6 @@
 angular.module('budget.despmarc', [])
 .controller('DespMarcadorCtrl', function($scope, $stateParams, daoFactory) {
-//    var limit = 50;
+//    var limit = 25;
 //    
 //    $scope.limitData = limit;
     

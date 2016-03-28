@@ -1,10 +1,9 @@
 angular.module('budget.filters', ['ionic'])
 
-.filter('groupByMonthYear', function(){
+.filter('groupByMonthYear', function() {
     var dividers = {};
     
     var _setTotal = function(hasValue, dividerId, total) {
-
         if (hasValue && dividers[dividerId]) 
             dividers[dividerId].total = total;
     }            
@@ -41,7 +40,8 @@ angular.module('budget.filters', ['ionic'])
                 }
 
                 output.push(dividers[dividerId]);
-            }            
+            }
+            
             output.push(item);
             
             if (hasValue)
@@ -55,4 +55,4 @@ angular.module('budget.filters', ['ionic'])
         
         return output;
     };
-})
+});

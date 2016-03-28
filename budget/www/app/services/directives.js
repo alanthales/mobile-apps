@@ -44,23 +44,59 @@ angular.module('budget.directives', ['ionic'])
     }
 })
 
-.directive('compareTo', function() {
+.directive('donate', ['$ionicModal', function($ionicModal) {
     return {
-        require: "ngModel",
+        restrict : 'E',
+        transclude: true,
         scope: {
-            otherModelValue: "=compareTo"
+            hidden: '@',
+            lnkClass: '@'
         },
-        link: function(scope, element, attributes, ngModel) {
-            ngModel.$validators.compareTo = function(modelValue) {
-                return modelValue == scope.otherModelValue;
-            };
- 
-            scope.$watch("otherModelValue", function() {
-                ngModel.$validate();
+        template:
+            [
+                '<div class="list list-inset" ng-hide="hidden">',
+                '    <div class="item item-divider">',
+                '        Ajude-nos a manter o projeto',
+                '        <a href="#" class="item-right dark" ng-click="hidden = true">',
+                '            <i class="icon ion-android-close"></i>',
+                '        </a>',
+                '    </div>',
+                '    <div class="item">',
+                '        Toque <a href="#" class="{{lnkClass}}" ng-click="openModal($event)">aqui</a> para ajudar.',
+                '    </div>',
+                '</div>'
+            ].join(''),
+
+        link: function (scope, element, attrs) {
+            var name = attrs.name || 'selModal';
+            
+            $ionicModal.fromTemplateUrl(attrs.template, {
+                scope: scope
+            }).then(function(modal) {
+                scope[name] = modal;
             });
+
+            scope.$on('$destroy', function() {
+                scope[name].remove();
+            });
+            
+            scope.openModal = function(event) {
+                event.preventDefault();
+                scope[name].show();
+            }
+
+            scope.closeModal = function() {
+                scope[name].hide();
+            }
+            
+            scope.goDonate = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(e.target.dataset.action, '_system');
+            }
         }
     }
-})
+}])
 
 .directive('dividerMonthRepeat', function(){
     return {

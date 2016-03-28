@@ -21,7 +21,7 @@ angular.module('budget.syncSDB', ['ionic'])
     };
     
     var _parseItem = function(item, itemId) {
-        var result = { id: item.Name || itemId },
+        var result = { id: itemId || item.Name },
             value;
 
         item.Attributes.forEach(function(attr) {
@@ -58,6 +58,8 @@ angular.module('budget.syncSDB', ['ionic'])
                 value = value.toISOString();
             } else if (typeof value === 'object') {
                 value = JSON.stringify(value);
+            } else {
+                value = value.toString();
             }
             
             result.push({
@@ -114,6 +116,22 @@ angular.module('budget.syncSDB', ['ionic'])
             });
             
             success(items);
+        });
+    };
+    
+    var _deleteAttr = function(table, itemId, attrName, success, error) {
+        var params = { DomainName: _getDomain(table), ItemName: itemId.toString(), Attributes: [] },
+            obj = { Name: attrName };
+        
+        params.Attributes.push(obj);
+        
+        _db.deleteAttributes(params, function(err, data) {
+            if (err) {
+                console.log( JSON.stringify(err) );
+                error(err);
+                return;
+            }
+            success();
         });
     };
     
@@ -179,7 +197,7 @@ angular.module('budget.syncSDB', ['ionic'])
     
     CreateSync.prototype.sendData = function(table, toInsert, toUpdate, toDelete, callback) {
         var self = this,
-            toSave = toInsert.concat(toUpdate),
+            toSave = new HashMap(),
             total = 2, // 2 operaçoes (incluir/atualizar e excluir)
             i;
 
@@ -191,6 +209,16 @@ angular.module('budget.syncSDB', ['ionic'])
             total--;
             if (total === 0) {
                 callback();
+            }
+        }
+
+        if (toUpdate.length > 0) {
+            toSave.putRange(toUpdate);
+        }
+        
+        for (i = 0; i < toInsert.length; i++) {
+            if (toSave.indexOfKey('id', parseInt(toInsert[i].id)) < 0) {
+                toSave.put(toInsert[i]);
             }
         }
 
@@ -233,6 +261,11 @@ angular.module('budget.syncSDB', ['ionic'])
         _getItem(table, itemId, success || cb, error || cb);
     }
     
+    CreateSync.deleteAttr = function(table, itemId, attrName, success, error) {
+        var cb = function() {};
+        _deleteAttr(table, itemId, attrName, success || cb, error || cb);
+    }
+    
     CreateSync.registerUser = function(user, success, error) {
         _getItem('usuarios', user.id, function(item) {
             if (item) {
@@ -253,7 +286,7 @@ angular.module('budget.syncSDB', ['ionic'])
    
         _getData(sql, function(data) {
             user.grupo = data.filter(function(item) {
-                return item.id !== user.id;
+                return item.id != user.id;
             });
             success();
         }, error);
