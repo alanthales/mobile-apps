@@ -11,7 +11,6 @@ angular.module('budget.filters', ['ionic'])
     return function(input, monthProp, yearProp, valueProp) {
         if (!input || !input.length) return;
         
-        
         var output = [], 
             total = 0,
             prevMonth = 0,

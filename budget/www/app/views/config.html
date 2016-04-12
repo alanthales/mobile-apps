@@ -51,7 +51,7 @@
             </div>
         </form>
     </ion-content>
-    <ion-footer-bar class="bar-light" ng-hide="!groupModified" ng-show="config.form.$dirty || groupModified">
+    <ion-footer-bar class="bar-light" ng-show="config.form.$dirty">
         <button type="button" class="button button-calm button-outline" ng-click="cancel()">Discartar</button>
         <button type="button" class="button button-calm" ng-click="submit()">Salvar</button>
     </ion-footer-bar>

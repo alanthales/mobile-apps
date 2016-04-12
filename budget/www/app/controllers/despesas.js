@@ -67,7 +67,7 @@ angular.module('budget.despesas', [])
     
     $scope.editItem = function() {
         var item = $scope.selection;
-        $scope.selection = HashMap.cloneObject($scope.menu.selectedItem);
+        $scope.selection = ArrayMap.cloneObject($scope.menu.selectedItem);
         $scope.datepickerObject.inputDate = new Date(item.ano, item.mes, item.dia);
         $scope.modal.show();
         $scope.menu.closeMenu();

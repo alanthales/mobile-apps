@@ -1,12 +1,26 @@
 angular.module('budget.dashboard', [])
 .controller('DashboardCtrl', function($scope, daoFactory, $ionicHistory, $state) {
     $ionicHistory.clearHistory();
-    
     $scope.dtHoje = new Date();
-    $scope.dtAnterior = new Date();
     
-    $scope.dtAnterior.setMonth($scope.dtHoje.getMonth() - 1);
+    var ano = $scope.dtHoje.getFullYear(),
+        mes = $scope.dtHoje.getMonth(),
+        dia = 31;
     
+    if ([0,2,4,6,7,9,11].indexOf(mes) == -1) {
+        dia = 30;
+    } else if (mes === 1) {
+        dia = ano % 4 == 0 ? 29 : 28;
+    }
+    
+    if (mes === 0) {
+        mes = 11;
+        ano--;
+    } else {
+        mes--;
+    }
+    
+    $scope.dtAnterior = new Date(ano, mes, dia);
     $scope.marcadores = daoFactory.getMarcadores();
     
     daoFactory.getDespesas(function(results) {

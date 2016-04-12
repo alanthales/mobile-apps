@@ -88,11 +88,16 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 12px;
+    font-size: .8em;
     color: #fff;
     padding: 1px 2px;
     border-radius: .4em;
     margin-right: 2px;
+}
+
+.card .item .marcador {
+    font-size: .95em;
+    border-radius: .3em;
 }
 
 .bg-gray {

@@ -197,7 +197,7 @@ angular.module('budget.syncSDB', ['ionic'])
     
     CreateSync.prototype.sendData = function(table, toInsert, toUpdate, toDelete, callback) {
         var self = this,
-            toSave = new HashMap(),
+            toSave = new ArrayMap(),
             total = 2, // 2 operaçoes (incluir/atualizar e excluir)
             i;
 

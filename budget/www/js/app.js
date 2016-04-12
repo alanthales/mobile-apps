@@ -58,7 +58,6 @@ angular.module('budget', [
         }
         document.addEventListener('online', onConnect, false);
         document.addEventListener('offline', onDisconnect, false);
-        $rootScope.syncData();
     });
 })
 

@@ -47,7 +47,6 @@ angular.module('budget.directives', ['ionic'])
 .directive('donate', ['$ionicModal', function($ionicModal) {
     return {
         restrict : 'E',
-        transclude: true,
         scope: {
             hidden: '@',
             lnkClass: '@'
@@ -105,7 +104,6 @@ angular.module('budget.directives', ['ionic'])
     }
     
     function compile(element, attr) {
-        console.log(attr.showYear);
         var height = attr.itemHeight || '53',
             showYear = attr.showYear != null,
             showTotal = attr.showTotal != null,
