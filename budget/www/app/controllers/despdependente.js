@@ -7,9 +7,9 @@ angular.module('budget.despdepend', [])
     $scope.marcadores = daoFactory.getMarcadores();
     
     $scope.dependente =
-        $rootScope.user.grupo.find(function(depend){
+        $rootScope.user.grupo.filter(function(depend){
             return depend.email == $stateParams.dependenteId
-        }).nome;
+        })[0].nome;
 
     daoFactory.getDespesas(function(results) {
 //        despDependent = results.query({ usuario: $stateParams.dependenteId });
