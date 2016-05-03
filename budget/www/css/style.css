@@ -121,6 +121,10 @@
     font-size: 14px;
 }
 
+.item-right .icon {
+    font-size: 24px;
+}
+
 label.item p i.icon {
     margin-top: -8px;
 }
