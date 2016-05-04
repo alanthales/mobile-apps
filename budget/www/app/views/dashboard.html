@@ -59,7 +59,7 @@
                         {{item.valor | currency:"R$"}}
                     </div>
                     <div class="marcadores">
-                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
+                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores" ng-click="goTo(mark)">
                             {{marcadores.getById(mark).descricao}}
                         </span>
                     </div>

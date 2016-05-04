@@ -11,7 +11,7 @@ angular.module('budget', [
     'budget.despmarc', 'budget.config', 'budget.utils', 'budget.despdepend', 'budget.filters'
 ])
 
-.run(function($ionicPlatform, $rootScope, daoFactory, SyncSDB, utils) {
+.run(function($ionicPlatform, $rootScope, daoFactory, SyncSDB) {
     var timer;
     
     $rootScope.user = _user ? JSON.parse( _user ) : {};
@@ -34,7 +34,7 @@ angular.module('budget', [
     $rootScope.syncData = syncData;
     
     function onConnect() {
-        var ms = 60*2*1000;
+        var ms = 60*2.5*1000;
         timer = setInterval(syncData, ms);
     };
     
@@ -58,6 +58,7 @@ angular.module('budget', [
         }
         document.addEventListener('online', onConnect, false);
         document.addEventListener('offline', onDisconnect, false);
+//        $rootScope.syncData();
     });
 })
 

@@ -282,7 +282,7 @@ angular.module('budget.syncSDB', ['ionic'])
             where, sql;
         
         where = "where titular = '" + titular + "' or itemName() = '" + titular + "'";
-        sql = ["select * from", _getDomain("usuarios"), where].join(" ");
+        sql = ["select id, nome, titular from", _getDomain("usuarios"), where].join(" ");
    
         _getData(sql, function(data) {
             user.grupo = data.filter(function(item) {

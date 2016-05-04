@@ -39,7 +39,7 @@
                     </div>
                     <div class="slide-right-left" ng-switch-when="desp">
                         <back-button title="Voltar" go-back="goBack()"></back-button>
-                        <div ng-if="$root.user.titular">
+                        <div ng-if="!$root.user.titular">
                             <a class="item item-icon-left item-icon-right" ng-click="openSub('marc')">
                                 <i class="icon icon-small ion-pricetags"></i>
                                 <i class="icon icon-small ion-chevron-right"></i>
@@ -51,7 +51,7 @@
                                 Por Dependentes
                             </a>
                         </div>
-                        <markers marks="marcadores.data" ng-if="!$root.user.titular"></markers>
+                        <markers marks="marcadores.data" ng-if="$root.user.titular"></markers>
                     </div>  
                     <div class="slide-right-left" ng-switch-when="marc">
                         <back-button title="Voltar" go-back="goBack()"></back-button>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="slide-right-left" ng-switch-when="dept">
                         <back-button title="Voltar" go-back="goBack()"></back-button>
-                        <a class="item item-icon-left" ng-repeat="dependent in $root.user.grupo track by $index" menu-close href="#/app/despdependente/{{dependent.email}}">
+                        <a class="item item-icon-left" ng-repeat="dependent in $root.user.grupo track by $index" menu-close href="#/app/despdependente/{{dependent.id}}">
                             <i class="icon icon-small ion-person"></i>
                             {{dependent.nome}}
                         </a>                        

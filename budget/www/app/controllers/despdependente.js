@@ -1,32 +1,17 @@
 angular.module('budget.despdepend', [])
 .controller('DespDependenteCtrl', function($scope, $stateParams, daoFactory, $rootScope) {    
-    var limit = 12,
-        despDependent = [];
-            
-    $scope.limitData = limit;
     $scope.marcadores = daoFactory.getMarcadores();
+    
+    console.log($stateParams.dependenteId);
     
     $scope.dependente =
         $rootScope.user.grupo.filter(function(depend){
-            return depend.email == $stateParams.dependenteId
-        })[0].nome;
+            return depend.id == $stateParams.dependenteId
+        })[0];
 
     daoFactory.getDespesas(function(results) {
-//        despDependent = results.query({ usuario: $stateParams.dependenteId });
-//        
-//        $scope.mesesDesp = despDependent        
-//            .groupBy({ $sum: 'valor', alias: 'total' }, ['ano', 'mes'])
-//            .orderBy({ ano: 'desc', mes: 'desc' });
-        
         $scope.despesas = results
             .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'], { usuario: $stateParams.dependenteId })
             .orderBy({ ano: 'desc', mes: 'desc', valor: 'desc' });
-        
-//        console.log($scope.despesas)
     });
-    
-//    $scope.loadMore = function() {
-//        $scope.limitData += limit;
-//        $scope.$broadcast('scroll.infiniteScrollComplete');
-//    };    
 });

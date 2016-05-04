@@ -5,19 +5,19 @@ angular.module('budget.dashboard', [])
     
     var ano = $scope.dtHoje.getFullYear(),
         mes = $scope.dtHoje.getMonth(),
-        dia = 31;
-    
-    if ([0,2,4,6,7,9,11].indexOf(mes) == -1) {
         dia = 30;
-    } else if (mes === 1) {
-        dia = ano % 4 == 0 ? 29 : 28;
-    }
     
     if (mes === 0) {
         mes = 11;
         ano--;
     } else {
         mes--;
+    }
+    
+    if ([0,2,4,6,7,9,11].indexOf(mes) >= 0) {
+        dia = 31;
+    } else if (mes === 1) {
+        dia = ano % 4 == 0 ? 29 : 28;
     }
     
     $scope.dtAnterior = new Date(ano, mes, dia);
