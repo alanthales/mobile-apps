@@ -21,7 +21,7 @@ angular.module('budget.syncSDB', ['ionic'])
     };
     
     var _parseItem = function(item, itemId) {
-        var result = { id: itemId || item.Name },
+        var result = { id: itemId },
             value;
 
         item.Attributes.forEach(function(attr) {
@@ -97,7 +97,8 @@ angular.module('budget.syncSDB', ['ionic'])
     
     var _getData = function(sql, success, error) {
         var params = { SelectExpression: sql, ConsistentRead: true },
-            items = [];
+            items = [],
+            itemId;
 
         _db.select(params, function(err, data) {
             if (err) {
@@ -112,7 +113,8 @@ angular.module('budget.syncSDB', ['ionic'])
             }
             
             data.Items.forEach(function(item, index) {
-                items[index] = _parseItem(item);
+                itemId = isNaN(item.Name) ? item.Name : parseInt(item.Name);
+                items[index] = _parseItem(item, itemId);
             });
             
             success(items);
@@ -170,23 +172,58 @@ angular.module('budget.syncSDB', ['ionic'])
     };
     
     var _putItems = function(table, items, success, error) {
-        var params = { DomainName: _getDomain(table), Items: [] },
-            obj;
-        
-        items.forEach(function(item) {
-            obj = { Name: item.id.toString() };
-            obj.Attributes = _formatItem(item);
-            params.Items.push(obj);
-        });
-        
-        _db.batchPutAttributes(params, function(err, data) {
+        var domain = _getDomain(table),
+            batch = {},
+            i, l, obj, prop, count;
+
+        function progress(err, data) {
+            count--;
             if (err) {
                 console.log( JSON.stringify(err) );
                 error(err);
                 return;
             }
-            success();
-        });
+            if (count <= 0) {
+                success();
+            }
+        }
+
+        l = items.length;
+        
+        for (i = 0; i < l; i++) {
+            prop = 'lote' + (i % 25) + 1;
+            
+            obj = { Name: items[i].id.toString() };
+            obj.Attributes = _formatItem(items[i]);
+            
+            batch[prop] = batch[prop] || { DomainName: domain, Items: [] };
+            batch[prop].Items.push(obj);
+        }
+        
+        console.log('_putItems');
+        console.log(batch);
+        
+        count = Object.keys(batch).length;
+        
+        for (prop in batch) {
+            _db.batchPutAttributes(batch[prop], progress);
+        }
+
+//        items.forEach(function(item) {
+//            obj = { Name: item.id.toString() };
+//            obj.Attributes = _formatItem(item);
+//            
+//            params.Items.push(obj);
+//        });
+        
+//        _db.batchPutAttributes(params, function(err, data) {
+//            if (err) {
+//                console.log( JSON.stringify(err) );
+//                error(err);
+//                return;
+//            }
+//            success();
+//        });
     };
 
     function CreateSync() {
@@ -244,7 +281,7 @@ angular.module('budget.syncSDB', ['ionic'])
         groups.push(user.id);
         
         where = 'where usuario in(\'' + groups.join('\',\'') + '\')',
-        sql = ['select * from', _getDomain(table), where].join(' ');
+        sql = ['select * from', _getDomain(table), where, 'limit 2500'].join(' ');
         
         _getData(sql, callback, function(err) {
             throw err.message;
