@@ -5,7 +5,7 @@ angular.module('budget.despesas', [])
         todayLabel: 'Hoje',  //Optional
         closeLabel: 'Sair',  //Optional
         setLabel: 'OK',  //Optional
-        setButtonType : 'button-calm',  //Optional
+        setButtonType : 'button-positive',  //Optional
         todayButtonType : 'button-assertive',  //Optional
         closeButtonType : 'button-outline',  //Optional
 //        inputDate: new Date(),  //Optional
@@ -14,8 +14,8 @@ angular.module('budget.despesas', [])
         monthList: $rootScope.listaMes, //Optional
         templateType: 'popup', //Optional
         showTodayButton: 'true', //Optional
-        modalHeaderColor: 'bar-calm', //Optional
-        modalFooterColor: 'bar-calm', //Optional
+//        modalHeaderColor: 'bar-calm', //Optional
+//        modalFooterColor: 'bar-calm', //Optional
         from: new Date(1100, 0, 1), //Optional
         callback: function (val) {  //Mandatory
             if (val) {
@@ -67,7 +67,7 @@ angular.module('budget.despesas', [])
     
     $scope.editItem = function() {
         var item = $scope.selection;
-        $scope.selection = ArrayMap.cloneObject($scope.menu.selectedItem);
+        $scope.selection = OjsUtils.cloneObject($scope.menu.selectedItem);
         $scope.datepickerObject.inputDate = new Date(item.ano, item.mes, item.dia);
         $scope.modal.show();
         $scope.menu.closeMenu();

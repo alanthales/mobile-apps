@@ -1,10 +1,10 @@
 angular.module('budget.config', [])
 .controller('ConfigCtrl', function($scope, $rootScope, $ionicPopup, utils, SyncSDB) {
-    $scope.usuario = ArrayMap.cloneObject($rootScope.user);
+    $scope.usuario = OjsUtils.cloneObject($rootScope.user);
     
     $scope.cancel = function() {
         $scope.config.form.$setPristine();
-        $scope.usuario = ArrayMap.cloneObject($rootScope.user);
+        $scope.usuario = OjsUtils.cloneObject($rootScope.user);
     }
 
     function error(err) {
@@ -38,7 +38,7 @@ angular.module('budget.config', [])
         }
         
         delete $scope.usuario.senhaAtual;
-        $rootScope.user = ArrayMap.cloneObject($scope.usuario);
+        $rootScope.user = OjsUtils.cloneObject($scope.usuario);
         utils.lStorage.setItem('usuario', $rootScope.user);
         document.forms[form.$name].submit();
     }

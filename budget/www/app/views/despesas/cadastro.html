@@ -13,7 +13,7 @@
             
             <label class="item item-input item-stacked-label">
                 <span class="input-label">Valor</span>
-                <input type="tel" placeholder="0,00" ng-model="selection.valor" ng-class="{'has-errors': cadForm.nome.$dirty && cadForm.nome.$invalid, 'no-errors': cadForm.nome.$valid}" required format decimals="2">
+                <input type="tel" name="valor" placeholder="0,00" ng-model="selection.valor" ng-class="{'has-errors': cadForm.valor.$dirty && cadForm.valor.$invalid, 'no-errors': cadForm.valor.$valid}" required format decimals="2">
             </label>
 
             <div class="item item-divider">
@@ -22,7 +22,7 @@
 
             <div class="item item-checkbox" ng-repeat="item in marcadores.data track by $index">
                 <label class="checkbox checkbox-calm">
-                    <input type="checkbox" ng-checked="selection.marcadores.indexOf(item.id) >= 0" ng-class="{'has-errors': cadForm.nome.$dirty && cadForm.nome.$invalid, 'no-errors': cadForm.nome.$valid}" ng-click="addMark(item)" required>
+                    <input type="checkbox" ng-checked="selection.marcadores.indexOf(item.id) >= 0" ng-click="addMark(item)">
                 </label>
                 {{item.descricao}}
             </div>

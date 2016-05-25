@@ -58,9 +58,10 @@ angular.module('budget.syncSDB', ['ionic'])
                 value = value.toISOString();
             } else if (typeof value === 'object') {
                 value = JSON.stringify(value);
-            } else {
-                value = value.toString();
             }
+//            else {
+//                value = value.toString();
+//            }
             
             result.push({
                 Name: prop, Value: value, Replace: true
@@ -191,7 +192,7 @@ angular.module('budget.syncSDB', ['ionic'])
         l = items.length;
         
         for (i = 0; i < l; i++) {
-            prop = 'lote' + (i % 25) + 1;
+            prop = 'lote' + (i % 25 + 1);
             
             obj = { Name: items[i].id.toString() };
             obj.Attributes = _formatItem(items[i]);
@@ -208,22 +209,6 @@ angular.module('budget.syncSDB', ['ionic'])
         for (prop in batch) {
             _db.batchPutAttributes(batch[prop], progress);
         }
-
-//        items.forEach(function(item) {
-//            obj = { Name: item.id.toString() };
-//            obj.Attributes = _formatItem(item);
-//            
-//            params.Items.push(obj);
-//        });
-        
-//        _db.batchPutAttributes(params, function(err, data) {
-//            if (err) {
-//                console.log( JSON.stringify(err) );
-//                error(err);
-//                return;
-//            }
-//            success();
-//        });
     };
 
     function CreateSync() {
@@ -254,7 +239,7 @@ angular.module('budget.syncSDB', ['ionic'])
         }
         
         for (i = 0; i < toInsert.length; i++) {
-            if (toSave.indexOfKey('id', parseInt(toInsert[i].id)) < 0) {
+            if (toSave.indexOfKey('id', toInsert[i].id) < 0) {
                 toSave.put(toInsert[i]);
             }
         }

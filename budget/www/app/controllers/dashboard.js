@@ -24,32 +24,57 @@ angular.module('budget.dashboard', [])
     $scope.marcadores = daoFactory.getMarcadores();
     
     daoFactory.getDespesas(function(results) {
-        $scope.mesAtual = results
-            .query({ ano: $scope.dtHoje.getFullYear(), mes: $scope.dtHoje.getMonth() })
-            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
-            .orderBy({ valor: 'desc' });
+        var despesas = new ArrayMap(),
+            i, obj;
         
-        $scope.mesAnterior = results
-            .query({ ano: $scope.dtAnterior.getFullYear(), mes: $scope.dtAnterior.getMonth() })
-            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
-            .orderBy({ valor: 'desc' });
-        
-        $scope.mesAtual.forEach(function(item) {
-            var resultado = $scope.mesAnterior.query({ marcadores: { $contain: item.marcadores } });
-            if (!resultado.length) {
-                item.class = 'positive';
-                item.icon = 'ion-plus-round';
-            } else if (item.valor > resultado[0].valor) {
-                item.class = 'assertive';
-                item.icon = 'ion-arrow-up-b';
-            } else if (item.valor < resultado[0].valor) {
-                item.class = 'balanced';
-                item.icon = 'ion-arrow-down-b';
-            } else {
-                item.class = 'bold';
-                item.icon = 'ion-equal';
+        results.forEach(function(item) {
+            for (i = 0; i < item.marcadores.length; i++) {
+                obj = angular.copy(item);
+                delete obj.marcadores;
+                obj.marcadorId = item.marcadores[i];
+                obj.total = i === 0 ? obj.valor : 0;
+                despesas.put(obj);
             }
         });
+        
+        $scope.mesAtual = despesas
+            .query({ ano: $scope.dtHoje.getFullYear(), mes: $scope.dtHoje.getMonth() })
+            .groupBy([{ $sum: 'valor' }, { $sum: 'total' }], ['ano', 'mes', 'marcadorId'])
+            .orderBy({ valor: 'desc' });
+
+        console.log($scope.mesAtual);
+        
+        $scope.mesAnterior = despesas
+            .query({ ano: $scope.dtAnterior.getFullYear(), mes: $scope.dtAnterior.getMonth() })
+            .groupBy([{ $sum: 'valor' }, { $sum: 'total' }], ['ano', 'mes', 'marcadorId'])
+            .orderBy({ valor: 'desc' });
+        
+//        $scope.mesAtual = results
+//            .query({ ano: $scope.dtHoje.getFullYear(), mes: $scope.dtHoje.getMonth() })
+//            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
+//            .orderBy({ valor: 'desc' });
+//        
+//        $scope.mesAnterior = results
+//            .query({ ano: $scope.dtAnterior.getFullYear(), mes: $scope.dtAnterior.getMonth() })
+//            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'])
+//            .orderBy({ valor: 'desc' });
+//        
+//        $scope.mesAtual.forEach(function(item) {
+//            var resultado = $scope.mesAnterior.query({ marcadores: { $contain: item.marcadores } });
+//            if (!resultado.length) {
+//                item.class = 'positive';
+//                item.icon = 'ion-plus-round';
+//            } else if (item.valor > resultado[0].valor) {
+//                item.class = 'assertive';
+//                item.icon = 'ion-arrow-up-b';
+//            } else if (item.valor < resultado[0].valor) {
+//                item.class = 'balanced';
+//                item.icon = 'ion-arrow-down-b';
+//            } else {
+//                item.class = 'bold';
+//                item.icon = 'ion-equal';
+//            }
+//        });
     });
     
     $scope.goTo = function(marcadorId) {
