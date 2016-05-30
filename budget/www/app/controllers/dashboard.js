@@ -42,7 +42,20 @@ angular.module('budget.dashboard', [])
             .groupBy([{ $sum: 'valor' }, { $sum: 'total' }], ['ano', 'mes', 'marcadorId'])
             .orderBy({ valor: 'desc' });
 
-        console.log($scope.mesAtual);
+        $scope.mesAtual.forEach(function(item) {
+            var marcador = $scope.marcadores.getById(item.marcadorId),
+                limite = marcador.limite || 0,
+                diff;
+            
+            if (limite === 0) return;
+            
+            if (item.valor >= limite) {
+                item.class = 'assertive';
+            } else {
+                diff = item.valor * 100 / limite;
+                item.class = diff > 70 ? 'energized' : '';
+            }
+        });
         
         $scope.mesAnterior = despesas
             .query({ ano: $scope.dtAnterior.getFullYear(), mes: $scope.dtAnterior.getMonth() })

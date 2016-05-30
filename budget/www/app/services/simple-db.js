@@ -20,6 +20,14 @@ angular.module('budget.syncSDB', ['ionic'])
         return true;
     };
     
+    var toNumber = function(value) {
+        if ((Number(value) % 1) === 0) {
+            return parseInt(value);
+        } else {
+            return parseFloat(value);
+        }
+    };
+    
     var _parseItem = function(item, itemId) {
         var result = { id: itemId },
             value;
@@ -34,6 +42,8 @@ angular.module('budget.syncSDB', ['ionic'])
                     value = JSON.parse(value, DbProxy.dateParser);
                 } else if (value === 'true' || value === 'false') {
                     value = value === 'true';
+                } else if (!isNaN(value)) {
+                    value = toNumber(value);
                 }
             }
             
@@ -58,10 +68,9 @@ angular.module('budget.syncSDB', ['ionic'])
                 value = value.toISOString();
             } else if (typeof value === 'object') {
                 value = JSON.stringify(value);
+            } else {
+                value = value.toString();
             }
-//            else {
-//                value = value.toString();
-//            }
             
             result.push({
                 Name: prop, Value: value, Replace: true
@@ -192,7 +201,8 @@ angular.module('budget.syncSDB', ['ionic'])
         l = items.length;
         
         for (i = 0; i < l; i++) {
-            prop = 'lote' + (i % 25 + 1);
+            prop = 'lote' + (Math.floor(i / 25) + 1);
+            console.log(prop);
             
             obj = { Name: items[i].id.toString() };
             obj.Attributes = _formatItem(items[i]);
@@ -200,9 +210,6 @@ angular.module('budget.syncSDB', ['ionic'])
             batch[prop] = batch[prop] || { DomainName: domain, Items: [] };
             batch[prop].Items.push(obj);
         }
-        
-        console.log('_putItems');
-        console.log(batch);
         
         count = Object.keys(batch).length;
         
