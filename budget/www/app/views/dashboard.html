@@ -35,7 +35,7 @@
                         {{item.valor | currency:"R$"}}
                     </div>
                     <div class="marcadores">
-                        <span class="marcador bg-gray" ng-click="goTo(mark)">
+                        <span class="marcador bg-gray" ng-click="goTo(item.marcadorId)">
                             {{marcadores.getById(item.marcadorId).descricao}}
                         </span>
                     </div>
@@ -55,11 +55,11 @@
 
             <div class="item">
                 <div class="item-set" ng-repeat="item in mesAnterior track by $index">
-                    <div class="item-right">
+                    <div class="item-right {{item.class}}">
                         {{item.valor | currency:"R$"}}
                     </div>
                     <div class="marcadores">
-                        <span class="marcador bg-gray" ng-click="goTo(mark)">
+                        <span class="marcador bg-gray" ng-click="goTo(item.marcadorId)">
                             {{marcadores.getById(item.marcadorId).descricao}}
                         </span>
                     </div>
