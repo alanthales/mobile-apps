@@ -202,7 +202,6 @@ angular.module('budget.syncSDB', ['ionic'])
         
         for (i = 0; i < l; i++) {
             prop = 'lote' + (Math.floor(i / 25) + 1);
-            console.log(prop);
             
             obj = { Name: items[i].id.toString() };
             obj.Attributes = _formatItem(items[i]);
