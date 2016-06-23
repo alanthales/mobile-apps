@@ -1,6 +1,6 @@
 angular.module('budget.utils', ['ionic'])
 
-.factory('utils', function($http) {
+.factory('utils', function($http, $ionicModal) {
     var local = window.localStorage,
         session = window.sessionStorage,
         sibUrl = window.cordova ? 'https://api.sendinblue.com/v2.0' : '/send',
@@ -62,6 +62,40 @@ angular.module('budget.utils', ['ionic'])
                 var obj = session.getItem(key);
                 return obj ? JSON.parse(obj) : {};
             }
+        },
+        
+        initModal: function(template, scope) {
+            scope.$on('$ionicView.enter', function() {
+                $ionicModal.fromTemplateUrl(template, {
+                    scope: scope,
+                    animation: 'slide-in-up',
+                    backdropClickToClose: false,
+                    hardwareBackButtonClose: false
+                }).then(function(modal) {
+                    scope.modal = modal;
+                });
+            });
+
+            scope.$on('$ionicView.leave', function() {
+                scope.modal.remove();
+            });
+        },
+        
+        reGroup: function(list, oldProp, newProp, aggProp) {
+            var result = new ArrayMap(),
+                i, obj;
+            
+            list.forEach(function(item) {
+                for (i = 0; i < item[oldProp].length; i++) {
+                    obj = angular.copy(item);
+                    delete obj[oldProp];
+                    obj[newProp] = item[oldProp][i];
+                    obj.aggregated = i === 0 ? item[aggProp] : 0;
+                    result.put(obj);
+                }
+            });
+            
+            return result;
         },
         
         sender: {

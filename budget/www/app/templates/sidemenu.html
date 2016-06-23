@@ -27,6 +27,10 @@
                             <i class="icon icon-small ion-edit"></i>
                             Lançamentos
                         </a>
+                        <a class="item item-icon-left" menu-close href="#/app/pagamentos">
+                            <i class="icon icon-small ion-calendar"></i>
+                            Pagamentos
+                        </a>
                         <a class="item item-icon-left item-icon-right" ng-if="marcadores.data.length" ng-click="openSub('desp')">
                             <i class="icon icon-small ion-ios-calculator"></i>
                             <i class="icon icon-small ion-chevron-right"></i>
@@ -39,6 +43,22 @@
                     </div>
                     <div class="slide-right-left" ng-switch-when="desp">
                         <back-button title="Voltar" go-back="goBack()"></back-button>
+                        <a ng-if="!$root.user.titular" class="item item-icon-left item-icon-right" ng-click="openSub('dept')">
+                            <i class="icon icon-small ion-person-stalker"></i>
+                            <i class="icon icon-small ion-chevron-right"></i>
+                            Por Dependentes
+                        </a>
+                        <a class="item item-icon-left item-icon-right" ng-click="openSub('marc')">
+                            <i class="icon icon-small ion-pricetags"></i>
+                            <i class="icon icon-small ion-chevron-right"></i>
+                            Por Marcadores
+                        </a>                         
+                        <a class="item item-icon-left item-icon-right" ng-click="openSub('mes')">
+                            <i class="icon icon-small ion-calendar"></i>
+                            <i class="icon icon-small ion-chevron-right"></i>
+                            Mensal
+                        </a>
+<!--
                         <div ng-if="!$root.user.titular">
                             <a class="item item-icon-left item-icon-right" ng-click="openSub('marc')">
                                 <i class="icon icon-small ion-pricetags"></i>
@@ -52,6 +72,7 @@
                             </a>
                         </div>
                         <markers marks="marcadores.data" ng-if="$root.user.titular"></markers>
+-->
                     </div>  
                     <div class="slide-right-left" ng-switch-when="marc">
                         <back-button title="Voltar" go-back="goBack()"></back-button>
@@ -64,6 +85,13 @@
                             {{dependent.nome}}
                         </a>                        
                     </div>                    
+                    <div class="slide-right-left" ng-switch-when="mes">
+                        <back-button title="Voltar" go-back="goBack()"></back-button>
+                        <a class="item item-icon-left" ng-repeat="mes in $root.listaMes track by $index" menu-close href="#/app/despmensal/{{$index}}">
+                            <i class="icon icon-small ion-pound"></i>
+                            {{mes}}
+                        </a>                        
+                    </div>
                 </div>
             </div>
         </ion-content>

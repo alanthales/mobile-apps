@@ -8,7 +8,8 @@ var _user = window.localStorage.getItem('usuario');
 angular.module('budget', [
     'ionic', 'ionic-datepicker', 'ojs.directives', 'budget.directives', 'budget.syncSDB', 'budget.dao',
     'budget.bemvindo', 'budget.sidemenu', 'budget.dashboard', 'budget.marcadores', 'budget.despesas',
-    'budget.despmarc', 'budget.config', 'budget.utils', 'budget.despdepend', 'budget.filters'
+    'budget.despmarc', 'budget.config', 'budget.utils', 'budget.despdepend', 'budget.filters',
+    'budget.pagamentos', 'budget.despmensal'
 ])
 
 .run(function($ionicPlatform, $rootScope, daoFactory, SyncSDB, utils) {
@@ -111,12 +112,12 @@ angular.module('budget', [
         }
     })
 
-    .state('app.despmarcador', {
-        url: '/despmarcador/:marcadorId',
+    .state('app.pagamentos', {
+        url: '/pagamentos',
         views: {
             'menuContent': {
-                templateUrl: './app/views/despesas/marcador.html',
-                controller: 'DespMarcadorCtrl'
+                templateUrl: './app/views/pagamentos/lista.html',
+                controller: 'PagtosCtrl'
             }
         }
     })
@@ -130,17 +131,37 @@ angular.module('budget', [
             }
         }
     })
+
+    .state('app.despmarcador', {
+        url: '/despmarcador/:marcadorId',
+        views: {
+            'menuContent': {
+                templateUrl: './app/views/relatorios/marcador.html',
+                controller: 'DespMarcadorCtrl'
+            }
+        }
+    })
     
     .state('app.despdependente', {
         url: '/despdependente/:dependenteId',
         views: {
             'menuContent': {
-                templateUrl: './app/views/despesas/dependente.html',
+                templateUrl: './app/views/relatorios/dependente.html',
                 controller: 'DespDependenteCtrl'
             }
         }
-    });    
+    })
 
+    .state('app.despmensal', {
+        url: '/despmensal/:mes',
+        views: {
+            'menuContent': {
+                templateUrl: './app/views/relatorios/mensal.html',
+                controller: 'DespMensalCtrl'
+            }
+        }
+    });
+    
     if (_user) {
         $urlRouterProvider.otherwise('/app/dashboard');
     } else {

@@ -23,6 +23,31 @@
         
         <donate name="paypal" lnk-class="calm" template="./app/templates/donate.html"></donate>
         
+        <div class="list card" ng-if="pagamentos.length">
+            <div class="item ">
+                <h2 class="calm">Próximos pagamentos</h2>
+                <p>Até {{dtFinalPagtos | date:'dd/MM/yyyy'}}</p>
+            </div>
+
+            <div class="item" ng-repeat="item in pagamentos track by $index" on-hold="pay(item)">
+                <h2>
+                    {{item.vencimento | date:'dd/MM/yyyy'}}
+                    <span class="item-right">{{item.valor | currency:'R$'}}</span>
+                </h2>
+                <div class="item-set">
+                    <div class="marcadores">
+                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores track by $index">
+                            {{marcadores.getById(mark).descricao}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="item calm">
+                <span class="item-right">Total: {{pagamentos.compute({ $sum: "valor"}).valor | currency:"R$"}}</span>
+            </div>
+        </div>
+        
         <div class="list card" ng-if="mesAtual.length">
             <div class="item ">
                 <h2 class="calm">Mês Atual</h2>
@@ -43,7 +68,7 @@
             </div>
             
             <div class="item calm">
-                <span class="item-right">Total: {{mesAtual.compute({ $sum: "total"}).total | currency:"R$"}}</span>
+                <span class="item-right">Total: {{mesAtual.compute({ $sum: "aggregated"}).aggregated | currency:"R$"}}</span>
             </div>
         </div>
         
@@ -67,7 +92,7 @@
             </div>
             
             <div class="item calm">
-                <span class="item-right">Total: {{mesAnterior.compute({ $sum: "total"}).total | currency:"R$"}}</span>
+                <span class="item-right">Total: {{mesAnterior.compute({ $sum: "aggregated"}).aggregated | currency:"R$"}}</span>
             </div>
         </div>
     </ion-content>

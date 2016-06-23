@@ -1,23 +1,10 @@
 angular.module('budget.marcadores', [])
-.controller('MarcadoresCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, daoFactory) {
+.controller('MarcadoresCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, daoFactory, utils) {
     $scope.selection = {};
     
     $scope.marcadores = daoFactory.getMarcadores();
     
-    $scope.$on('$ionicView.enter', function() {
-        $ionicModal.fromTemplateUrl('./app/views/marcadores/cadastro.html', {
-            scope: $scope,
-            animation: 'slide-in-up',
-            backdropClickToClose: false,
-            hardwareBackButtonClose: false
-        }).then(function(modal) {
-            $scope.modal = modal;
-        });
-    });
-        
-    $scope.$on('$ionicView.leave', function() {
-        $scope.modal.remove();
-    });
+    utils.initModal('./app/views/marcadores/cadastro.html', $scope);
     
     $scope.closeForm = function() {
         $scope.modal.hide();

@@ -2,8 +2,6 @@ angular.module('budget.despdepend', [])
 .controller('DespDependenteCtrl', function($scope, $stateParams, daoFactory, $rootScope) {    
     $scope.marcadores = daoFactory.getMarcadores();
     
-    console.log($stateParams.dependenteId);
-    
     $scope.dependente =
         $rootScope.user.grupo.filter(function(depend){
             return depend.id == $stateParams.dependenteId

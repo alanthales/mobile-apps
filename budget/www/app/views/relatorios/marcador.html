@@ -14,7 +14,7 @@
         </div>
         <div class="list">
             <div collection-repeat="item in despesas | groupByMonthYear:'mes':'ano':'valor'" divider-month-repeat show-total>
-                <div class="item teste">
+                <div class="item">
                     {{getDate(item) | date:'dd/MM/yyyy'}}
                     <span class="item-right">{{item.valor | currency:'R$'}}</span>
                 </div>

@@ -1,12 +1,12 @@
 <div class="modal">
-    <form-base title="Lançar Despesa" save-record="saveItem(selection)" close-form="closeForm()">
+    <form-base title="Lançar Pagamento" save-record="saveItem(selection)" close-form="closeForm()">
         <div class="list">
             <ionic-datepicker input-obj="datepickerObject">
                 <label class="item item-input item-stacked-label">
-                    <span class="input-label">Data</span>
+                    <span class="input-label">Vencimento</span>
                     <p>
                         <i class="icon ion-calendar"></i>
-                        {{getDate(selection) | date:datepickerObject.dateFormat}}
+                        {{selection.vencimento | date:datepickerObject.dateFormat}}
                     </p>
                 </label>
             </ionic-datepicker>
@@ -16,13 +16,6 @@
                 <input type="tel" name="valor" placeholder="0,00" ng-model="selection.valor" ng-class="{'has-errors': cadForm.valor.$dirty && cadForm.valor.$invalid, 'no-errors': cadForm.valor.$valid}" required format decimals="2">
             </label>
 
-            <div class="item item-divider">
-                Parcelas {{parcelas.valor}}x
-            </div>
-            <div class="item range range-calm">
-                <input type="range" ng-readonly="!parcelas.habilitado" name="parcelas" ng-model="parcelas.valor" min="1" max="12">
-            </div>
-            
             <div class="item item-divider">
                 Marcadores
             </div>
