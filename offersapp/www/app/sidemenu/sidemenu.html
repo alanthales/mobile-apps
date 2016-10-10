@@ -1,19 +1,11 @@
 <ion-side-menus enable-menu-with-back-views="true">
     <ion-side-menu-content>
-        <ion-nav-bar class="bar-balanced" ng-class="{expanded: isExpanded, 'has-header-fab-left': hasHeaderFabLeft, 'has-header-fab-right': hasHeaderFabRight}" align-title="left">
-            <ion-nav-back-button class="no-text">
-            </ion-nav-back-button>
-            <ion-nav-buttons side="left">
-                <button class="button button-icon button-clear ion-android-menu" menu-toggle="left">
-                </button>
-            </ion-nav-buttons>
-        </ion-nav-bar>
         <ion-nav-view name="fabContent"></ion-nav-view>
-        <ion-nav-view name="pageContent" ng-class="{expanded: isExpanded}"></ion-nav-view>
+        <ion-nav-view name="pageContent"></ion-nav-view>
     </ion-side-menu-content>
     <ion-side-menu side="left">
         <ion-header-bar class="dark-bg expanded">
-            <h2>Thronester</h2>
+            <h2>Offer's App</h2>
         </ion-header-bar>
         <ion-content class="stable-bg has-expanded-header">
             <ion-list>

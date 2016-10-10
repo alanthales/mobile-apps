@@ -5,26 +5,27 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', [
+angular.module('offersapp', [
     'ionic',
     'ionic-material',
-    'starter.home'// Yeoman hook. Define section. Do not remove this comment.
+    'offersapp.home',
+	'offersapp.search',
+	'offersapp.dao'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
+    $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
+        }
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleDefault();
+        }
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -37,7 +38,8 @@ angular.module('starter', [
 
   .state('app', {
       abstract: true,
-      templateUrl: './app/sidemenu/sidemenu.html'
+      templateUrl: './app/sidemenu/sidemenu.html',
+      controller: 'SideMenuCtrl'
   })
   
   .state('app.home', {
@@ -45,11 +47,22 @@ angular.module('starter', [
     views: {
         'pageContent': {
             templateUrl: './app/home/home.html',
-            controller: 'HomeCtrl'
-        },
-        'fabContent': {
-            template: '<button id="fab-activity" class="button button-fab button-fab-top-right button-energized-900"><i class="icon ion-paper-airplane"></i></button>'
+            controller: 'HomeCtrl as ctrl'
         }
+//        'fabContent': {
+//            templateUrl: './app/sidemenu/search-button.html',
+//            controller: 'SideMenuCtrl'
+//        }
+    }
+  })
+
+  .state('app.search', {
+    url: '/search',
+    views: {
+      'pageContent': {
+        templateUrl: './app/search/search.html',
+        controller: 'SearchCtrl as ctrl'
+      }
     }
   })// Yeoman hook. States section. Do not remove this comment.
   ;

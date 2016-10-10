@@ -1,10 +1,55 @@
-.bar {
-    box-shadow: 0 0 0 rgba(0,0,0,0);
+/* App style's */
+.bar-search {
+    box-shadow: none;
+}
+
+.pane[state="app.search"] .bar.bar-balanced {
     border: none;
 }
 
-.bar-subheader {
+.card-list {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    height: 100%;
+    width: 277px;
+}
+
+.card-list .item {
+    margin: 5px;
+    width: 50%;
+}
+
+/* Ionic Material override's */
+.card-list .card.card-gallery.item .title {
+    position: absolute;
+    background-color: #333;
+    padding: 5px;
+    margin: 5px;
+    color: #fff;
+}
+
+.card-list .card.card-gallery.item h2, .card-list .card.card-gallery.item h3, .card-list .card.card-gallery.item h4 {
+    background-color: #999;
+    color: #fff;
+    padding: 5px;
+}
+
+.button.button-fab.button-fab-top-right,
+.button.button-fab.button-fab-top-left {
+    top: 16px;
+}
+
+.bar.item-input {
     padding: 0 10px;
+}
+
+.card-gallery .full-image {
+    background-color: white;
+}
+
+.card-footer {
+    padding: 0 5px;
 }
 
 /* Utilities

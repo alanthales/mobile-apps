@@ -1,0 +1,14 @@
+<ion-view view-title="Pesquisar">
+    <ion-nav-bar class="bar-balanced bar-search" align-title="left">
+        <ion-nav-back-button class="no-text"></ion-nav-back-button>
+    </ion-nav-bar>
+    <div class="bar bar-subheader bar-balanced item-input">
+        <label class="item-input-wrapper">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder="Digite algo...">
+        </label>
+    </div>
+    <ion-content class="has-subheader animate-fade-slide-in">
+        <ng-include src="'./app/utils/offers.tmpl.html'"></ng-include>
+    </ion-content>
+</ion-view>

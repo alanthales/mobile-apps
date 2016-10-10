@@ -1,14 +1,14 @@
 <ion-view view-title="Home">
-    <div class="bar bar-header bar-search">
-        <h2 class="title">Home</h2>
-    </div>
-    <div class="bar bar-subheader bar-balanced item-input-inset">
-        <label class="item-input-wrapper">
-            <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" placeholder="Search">
-        </label>
-    </div>
-    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
-        <h1>Hello!</h1>
+    <ion-nav-bar class="bar-balanced" align-title="left">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-android-menu" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+        <button class="button button-fab button-fab-top-right button-balanced" ui-sref="app.search">
+            <i class="icon ion-search"></i>
+        </button>
+    </ion-nav-bar>
+    <ion-content class="animate-fade-slide-in">
+        <ng-include src="'./app/utils/offers.tmpl.html'"></ng-include>
     </ion-content>
 </ion-view>

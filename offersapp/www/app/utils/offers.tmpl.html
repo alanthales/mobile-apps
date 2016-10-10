@@ -1,0 +1,12 @@
+<div class="card-list">
+    <div class="card card-gallery item item-text-wrap" ng-repeat="item in ctrl.ofertas.data | filter:search">
+        <div class="ink light-bg">
+            <span class="title">{{item.anunciante.razao}}</span>
+            <img class="full-image" src="img/ionic.png">
+            <h2>{{item.descricao}}</h2>
+        </div>
+        <div class="card-footer assertive-bg text-right">
+            <i class="icon ion-clock"></i> {{item.validade | date:'dd/MM/yyyy'}}
+        </div>
+    </div>
+</div>
