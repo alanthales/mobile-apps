@@ -8,7 +8,7 @@
 angular.module('starter', [
     'ionic',
     'ionic-material',
-    'starter.home.index'// Yeoman hook. Define section. Do not remove this comment.
+    'starter.home'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
 .run(function($ionicPlatform) {
@@ -35,18 +35,25 @@ angular.module('starter', [
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  .state('home', {
-    url: '/home',
+  .state('app', {
+      abstract: true,
+      templateUrl: './app/sidemenu/sidemenu.html'
+  })
+  
+  .state('app.home', {
+    url: '/',
     views: {
         'pageContent': {
-            templateUrl: './app/home/index.html',
-            controller: 'HomeIndexCtrsl'
+            templateUrl: './app/home/home.html',
+            controller: 'HomeCtrl'
+        },
+        'fabContent': {
+            template: '<button id="fab-activity" class="button button-fab button-fab-top-right button-energized-900"><i class="icon ion-paper-airplane"></i></button>'
         }
     }
   })// Yeoman hook. States section. Do not remove this comment.
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/home');
-
+  $urlRouterProvider.otherwise('/');
 });
