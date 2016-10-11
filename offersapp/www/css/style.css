@@ -7,35 +7,59 @@
     border: none;
 }
 
+.price {
+    color: #f44336;
+}
+
+.flame-bg {
+    background-color: #f44336;
+    color: #fff;
+}
+
 .card-list {
+/*
     display: flex;
-    flex-flow: column wrap;
-    align-items: flex-start;
-    height: 100%;
-    width: 320px;
+    flex-flow: row wrap;
+    align-items: center;
+*/
+    margin: 0 auto;
 }
 
 .card-list .card {
-    margin: 5px;
-    width: 50%;
+    display: inline-block;
+    max-width: 158px;
+    vertical-align: top;
+}
+
+@media screen and (min-width: 960px) {
+    .card-list { max-width: 550px; }
+	.card-list .card { width: 33.3%; }
+}
+
+.card-list .card.card-gallery .title {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background-color: #555;
+    color: #fff;
+    padding: 4px;
+}
+
+.card-list .card-header {
+    padding: 5px;
+}
+
+.card-list .card-header h2, .card-list .card-header h3, .card-list .card-header h4 {
+    color: #333;
+    font-size: 16px;
+}
+
+.card-list .card-label {
+    padding: 0 5px;
+    font-size: 85%;
 }
 
 /* Ionic Material override's */
-.card-list .card.card-gallery .title {
-    position: absolute;
-    background-color: #fff;
-    padding: 5px;
-    margin: 5px;
-    color: #333;
-    font-weight: bold;
-}
-
-.card-list .card.card-gallery h2, .card-list .card.card-gallery h3, .card-list .card.card-gallery h4 {
-    color: #333;
-    padding: 5px;
-    font-size: 14px;
-}
-
 .button.button-fab.button-fab-top-right,
 .button.button-fab.button-fab-top-left {
     top: 16px;
@@ -43,14 +67,6 @@
 
 .bar.item-input {
     padding: 0 10px;
-}
-
-.card-gallery .full-image {
-    background-color: #333;
-}
-
-.card-footer {
-    padding: 0 5px;
 }
 
 /* Utilities

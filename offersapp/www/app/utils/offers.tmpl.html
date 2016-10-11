@@ -1,12 +1,18 @@
 <div class="card-list">
     <div class="card card-gallery item-text-wrap" ng-repeat="item in ctrl.ofertas.data | filter:search">
-        <div class="ink light-bg">
-            <span class="title">{{item.anunciante.razao}}</span>
-            <img class="full-image" src="img/ionic.png">
-            <h2>{{item.descricao}}</h2>
+        <div class="card-label flame-bg">
+            <i class="icon ion-clock"></i> Válido até {{item.validade | date:'dd/MM/yyyy'}}
         </div>
-        <div class="card-footer assertive-bg text-right">
-            <i class="icon ion-clock"></i> {{item.validade | date:'dd/MM/yyyy'}}
+        <div class="ink white-bg">
+            <span class="title">{{item.anunciante.razao}}</span>
+            <img class="full-image" src="{{item.imagem || 'img/ionic.png'}}">
+        </div>
+        <div class="card-header stable-bg">
+            <h2>{{item.descricao}}</h2>
+            <div class="price text-right">
+                <strong>{{item.valor | currency:'R$'}}</strong>
+                <i class="icon ion-flame"></i>
+            </div>
         </div>
     </div>
 </div>
