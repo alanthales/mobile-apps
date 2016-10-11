@@ -7,7 +7,7 @@ angular.module('offersapp.home', [])
     
     $timeout(function() {
         ionicMaterialMotion.fadeSlideInRight({
-            selector: '.animate-fade-slide-in .item'
+            selector: '.animate-fade-slide-in .card'
         });
     }, 300);
 });

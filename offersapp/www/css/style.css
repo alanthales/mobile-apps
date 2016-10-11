@@ -12,27 +12,28 @@
     flex-flow: column wrap;
     align-items: flex-start;
     height: 100%;
-    width: 277px;
+    width: 320px;
 }
 
-.card-list .item {
+.card-list .card {
     margin: 5px;
     width: 50%;
 }
 
 /* Ionic Material override's */
-.card-list .card.card-gallery.item .title {
+.card-list .card.card-gallery .title {
     position: absolute;
-    background-color: #333;
+    background-color: #fff;
     padding: 5px;
     margin: 5px;
-    color: #fff;
+    color: #333;
+    font-weight: bold;
 }
 
-.card-list .card.card-gallery.item h2, .card-list .card.card-gallery.item h3, .card-list .card.card-gallery.item h4 {
-    background-color: #999;
-    color: #fff;
+.card-list .card.card-gallery h2, .card-list .card.card-gallery h3, .card-list .card.card-gallery h4 {
+    color: #333;
     padding: 5px;
+    font-size: 14px;
 }
 
 .button.button-fab.button-fab-top-right,
@@ -45,7 +46,7 @@
 }
 
 .card-gallery .full-image {
-    background-color: white;
+    background-color: #333;
 }
 
 .card-footer {
