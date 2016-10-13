@@ -1,14 +1,14 @@
-<ion-view view-title="Home">
+<ion-view view-title="Ofertas">
     <ion-nav-bar class="bar-balanced" align-title="left">
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-android-menu" menu-toggle="left">
             </button>
         </ion-nav-buttons>
-        <button class="button button-fab button-fab-top-right button-balanced" ui-sref="app.search">
+        <button class="button button-fab button-fab-top-right button-balanced spin" ui-sref="app.search">
             <i class="icon ion-search"></i>
         </button>
     </ion-nav-bar>
-    <ion-content class="padding-top animate-fade-slide-in">
-        <ng-include src="'./app/utils/offers.tmpl.html'"></ng-include>
+    <ion-content class="stable-bg padding-top animate-fade-slide-in">
+        <offers data="ctrl.ofertas.data"></offers>
     </ion-content>
 </ion-view>

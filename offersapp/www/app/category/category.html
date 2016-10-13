@@ -1,4 +1,4 @@
-<ion-view view-title="Pesquisar">
+<ion-view view-title="{{ctrl.categoria.nome}}">
     <ion-nav-bar class="bar-balanced bar-search" align-title="left">
         <ion-nav-back-button class="no-text"></ion-nav-back-button>
     </ion-nav-bar>
@@ -8,7 +8,7 @@
             <input type="text" placeholder="Digite algo..." ng-model="search">
         </label>
     </div>
-    <ion-content class="has-subheader stable-bg animate-fade-slide-in">
+    <ion-content class="has-subheader stable-bg">
         <offers data="ctrl.ofertas" filter="search"></offers>
     </ion-content>
 </ion-view>

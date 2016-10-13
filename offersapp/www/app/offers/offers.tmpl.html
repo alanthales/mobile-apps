@@ -17,16 +17,28 @@
         </div>
     </div>
 </div>-->
-<div class="list">
-    <div class="card" ng-repeat="item in ctrl.ofertas.data | filter:search">
-        <a class="item item-thumbnail-left">
+<div class="list-card">
+    <div class="item in done" ng-if="!ctrl.data.length">
+        <div class="card padding">
+            <i class="icon ion-alert"></i> Nenhuma oferta
+        </div>
+    </div>
+    <div class="card-item" ng-repeat="item in ctrl.data | filter:ctrl.filter track by item.id" ng-click="ctrl.showOffer(item)">
+        <div class="thumbnail">
             <img src="{{item.imagem || 'img/ionic.png'}}">
+        </div>
+        <div class="item-container">
             <h2>{{item.descricao}}</h2>
-            <p>{{item.anunciante.razao}}</p>
-            <p class="text-right">
-                <strong>{{item.valor | currency:'R$'}}</strong>
-                <i class="icon ion-flame"></i>
+            <h3>{{item.anunciante.razao}}</h3>
+            <p>
+                <span class="item-note">
+                    <strong>{{item.valor | currency:'R$'}}</strong>
+                    <i class="icon ion-flame"></i>
+                </span>
             </p>
-        </a>
+            <p class="notes">
+                <i class="icon ion-clock"></i> Válido até {{item.validade | date:'dd/MM/yyyy'}}
+            </p>
+        </div>
     </div>
 </div>

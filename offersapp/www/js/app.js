@@ -10,7 +10,9 @@ angular.module('offersapp', [
     'ionic-material',
     'offersapp.home',
 	'offersapp.search',
-	'offersapp.dao'// Yeoman hook. Define section. Do not remove this comment.
+	'offersapp.dao',
+	'offersapp.category',
+	'offersapp.offers'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
 .run(function($ionicPlatform) {
@@ -39,7 +41,7 @@ angular.module('offersapp', [
   .state('app', {
       abstract: true,
       templateUrl: './app/sidemenu/sidemenu.html',
-      controller: 'SideMenuCtrl'
+      controller: 'SideMenuCtrl as ctrl'
   })
   
   .state('app.home', {
@@ -49,10 +51,6 @@ angular.module('offersapp', [
             templateUrl: './app/home/home.html',
             controller: 'HomeCtrl as ctrl'
         }
-//        'fabContent': {
-//            templateUrl: './app/sidemenu/search-button.html',
-//            controller: 'SideMenuCtrl'
-//        }
     }
   })
 
@@ -62,6 +60,16 @@ angular.module('offersapp', [
       'pageContent': {
         templateUrl: './app/search/search.html',
         controller: 'SearchCtrl as ctrl'
+      }
+    }
+  })
+
+  .state('app.category', {
+    url: '/category/:id',
+    views: {
+      'pageContent': {
+        templateUrl: './app/category/category.html',
+        controller: 'CategoryCtrl as ctrl'
       }
     }
   })// Yeoman hook. States section. Do not remove this comment.

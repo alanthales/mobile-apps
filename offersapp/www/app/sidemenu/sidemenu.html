@@ -8,23 +8,14 @@
             <h2>Offer's App</h2>
         </ion-header-bar>
         <ion-content class="stable-bg has-expanded-header">
-            <ion-list>
-                <ion-item nav-clear menu-close ui-sref="app.activity">
-                    Activity
-                </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.login">
-                    Login
-                </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.profile">
-                    Profile
-                </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.friends">
-                    Friends
-                </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.gallery">
-                    Gallery
-                </ion-item>
-            </ion-list>
+            <div class="list">
+                <div class="item" menu-close ng-click="ctrl.goTo('app.mylist')">
+                    Minha lista
+                </div>
+                <div class="item" menu-close ng-repeat="item in ctrl.categorias.data" ng-click="ctrl.goTo({ id: item.id })">
+                    {{item.nome}}
+                </div>
+            </div>
         </ion-content>
     </ion-side-menu>
 </ion-side-menus>

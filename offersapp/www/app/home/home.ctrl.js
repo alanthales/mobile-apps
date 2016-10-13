@@ -1,15 +1,10 @@
 angular.module('offersapp.home', [])
-.controller('HomeCtrl', function($scope, $timeout, ionicMaterialInk, ionicMaterialMotion, DaoFact){
+.controller('HomeCtrl', function($scope, $timeout, DaoFact){
     this.ofertas = DaoFact.getOfertas();
     
-//    this.gridLenght = { 'height': Math.ceil(this.ofertas.data.length / 4) * 150 + 'vw' };
-        
-    // Activate ink for controller
-    ionicMaterialInk.displayEffect();
-    
     $timeout(function() {
-        ionicMaterialMotion.fadeSlideInRight({
-            selector: '.animate-fade-slide-in .item'
-        });
+        document.getElementsByClassName('button-fab-top-right')[0].classList.toggle('on');
     }, 300);
+    
+//    this.gridLenght = { 'height': Math.ceil(this.ofertas.data.length / 4) * 150 + 'vw' };
 });
