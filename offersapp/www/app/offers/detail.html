@@ -1,0 +1,23 @@
+<ion-view view-title="Detalhes da oferta">
+    <ion-nav-bar class="bar-balanced" align-title="left">
+        <ion-nav-back-button class="no-text"></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="material-bg hero slide-up">
+            <div class="content">
+                <div class="avatar" style="background-image: url('{{ctrl.oferta.imagem}}');"></div>
+                <h3><span class="light">{{ctrl.oferta.descricao}}</span></h3>
+                <h4>{{ctrl.oferta.anunciante.razao}}</h4>
+            </div>
+        </div>
+        
+        <div class="list list-inset animate-fade-slide-in-right">
+            <div class="item">
+                {{ctrl.oferta.descricao}}
+            </div>
+            <div class="item">
+                {{ctrl.oferta.anunciante.razao}}
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

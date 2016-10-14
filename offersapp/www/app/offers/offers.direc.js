@@ -6,9 +6,9 @@ angular.module('offersapp.offers', [])
             data: '=',
             filter: '='
         },
-        controller: ['$timeout', 'ionicMaterialInk', 'ionicMaterialMotion', function($timeout, ionicMaterialInk, ionicMaterialMotion) {
+        controller: ['$state', '$timeout', 'ionicMaterialInk', 'ionicMaterialMotion', function($state, $timeout, ionicMaterialInk, ionicMaterialMotion) {
             this.showOffer = function(offer) {
-                console.log(offer);
+                $state.go('app.offersdetail', { id: offer.id });
             };
             
             ionicMaterialInk.displayEffect();

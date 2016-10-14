@@ -38,5 +38,5 @@ angular.module('offersapp.dao', [])
         getCategorias: function() {
             return categorias;
         }
-    }
+    };
 });

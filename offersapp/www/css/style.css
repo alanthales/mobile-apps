@@ -8,8 +8,20 @@
     border: none;
 }
 
+.has-expanded {
+    top: 85px;
+}
+
 .smoke-bg {
     background-color: #f0f0f0;
+}
+
+.material-bg {
+    background-image: url('../img/material-bg.jpg');
+}
+
+.material-bg h2 {
+    color: #fff;
 }
 
 .list-card {
@@ -144,11 +156,6 @@
 */
 
 /* Ionic Material override's */
-.button.button-fab.button-fab-top-right,
-.button.button-fab.button-fab-top-left {
-    top: 12px;
-}
-
 .bar.item-input {
     padding: 0 10px;
 }
@@ -204,22 +211,4 @@ p {
 
 .menu-open .ion-navicon:before {
     content: "\f2ca";
-}
-
-
-/* Login
-==================================*/
-.app-icon {
-    background-color: #fff;
-    background: url('../img/crown.jpg') center;
-    background-size: cover;
-    border-radius: 50%;
-    height: 125px;
-    margin: 0 auto;
-    width: 125px;
-}
-
-.social-login {
-    position: fixed;
-    bottom: 0;
 }

@@ -1,27 +1,7 @@
-<!--
-<div class="card-list" ng-style="ctrl.gridLenght">
-    <div class="card card-gallery item-text-wrap" ng-repeat="item in ctrl.ofertas.data | filter:search">
-        <div class="card-label flame-bg">
-            <i class="icon ion-clock"></i> Válido até {{item.validade | date:'dd/MM/yyyy'}}
-        </div>
-        <div class="ink padding">
-            <span class="title">{{item.anunciante.razao}}</span>
-            <img class="full-image" src="{{item.imagem || 'img/ionic.png'}}">
-        </div>
-        <div class="card-header">
-            <h2 class="balanced">{{item.descricao}}</h2>
-            <div class="price text-right">
-                <strong>{{item.valor | currency:'R$'}}</strong>
-                <i class="icon ion-flame"></i>
-            </div>
-        </div>
-    </div>
-</div>-->
-<div class="list-card">
-    <div class="item in done" ng-if="!ctrl.data.length">
-        <div class="card padding">
-            <i class="icon ion-alert"></i> Nenhuma oferta
-        </div>
+<div class="list list-card">
+    <div class="item item-icon-left in done" ng-if="!ctrl.data.length">
+        <i class="icon ion-alert"></i>
+        <h2>Nenhuma oferta</h2>
     </div>
     <div class="card-item" ng-repeat="item in ctrl.data | filter:ctrl.filter track by item.id" ng-click="ctrl.showOffer(item)">
         <div class="thumbnail">
