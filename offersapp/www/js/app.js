@@ -12,7 +12,8 @@ angular.module('offersapp', [
 	'offersapp.search',
 	'offersapp.dao',
 	'offersapp.category',
-	'offersapp.offers'// Yeoman hook. Define section. Do not remove this comment.
+	'offersapp.offers',
+	'offersapp.popup'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
 .run(function($ionicPlatform) {

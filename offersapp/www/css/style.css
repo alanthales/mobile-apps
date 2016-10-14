@@ -8,6 +8,10 @@
     border: none;
 }
 
+.smoke-bg {
+    background-color: #f0f0f0;
+}
+
 .list-card {
     max-width: 690px;
     margin: 0 auto;
@@ -142,7 +146,7 @@
 /* Ionic Material override's */
 .button.button-fab.button-fab-top-right,
 .button.button-fab.button-fab-top-left {
-    top: 8px;
+    top: 12px;
 }
 
 .bar.item-input {
