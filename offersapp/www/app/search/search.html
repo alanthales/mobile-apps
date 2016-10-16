@@ -1,14 +1,14 @@
-<ion-view view-title="Pesquisar">
-    <ion-nav-bar class="bar-balanced bar-search" align-title="left">
+<ion-view view-title="Pesquisar" class="material-bg">
+    <ion-nav-bar class="bar-energized bar-search" align-title="left">
         <ion-nav-back-button class="no-text"></ion-nav-back-button>
     </ion-nav-bar>
-    <div class="bar bar-subheader bar-balanced item-input">
+    <div class="bar bar-subheader bar-energized item-input">
         <label class="item-input-wrapper">
             <i class="icon ion-search placeholder-icon"></i>
             <input type="text" placeholder="Digite algo..." ng-model="search">
         </label>
     </div>
-    <ion-content class="has-subheader smoke-bg animate-fade-slide-in">
+    <ion-content class="has-subheader animate-fade-slide-in">
         <offers data="ctrl.ofertas" filter="search"></offers>
     </ion-content>
 </ion-view>
