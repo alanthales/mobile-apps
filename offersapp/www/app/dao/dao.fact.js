@@ -1,13 +1,15 @@
 angular.module('offersapp.dao', [])
 .factory('DaoFact', function() {
-    var anunciantes = new SimpleDataSet(),
+    var localDb = new DbFactory(DbProxies.LOCALSTORAGE),
+        lista = localDb.createDataSet('lista'),
+        anunciantes = new SimpleDataSet(),
         categorias = new SimpleDataSet(),
         ofertas = new SimpleDataSet();
     
     anunciantes.insertAll([
-        { id: 1, razao: 'Adicao Comércio', endereco: 'Av. São João', numero: '380', cidade: 'Campo Belo', estado: 'MG' },
-        { id: 2, razao: 'Mercearia do Xico', endereco: 'Rua Francisco Gibram', numero: '661', cidade: 'Campo Belo', estado: 'MG' },
-        { id: 3, razao: 'Açougue do João', endereco: 'Rua Floriano Peixoto', numero: '201', cidade: 'Campo Belo', estado: 'MG' }
+        { id: 1, nome: 'Adicao Comércio', endereco: 'Av. São João', numero: '380', cidade: 'Campo Belo', estado: 'MG' },
+        { id: 2, nome: 'Mercearia do Xico', endereco: 'Rua Francisco Gibram', numero: '661', cidade: 'Campo Belo', estado: 'MG' },
+        { id: 3, nome: 'Açougue do João', endereco: 'Rua Floriano Peixoto', numero: '201', cidade: 'Campo Belo', estado: 'MG' }
     ]);
     
     categorias.insertAll([
@@ -37,6 +39,9 @@ angular.module('offersapp.dao', [])
         },
         getCategorias: function() {
             return categorias;
+        },
+        getLista: function(callback) {
+            return lista.open(callback);
         }
     };
 });

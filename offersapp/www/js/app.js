@@ -14,7 +14,8 @@ angular.module('offersapp', [
 	'offersapp.category',
 	'offersapp.offers',
 	'offersapp.popup',
-	'offersapp.offersdetail'// Yeoman hook. Define section. Do not remove this comment.
+	'offersapp.offersdetail',
+	'offersapp.my-list'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
 .run(function($ionicPlatform) {
@@ -82,6 +83,16 @@ angular.module('offersapp', [
       'pageContent': {
         templateUrl: './app/offers/detail.html',
         controller: 'OffersDetailCtrl as ctrl'
+      }
+    }
+  })
+
+  .state('app.my-list', {
+    url: '/my-list',
+    views: {
+      'pageContent': {
+        templateUrl: './app/my-list/my-list.html',
+        controller: 'MyListCtrl as ctrl'
       }
     }
   })// Yeoman hook. States section. Do not remove this comment.

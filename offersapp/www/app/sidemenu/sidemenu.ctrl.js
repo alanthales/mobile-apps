@@ -1,6 +1,7 @@
 angular.module('offersapp')
 .controller('SideMenuCtrl', function($scope, $state, DaoFact){
     this.categorias = DaoFact.getCategorias();
+    this.lista = DaoFact.getLista();
     
     this.goTo = function(params) {
         if (params && typeof params === 'object') {

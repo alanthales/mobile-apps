@@ -1,13 +1,21 @@
 angular.module('offersapp.offersdetail', [])
-.controller('OffersDetailCtrl', function($scope, $stateParams, DaoFact, ionicMaterialInk, ionicMaterialMotion) {
+.controller('OffersDetailCtrl', function($scope, $stateParams, $timeout, DaoFact, PopupServ, ionicMaterialInk, ionicMaterialMotion) {
     var ofertaId = $stateParams.id ? parseInt($stateParams.id) : 0;
     
     this.oferta = DaoFact.getOfertas().getById(ofertaId);
+    
+    this.add = function(oferta) {
+        var lista = DaoFact.getLista(),
+            l = lista.data.length;
         
-    ionicMaterialMotion.fadeSlideInRight();
-    
-    ionicMaterialInk.displayEffect();
-    
+        lista.save(oferta);
+        lista.post();
+        
+        if (l < lista.data.length) {
+            PopupServ.alert('Oferta adicionada na lista de compra!');
+        }
+    };
+
     var anunciante = this.oferta.anunciante,
         endereco = [anunciante.endereco, ',', anunciante.numero, '-', anunciante.cidade, ' ', anunciante.estado].join(' '),
         geocoder = new google.maps.Geocoder(),
@@ -45,4 +53,10 @@ angular.module('offersapp.offersdetail', [])
             infowindow.open(map, marker);
         });
     });
+    
+    ionicMaterialInk.displayEffect();
+    
+    $timeout(function() {
+        ionicMaterialMotion.slideUp({ selector: '.slide-up' });
+    }, 300);
 });

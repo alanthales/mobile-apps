@@ -3,7 +3,7 @@
         <ion-nav-back-button class="no-text"></ion-nav-back-button>
     </ion-nav-bar>
     <ion-content class="smoke-bg">
-        <div class="hero material-bg">
+        <div class="hero material-bg slide-up">
             <div class="content">
                 <div class="avatar" style="background-image: url('{{ctrl.oferta.imagem || 'img/noimage.jpg'}}');"></div>
                 <h3><span class="light">{{ctrl.oferta.descricao}}</span></h3>
@@ -11,19 +11,27 @@
             </div>
         </div>
         
-        <div class="list list-inset animate-fade-slide-in-right">
+        <div class="list list-inset">
             <div class="item">
-                <h2>{{ctrl.oferta.anunciante.razao}}</h2>
+                <h2>{{ctrl.oferta.anunciante.nome}}</h2>
             </div>
-            <div class="item">
+            <div class="item item-icon-left">
+                <i class="icon icon-small ion-location"></i>
                 <p>
                     {{ctrl.oferta.anunciante.endereco + ", " + ctrl.oferta.anunciante.numero}}
                     {{ctrl.oferta.anunciante.cidade + " - " + ctrl.oferta.anunciante.estado}}
                 </p>
             </div>
-            <div class="item">
+            <div class="item item-icon-left">
+                <i class="icon icon-small ion-clock"></i>
                 <p>Promoção válida até {{ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
             </div>
+        </div>
+        
+        <div class="list padding">
+            <button class="button button-block button-energized" ng-click="ctrl.add(ctrl.oferta)">
+                <i class="icon ion-plus"></i> Adicionar na lista
+            </button>
         </div>
         
         <div id="map" data-tap-disabled="true">
