@@ -109,6 +109,7 @@
 }
 
 .animate-fade-slide-in .card-item {
+    -webkit-transform: translateZ(0);
     -ms-transform: translate3d(-250px, 250px, 0);
     -webkit-transform: translate3d(-250px, 250px, 0);
     transform: translate3d(-250px, 250px, 0);
@@ -207,6 +208,7 @@
 }
 
 .menu .bar.bar-header.expanded {
+    -webkit-transform: translateZ(0);
     -webkit-transition: all .5s ease-in-out;
     transition: all .5s ease-in-out;
 }
