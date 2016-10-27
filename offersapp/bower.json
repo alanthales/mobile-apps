@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ionic-material": "^0.4.2",
-    "robotodraft": "^1.1.0"
+    "robotodraft": "^1.1.0",
+    "ojs-db": "https://github.com/alanthales/ojs-db.git"
   }
 }
