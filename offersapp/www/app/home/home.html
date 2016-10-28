@@ -10,7 +10,7 @@
     </ion-nav-bar>
     <ion-content class="has-expanded animate-fade-slide-in">
         <offers data="ctrl.ofertas.data"></offers>
-        <ion-infinite-scroll on-infinite="ctrl.loadMore()" distance="1%" spinner="spiral" ng-if="!ctrl.ofertas.eof">
+        <ion-infinite-scroll class="spinner-white" on-infinite="ctrl.loadMore()" distance="1%" spinner="spiral" ng-if="!ctrl.ofertas.eof">
         </ion-infinite-scroll>
     </ion-content>
 </ion-view>

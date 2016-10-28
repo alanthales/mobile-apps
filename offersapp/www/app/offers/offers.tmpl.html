@@ -7,7 +7,7 @@
 -->
     <div class="card-item" ng-repeat="item in ctrl.data | filter:ctrl.filter track by item.id" ng-click="ctrl.showOffer(item)">
         <div class="thumbnail">
-            <img src="{{::item.imagem || 'img/noimage.jpg'}}">
+            <img ng-src="{{::item.imagem || 'img/noimage.jpg'}}" alt="{{::item.descricao}}">
         </div>
         <div class="item-container">
             <h2>{{::item.descricao}}</h2>

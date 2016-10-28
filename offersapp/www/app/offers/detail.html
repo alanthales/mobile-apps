@@ -2,7 +2,8 @@
     <ion-nav-bar class="bar-energized" align-title="left">
         <ion-nav-back-button class="no-text"></ion-nav-back-button>
     </ion-nav-bar>
-    <ion-content class="smoke-bg">
+        
+    <ion-content>
         <div class="hero material-bg slide-up">
             <div class="content">
                 <div class="avatar" style="background-image: url('{{ctrl.oferta.imagem || 'img/noimage.jpg'}}');"></div>
@@ -10,31 +11,42 @@
                 <h4>{{ctrl.oferta.valor | currency:"R$"}}</h4>
             </div>
         </div>
-        
-        <div class="list list-inset">
-            <div class="item">
-                <h2>{{ctrl.oferta.anunciante.nome}}</h2>
+
+        <div class="button-bar bar-dark">
+            <a class="button button-icon-left ion-at" ng-click="ctrl.changeTab(0)">
+                Anunciante
+            </a>
+            <a class="button button-icon-left ion-location" ng-click="ctrl.changeTab(1)">
+                Localização
+            </a>
+        </div>
+
+        <div ng-hide="ctrl.tabIndex === 1">
+            <div class="list list-inset">
+                <div class="item">
+                    <h2>{{ctrl.oferta.anunciante.nome}}</h2>
+                </div>
+                <div class="item item-icon-left">
+                    <i class="icon icon-small ion-location"></i>
+                    <p>
+                        {{ctrl.oferta.anunciante.endereco + ", " + ctrl.oferta.anunciante.numero}}
+                        {{ctrl.oferta.anunciante.cidade + " - " + ctrl.oferta.anunciante.estado}}
+                    </p>
+                </div>
+                <div class="item item-icon-left">
+                    <i class="icon icon-small ion-clock"></i>
+                    <p>Promoção válida até {{ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
+                </div>
             </div>
-            <div class="item item-icon-left">
-                <i class="icon icon-small ion-location"></i>
-                <p>
-                    {{ctrl.oferta.anunciante.endereco + ", " + ctrl.oferta.anunciante.numero}}
-                    {{ctrl.oferta.anunciante.cidade + " - " + ctrl.oferta.anunciante.estado}}
-                </p>
-            </div>
-            <div class="item item-icon-left">
-                <i class="icon icon-small ion-clock"></i>
-                <p>Promoção válida até {{ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
+
+            <div class="list padding">
+                <button class="button button-block button-energized" ng-click="ctrl.add(ctrl.oferta)">
+                    <i class="icon ion-plus"></i> Adicionar na lista
+                </button>
             </div>
         </div>
         
-        <div class="list padding">
-            <button class="button button-block button-energized" ng-click="ctrl.add(ctrl.oferta)">
-                <i class="icon ion-plus"></i> Adicionar na lista
-            </button>
-        </div>
-        
-        <div id="map" data-tap-disabled="true">
+        <div id="map" data-tap-disabled="true" ng-hide="ctrl.tabIndex === 0">
         </div>
     </ion-content>
 </ion-view>

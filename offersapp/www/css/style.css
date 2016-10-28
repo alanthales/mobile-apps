@@ -7,6 +7,11 @@
     opacity: .9;
 }
 
+.tabs-energized-900 > .tabs {
+    background-color: #ff9800;
+    color: #fff;
+}
+
 .pane[state="app.search"] .bar.bar-energized,
 .pane[state="app.category"] .bar.bar-energized {
     border: none;
@@ -123,53 +128,21 @@
     transform: translate3d(0, 0, 0);
 }
 
+.spinner-white .spinner {
+    stroke: #fff;
+    fill: #fff;
+}
+
 #map {
     width: 100%;
     height: 100%;
 }
 
-/*
-.card-list {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    margin: 0 auto;
-}
-
-.card-list .card {
-    height: 150px;
-}
-
-@media screen and (min-width: 960px) {
-    .card-list { max-width: 550px; }
-	.card-list .card { width: 33.3%; }
-}
-
-.card-list .card.card-gallery .title {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    background-color: #555;
-    color: #fff;
-    padding: 4px;
-}
-
-.card-list .card-header {
-    padding: 5px;
-}
-
-.card-list .card-header h2, .card-list .card-header h3, .card-list .card-header h4 {
-    color: #333;
-    font-size: 16px;
-}
-
-.card-list .card-label {
-    padding: 0 5px;
-    font-size: 85%;
-}
-*/
-
 /* Ionic Material override's */
+.overflow-scroll {
+    overflow-y: auto;
+}
+
 .bar.bar-header.expanded .title,
 .expanded .bar .button {
     top: 15px;
