@@ -7,11 +7,11 @@
 -->
     <div class="card-item" ng-repeat="item in ctrl.data | filter:ctrl.filter track by item.id" ng-click="ctrl.showOffer(item)">
         <div class="thumbnail">
-            <img ng-src="{{::item.imagem || 'img/noimage.jpg'}}" alt="{{::item.descricao}}">
+            <img ng-src="{{$root.getImage(item)}}" alt="{{::item.descricao}}">
         </div>
         <div class="item-container">
             <h2>{{::item.descricao}}</h2>
-            <h3>{{::item.anunciante.nome}}</h3>
+            <h3>{{::item.usuario.nome}}</h3>
             <p>
                 <span class="item-note item-price">
                     <strong>{{::item.valor | currency:'R$'}}</strong>

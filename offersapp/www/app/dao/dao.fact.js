@@ -1,47 +1,41 @@
 angular.module('offersapp.dao', [])
-.factory('DaoFact', function() {
-    var localDb = new DbFactory(DbProxies.LOCALSTORAGE),
-        lista = localDb.createDataSet('lista'),
-        anunciantes = new SimpleDataSet(),
-        categorias = new SimpleDataSet(),
-        ofertas = new SimpleDataSet();
+.factory('DaoFact', function($q, urls) {
+    var token = btoa('ojs:only-jesus-saves'),
+        header = { Authorization: 'Basic ' + token },
+        db = new DbFactory(DbProxies.RESTFUL, { url: urls.BACKEND, headers: header }),
+        localDb = new DbFactory(DbProxies.LOCALSTORAGE),
+        lista = localDb.createDataSet('lista');
     
-    anunciantes.insertAll([
-        { id: 1, nome: 'Adicao Comércio', endereco: 'Av. São João', numero: '380', cidade: 'Campo Belo', estado: 'MG' },
-        { id: 2, nome: 'Mercearia do Xico', endereco: 'Rua Francisco Gibram', numero: '661', cidade: 'Campo Belo', estado: 'MG' },
-        { id: 3, nome: 'Açougue do João', endereco: 'Rua Floriano Peixoto', numero: '201', cidade: 'Campo Belo', estado: 'MG' }
-    ]);
-    
-    categorias.insertAll([
-        { id: 1, nome: 'Açougue' },
-        { id: 2, nome: 'Frios' },
-        { id: 3, nome: 'Enlatados' },
-        { id: 4, nome: 'Grãos' }
-    ]);
-    
-    ofertas.insertAll([
-        { id: 1, descricao: "Arroz D'Mata Tipo 1 PCT 5kg", valor: 14.29, validade: new Date(), anunciante: anunciantes.getById(1), imagem: './img/arroz pct.jpg', categoriaId: 4 },
-        { id: 2, descricao: "Feijão Galo PCT 3kg", valor: 10.49, validade: new Date(), anunciante: anunciantes.getById(1), imagem: './img/feijao pct.jpg', categoriaId: 4 },
-        { id: 3, descricao: "Extrato de Tomate Pomarola UN 350g", valor: 1.99, validade: new Date(), anunciante: anunciantes.getById(1), categoriaId: 3 },
-        { id: 4, descricao: "Feijão da Roça Agranel KG", valor: 4.49, validade: new Date(), anunciante: anunciantes.getById(2), categoriaId: 4 },
-        { id: 5, descricao: "Milho verde Fuggini LT 300g", valor: 1.29, validade: new Date(), anunciante: anunciantes.getById(2), categoriaId: 3 },
-        { id: 6, descricao: "Azeitona Del Chef PT 800g", valor: 8.39, validade: new Date(), anunciante: anunciantes.getById(1), categoriaId: 3 },
-        { id: 7, descricao: "Carne Picanha Friboi KG", valor: 23.49, validade: new Date(), anunciante: anunciantes.getById(1), imagem: './img/carne friboi.jpg', categoriaId: 1 },
-        { id: 8, descricao: "Carne de porco Pernil KG", valor: 14.00, validade: new Date(), anunciante: anunciantes.getById(3), categoriaId: 1 }
-    ]);
+    var qryPromise = function(table, params) {
+        var defer = $q.defer();
+
+        db.query(table, params || {}, function(err, results) {
+            if (err) {
+                defer.reject(err);
+            } else {
+                defer.resolve(results);
+            }
+        });
+        
+        return defer.promise;
+    };
     
     return {
-        getAnunciantes: function() {
-            return anunciantes;
+        getOfertas: function(options) {
+            var opts = options && typeof options === 'object' ? options : {},
+                url = 'oferta/findByCity';
+            
+            opts.cidade = opts.cidade || 1;
+            
+            return qryPromise(url, opts);
         },
-        getOfertas: function() {
-            return ofertas;
-        },
+        
         getCategorias: function() {
-            return categorias;
+            return qryPromise('categoria');
         },
-        getLista: function(callback) {
-            return lista.open(callback);
+        
+        getLista: function() {
+            return lista.open();
         }
     };
 });

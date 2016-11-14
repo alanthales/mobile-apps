@@ -18,7 +18,12 @@ angular.module('offersapp', [
 	'offersapp.my-list'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
-.run(function($ionicPlatform) {
+.constant('urls', {
+    'BACKEND': 'http://' + (location.hostname === "localhost" ? 'localhost:1337' : 'offersapp.herokuapp.com'),
+    'IMAGES': 'https://s3.amazonaws.com/offersapp'
+})
+
+.run(function($ionicPlatform, $rootScope, urls) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -31,6 +36,10 @@ angular.module('offersapp', [
             StatusBar.styleDefault();
         }
     });
+    
+    $rootScope.getImage = function(oferta) {
+        return oferta.imagem ? urls.IMAGES + '/' + oferta.imagem : 'img/noimage.jpg';
+    };
 })
 
 .config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
@@ -41,6 +50,14 @@ angular.module('offersapp', [
   .state('app', {
       abstract: true,
       templateUrl: './app/sidemenu/sidemenu.html',
+      resolve: {
+          categorias: function(DaoFact) {
+              return DaoFact.getCategorias();
+          },
+          lista: function(DaoFact) {
+              return DaoFact.getLista();
+          }
+      },
       controller: 'SideMenuCtrl as ctrl'
   })
   
@@ -50,6 +67,11 @@ angular.module('offersapp', [
         'pageContent': {
             templateUrl: './app/home/home.html',
             controller: 'HomeCtrl as ctrl'
+        }
+    },
+    resolve: {
+        ofertas: function(DaoFact) {
+            return DaoFact.getOfertas();
         }
     }
   })
@@ -71,6 +93,11 @@ angular.module('offersapp', [
         templateUrl: './app/category/category.html',
         controller: 'CategoryCtrl as ctrl'
       }
+    },
+    resolve: {
+        ofertas: function(DaoFact, $stateParams) {
+            return DaoFact.getOfertas({ categoria: $stateParams.id });
+        }
     }
   })
 

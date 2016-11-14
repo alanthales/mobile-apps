@@ -1,6 +1,6 @@
 angular.module('offersapp.home', [])
-.controller('HomeCtrl', function($scope, $timeout, DaoFact){
-    this.ofertas = DaoFact.getOfertas();
+.controller('HomeCtrl', function($scope, $timeout, ofertas){
+    this.ofertas = ofertas;
 
     this.loadMore = function() {
 //        this.ofertas.next();
