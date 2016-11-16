@@ -15,7 +15,9 @@ angular.module('offersapp', [
 	'offersapp.offers',
 	'offersapp.popup',
 	'offersapp.offersdetail',
-	'offersapp.my-list'// Yeoman hook. Define section. Do not remove this comment.
+	'offersapp.my-list',
+	'offersapp.bemvindo',
+	'offersapp.userStore'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
 .constant('urls', {
@@ -23,7 +25,7 @@ angular.module('offersapp', [
     'IMAGES': 'https://s3.amazonaws.com/offersapp'
 })
 
-.run(function($ionicPlatform, $rootScope, urls) {
+.run(function($ionicPlatform, $rootScope, $state, urls, UserStore) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -40,12 +42,29 @@ angular.module('offersapp', [
     $rootScope.getImage = function(oferta) {
         return oferta.imagem ? urls.IMAGES + '/' + oferta.imagem : 'img/noimage.jpg';
     };
+
+    if (UserStore.getStore().cidade) {
+        $state.transitionTo('app.home');
+    } else {
+        $state.transitionTo('bemvindo');
+    }
 })
 
 .config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
   $ionicConfigProvider.scrolling.jsScrolling(false);
 
   $stateProvider
+
+  .state('bemvindo', {
+    url: '/bemvindo',
+    templateUrl: './app/bemvindo/bemvindo.html',
+    controller: 'BemvindoCtrl as ctrl',
+    resolve: {
+        cidades: function(DaoFact) {
+            return DaoFact.getCidades();
+        }
+    }
+  })
 
   .state('app', {
       abstract: true,
@@ -123,5 +142,5 @@ angular.module('offersapp', [
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/');
+   $urlRouterProvider.otherwise('/notfound');
 });

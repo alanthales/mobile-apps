@@ -1,5 +1,5 @@
 angular.module('offersapp.dao', [])
-.factory('DaoFact', function($q, urls) {
+.factory('DaoFact', function($q, urls, UserStore) {
     var token = btoa('ojs:only-jesus-saves'),
         header = { Authorization: 'Basic ' + token },
         db = new DbFactory(DbProxies.RESTFUL, { url: urls.BACKEND, headers: header }),
@@ -21,17 +21,21 @@ angular.module('offersapp.dao', [])
     };
     
     return {
-        getOfertas: function(options) {
-            var opts = options && typeof options === 'object' ? options : {},
-                url = 'oferta/findByCity';
-            
-            opts.cidade = opts.cidade || 1;
-            
-            return qryPromise(url, opts);
+        getCidades: function() {
+            return qryPromise('cidade');
         },
         
         getCategorias: function() {
             return qryPromise('categoria');
+        },
+        
+        getOfertas: function(options) {
+            var opts = options && typeof options === 'object' ? options : {},
+                url = 'oferta/findByCity';
+            
+            opts.cidade = opts.cidade || UserStore.getStore().cidade;
+            
+            return qryPromise(url, opts);
         },
         
         getLista: function() {

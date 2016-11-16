@@ -33,6 +33,10 @@
     font-size: 50%;
 }
 
+.icon-xlarge:before {
+    font-size: 520% !important;
+}
+
 .item-price {
     padding: 0 4px;
     background-color: #ef473a;
@@ -131,6 +135,35 @@
 .spinner-white .spinner {
     stroke: #fff;
     fill: #fff;
+}
+
+.slider {
+    height: 100%;
+}
+
+.slider-slide {
+    padding: 20px;
+    text-align: center;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    color: #fff;
+}
+
+.slider-slide p {
+    font-size: 110%;
+    color: #fff;
+}
+
+.slider-slide h3, .slider-slide a, .slider-pager .slider-pager-page {
+    color: #fff;
+}
+
+.slider-pager {
+    bottom: 15px;
+}
+
+#logo {
+    margin: 30px 0px;
 }
 
 #map {

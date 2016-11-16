@@ -1,0 +1,41 @@
+<ion-view view-title="Offer's App">
+    <ion-slide-box class="energized-bg" show-pager="false" ng-init="ctrl.disableSlide()" active-slide="ctrl.actualSlide">
+        <ion-slide>
+            <h3>Bem vindo ao Offer's App!</h3>
+            <div id="logo">
+                <i class="icon icon-xlarge ion-arrow-graph-up-right"></i>
+            </div>
+            <p>
+                Para começar gostaríamos de saber qual sua cidade.
+            </p>
+            <div class="list padding">
+                <label class="item item-light item-input item-select">
+                    <div class="input-label">
+                        Cidade
+                    </div>
+                    <select name="cidade" ng-options="item.id as item.nome for item in ctrl.cidades track by item.id" ng-model="ctrl.user.cidade">
+                    </select>
+                </label>                
+            </div>
+            <div class="bottom">
+                <button type="button" class="button button-balanced" ng-click="ctrl.next()">
+                    Próximo <i class="icon ion-arrow-right-a"></i>
+                </button>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <h3>Obrigado pela informação</h3>
+            <div id="logo">
+                <i class="icon icon-xlarge ion-arrow-graph-up-right"></i>
+            </div>
+            <p>
+                As ofertas já irão aparecer na sua tela.
+            </p>
+            <div class="bottom">
+                <button type="button" class="button button-balanced" ng-click="ctrl.done()">
+                    Concluir
+                </button>
+            </div>
+        </ion-slide>
+    </ion-slide-box>
+</ion-view>
