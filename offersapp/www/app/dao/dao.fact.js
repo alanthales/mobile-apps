@@ -29,13 +29,24 @@ angular.module('offersapp.dao', [])
             return qryPromise('categoria');
         },
         
+        getOferta: function(id) {
+            return qryPromise('oferta/' + id || 0 );
+        },
+
         getOfertas: function(options) {
             var opts = options && typeof options === 'object' ? options : {},
-                url = 'oferta/findByCity';
+                url = 'oferta?limit=50&';
             
             opts.cidade = opts.cidade || UserStore.getStore().cidade;
-            
-            return qryPromise(url, opts);
+
+            if (opts.skip) {
+                url += 'skip=' + opts.skip + '&';
+                delete opts.skip;
+            }
+
+            url += 'where=' + JSON.stringify(opts);
+
+            return qryPromise(url);
         },
         
         getLista: function() {

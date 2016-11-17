@@ -17,7 +17,7 @@ angular.module('offersapp', [
 	'offersapp.offersdetail',
 	'offersapp.my-list',
 	'offersapp.bemvindo',
-	'offersapp.userStore'// Yeoman hook. Define section. Do not remove this comment.
+	'offersapp.userstore'// Yeoman hook. Define section. Do not remove this comment.
 ])
 
 .constant('urls', {
@@ -127,6 +127,16 @@ angular.module('offersapp', [
         templateUrl: './app/offers/detail.html',
         controller: 'OffersDetailCtrl as ctrl'
       }
+    },
+    resolve: {
+        oferta: function(DaoFact, $stateParams) {
+            return DaoFact.getOferta($stateParams.id).then(function(result) {
+                return result.length ? result[0] : {};
+            });
+        },
+        lista: function(DaoFact) {
+            return DaoFact.getLista();
+        }
     }
   })
 
@@ -142,5 +152,5 @@ angular.module('offersapp', [
   ;
 
   // if none of the above states are matched, use this as the fallback
-   $urlRouterProvider.otherwise('/notfound');
+  $urlRouterProvider.otherwise('/notfound');
 });

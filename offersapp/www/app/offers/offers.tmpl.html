@@ -1,10 +1,8 @@
 <div class="list list-card">
-<!--
-    <div class="item item-energized item-icon-left in done" ng-if="!ctrl.data.length">
-        <i class="icon ion-alert"></i>
-        <h2>Nenhuma oferta</h2>
+    <div class="item no-data in done" ng-if="!ctrl.data.length">
+        <i class="icon icon-large ion-sad-outline"></i> Nenhuma oferta
     </div>
--->
+
     <div class="card-item" ng-repeat="item in ctrl.data | filter:ctrl.filter track by item.id" ng-click="ctrl.showOffer(item)">
         <div class="thumbnail">
             <img ng-src="{{$root.getImage(item)}}" alt="{{::item.descricao}}">

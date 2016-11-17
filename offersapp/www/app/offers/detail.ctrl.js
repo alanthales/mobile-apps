@@ -1,24 +1,19 @@
 angular.module('offersapp.offersdetail', [])
-.controller('OffersDetailCtrl', function($scope, $stateParams, $timeout, $ionicLoading, DaoFact, ionicMaterialInk, ionicMaterialMotion) {
-    var self = this,
-        ofertaId = $stateParams.id ? parseInt($stateParams.id) : 0;
+.controller('OffersDetailCtrl', function($scope, $timeout, oferta, lista, PopupServ, ionicMaterialInk, ionicMaterialMotion) {
+    var self = this;
     
     this.tabIndex = 0;
-    this.oferta = DaoFact.getOfertas().getById(ofertaId);
+    this.oferta = oferta;
+    this.lista = lista;
     
     this.add = function(oferta) {
-        var lista = DaoFact.getLista(),
-            l = lista.data.length;
+        var l = self.lista.data.length;
         
-        lista.save(oferta);
-        lista.post();
+        self.lista.save(oferta);
+        self.lista.post();
         
-        if (l < lista.data.length) {
-            $ionicLoading.show({
-                template: 'Oferta adicionada na lista',
-                noBackdrop: true,
-                duration: 2000
-            });
+        if (l < self.lista.data.length) {
+            PopupServ.toast('Oferta adicionada na lista');
         }
     };
     
@@ -30,8 +25,8 @@ angular.module('offersapp.offersdetail', [])
     };
     
     this.loadMap = function() {
-        var anunciante = self.oferta.anunciante,
-            endereco = [anunciante.endereco, ',', anunciante.numero, '-', anunciante.cidade, ' ', anunciante.estado].join(' '),
+        var anunciante = self.oferta.usuario,
+            endereco = [anunciante.endereco, ',', anunciante.numero, '-', anunciante.cidade.nome, ' ', anunciante.cidade.estado].join(' '),
             geocoder = new google.maps.Geocoder(),
             mapOptions = {
                 center: {lat: -34.397, lng: 150.644},

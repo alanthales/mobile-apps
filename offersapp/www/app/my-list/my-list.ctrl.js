@@ -1,5 +1,7 @@
 angular.module('offersapp.my-list', [])
 .controller('MyListCtrl', function($scope, $timeout, DaoFact, ionicMaterialInk, ionicMaterialMotion) {
+    var self = this;
+    
     this.lista = DaoFact.getLista();
     
     this.save = function(oferta) {
@@ -22,8 +24,6 @@ angular.module('offersapp.my-list', [])
     
     ionicMaterialInk.displayEffect();
 
-    var self = this;
-    
     $timeout(function() {
         if (!self.lista.data.length) return;
         

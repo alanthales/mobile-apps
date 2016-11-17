@@ -13,6 +13,8 @@ angular.module('offersapp.offers', [])
             
             ionicMaterialInk.displayEffect();
 
+            if (!this.data.length) { return; }
+
             $timeout(function() {
                 ionicMaterialMotion.fadeSlideInRight({
                     selector: '.animate-fade-slide-in .card-item'

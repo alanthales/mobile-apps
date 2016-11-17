@@ -9,7 +9,7 @@
                     <i class="icon icon-small ion-alert"></i> Lista vázia
                 </div>
                 <div class="item item-avatar-right item-checkbox" ng-repeat="item in ctrl.lista.data | orderBy:'selected' track by item.id" ng-class="{'item-marked': item.selected}">
-                    <img src="{{item.imagem || 'img/noimage.jpg'}}">
+                    <img ng-src="{{$root.getImage(item)}}">
                     <h2>{{item.descricao}}</h2>
                     <p>{{item.anunciante.nome}}</p>
                     <label class="checkbox checkbox-assertive">

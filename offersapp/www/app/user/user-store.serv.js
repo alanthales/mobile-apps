@@ -1,4 +1,4 @@
-angular.module('offersapp.userStore', [])
+angular.module('offersapp.userstore', [])
 .service('UserStore', function($window) {
 	var store = JSON.parse( $window.localStorage.getItem('user') || '{}' );
 

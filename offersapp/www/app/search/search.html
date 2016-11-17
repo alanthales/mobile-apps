@@ -5,10 +5,10 @@
     <div class="bar bar-subheader bar-energized item-input">
         <label class="item-input-wrapper">
             <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" placeholder="Digite algo..." ng-model="search">
+            <input type="text" placeholder="Digite algo..." ng-model="ctrl.search">
         </label>
     </div>
     <ion-content class="has-subheader animate-fade-slide-in">
-        <offers data="ctrl.ofertas" filter="search"></offers>
+        <offers data="ctrl.ofertas"></offers>
     </ion-content>
 </ion-view>
