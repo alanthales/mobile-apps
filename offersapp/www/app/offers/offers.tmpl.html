@@ -1,8 +1,10 @@
-<div class="list list-card">
-    <div class="item no-data in done" ng-if="!ctrl.data.length">
+<div class="list no-data" ng-if="!ctrl.data.length">
+    <div class="item in done">
         <i class="icon icon-large ion-sad-outline"></i> Nenhuma oferta
     </div>
+</div>
 
+<div class="list list-card">
     <div class="card-item" ng-repeat="item in ctrl.data | filter:ctrl.filter track by item.id" ng-click="ctrl.showOffer(item)">
         <div class="thumbnail">
             <img ng-src="{{$root.getImage(item)}}" alt="{{::item.descricao}}">
@@ -22,3 +24,6 @@
         </div>
     </div>
 </div>
+
+<ion-infinite-scroll class="spinner-white" on-infinite="ctrl.loadMore()" distance="1%" spinner="spiral" ng-if="!ctrl.eof">
+</ion-infinite-scroll>

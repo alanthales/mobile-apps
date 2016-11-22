@@ -1,10 +1,3 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
 angular.module('offersapp', [
     'ionic',
     'ionic-material',
@@ -34,8 +27,10 @@ angular.module('offersapp', [
             cordova.plugins.Keyboard.disableScroll(true);
         }
         if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
+            StatusBar.styleLightContent();
+            StatusBar.overlaysWebView(false);
+            StatusBar.backgroundColorByHexString("#ff9800");
+            ionic.Platform.fullScreen(true, true);
         }
     });
     
@@ -114,6 +109,12 @@ angular.module('offersapp', [
       }
     },
     resolve: {
+        categoria: function(DaoFact, $stateParams) {
+            return DaoFact.getCategorias().then(function(results) {
+                var index = results.indexOfKey('id', parseInt($stateParams.id));
+                return results[index];
+            });
+        },
         ofertas: function(DaoFact, $stateParams) {
             return DaoFact.getOfertas({ categoria: $stateParams.id });
         }

@@ -10,7 +10,7 @@ angular.module('offersapp.home', [])
 		var filter = { skip: page * 50 };
 		
 		DaoFact.getOfertas(filter).then(function(data) {
-			self.ofertas.putRange(data);
+			self.ofertas.putRange(data, true);
 			self.eof = data.length < 50;
 		});
 

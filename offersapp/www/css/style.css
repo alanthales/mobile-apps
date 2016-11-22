@@ -17,28 +17,12 @@
 	border: none;
 }
 
-.has-expanded {
-	top: 85px;
-}
-
 .smoke-bg {
 	background-color: #f0f0f0;
 }
 
 .material-bg {
 	background-image: url('../img/app-bg.jpg');
-}
-
-.icon-small:before {
-	font-size: 50%;
-}
-
-.icon-xlarge:before {
-	font-size: 520% !important;
-}
-
-.icon-large:before {
-	font-size: 220% !important;
 }
 
 .item-price {
@@ -52,21 +36,17 @@
 	background-color: rgba(0,0,0,0.1);
 }
 
-.item.no-data {
+.list.no-data .item {
 	margin: auto;
 	font-weight: bold;
 	background: rgba(255, 255, 255, 0.4);
 	text-align: center;
 }
 
-.item.no-data i.icon {
+.list.no-data .item i.icon {
 	position: relative;
 	top: 5px;
 	margin-right: 5px;
-}
-
-.pane[state="app.search"] .item.no-data {
-	display: none;
 }
 
 .list-card {
@@ -228,6 +208,10 @@
 	color: #e42112;
 }
 
+.item-avatar-right > img:first-child {
+	top: 10px;
+}
+
 /* Menu
 ==================================*/
 .menu-bg {
@@ -287,4 +271,20 @@ p {
 
 .scroll {
 	height: 100%;
+}
+
+.has-expanded {
+	top: 85px;
+}
+
+.icon-small:before {
+	font-size: 50%;
+}
+
+.icon-large:before {
+	font-size: 220% !important;
+}
+
+.icon-xlarge:before {
+	font-size: 520% !important;
 }

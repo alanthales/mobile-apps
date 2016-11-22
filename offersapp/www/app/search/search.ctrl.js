@@ -1,10 +1,12 @@
 angular.module('offersapp.search', [])
 .controller('SearchCtrl', function($scope, $timeout, DaoFact) {
 	var self = this,
-		timer;
+		content = document.getElementsByClassName('search-content'),
+		nodata, criteria, timer;
 
 	this.ofertas = [];
 	this.search = '';
+	this.eof = true;
 
 	$scope.$watch('ctrl.search', function(newValue, oldValue) {
 		if (timer) { $timeout.cancel(timer); }
@@ -12,11 +14,12 @@ angular.module('offersapp.search', [])
 
 		timer = $timeout(function() {
 			var words = newValue.split(' '),
-				criteria = { or: [] },
-				w;
+				i = 0;
+				
+			criteria = { limit: 100, or: [] };
 
-			for (w in words) {
-				criteria.or.push({ descricao: {'contains': w}});
+			for (; i < words.length; i++) {
+				criteria.or.push({ descricao: {'contains': words[i]}});
 			}
 
 			DaoFact.getOfertas(criteria).then(loadOffers);
@@ -24,6 +27,14 @@ angular.module('offersapp.search', [])
 
 		function loadOffers(results) {
 			self.ofertas = results;
+			if (nodata.length) {
+				nodata[0].style.display = 'block';
+			}
 		};
 	});
+
+	$timeout(function() {
+		nodata = content[0].getElementsByClassName('list no-data');		
+		nodata[0].style.display = 'none';
+	}, 250);
 });

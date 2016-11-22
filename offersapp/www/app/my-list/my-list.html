@@ -9,9 +9,9 @@
                     <i class="icon icon-small ion-alert"></i> Lista vázia
                 </div>
                 <div class="item item-avatar-right item-checkbox" ng-repeat="item in ctrl.lista.data | orderBy:'selected' track by item.id" ng-class="{'item-marked': item.selected}">
-                    <img ng-src="{{$root.getImage(item)}}">
+                    <img ng-src="{{$root.getImage(item)}}" alt="item.descricao">
                     <h2>{{item.descricao}}</h2>
-                    <p>{{item.anunciante.nome}}</p>
+                    <p>{{item.usuario.nome}}</p>
                     <label class="checkbox checkbox-assertive">
                         <input type="checkbox" ng-model="item.selected" ng-change="ctrl.save(item)">
                     </label>
@@ -21,7 +21,7 @@
             <div ng-if="ctrl.lista.data.length">
                 <p class="padding-bottom">
                     <span class="item-note item-price">
-                        Total: {{ctrl.lista.data.compute({ $sum: 'valor'}).valor}}
+                        Total: {{ctrl.lista.data.compute({ $sum: 'valor'}).valor | currency:'R$'}}
                     </span>
                 </p>
                 

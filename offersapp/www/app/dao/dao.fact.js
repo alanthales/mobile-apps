@@ -4,15 +4,22 @@ angular.module('offersapp.dao', [])
         header = { Authorization: 'Basic ' + token },
         db = new DbFactory(DbProxies.RESTFUL, { url: urls.BACKEND, headers: header }),
         localDb = new DbFactory(DbProxies.LOCALSTORAGE),
-        lista = localDb.createDataSet('lista');
+        lista = localDb.createDataSet('lista'),
+        cache = {};
     
     var qryPromise = function(table, params) {
         var defer = $q.defer();
+
+        if (['cidade','categoria'].indexOf(table) >= 0 && cache[table]) {
+            defer.resolve(cache[table]);
+            return defer.promise;
+        }
 
         db.query(table, params || {}, function(err, results) {
             if (err) {
                 defer.reject(err);
             } else {
+                cache[table] = results;
                 defer.resolve(results);
             }
         });
@@ -35,9 +42,13 @@ angular.module('offersapp.dao', [])
 
         getOfertas: function(options) {
             var opts = options && typeof options === 'object' ? options : {},
-                url = 'oferta?limit=50&';
+                url = 'oferta?';
             
+            opts.limit = opts.limit || 30;
             opts.cidade = opts.cidade || UserStore.getStore().cidade;
+
+            url += 'limit=' + opts.limit + '&';
+            delete opts.limite;
 
             if (opts.skip) {
                 url += 'skip=' + opts.skip + '&';

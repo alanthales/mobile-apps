@@ -1,7 +1,9 @@
 */node_modules/
 */platforms/
 */plugins/
-*/resources/
+*/resources/*
+!*/resources/icon.png
+!*/resources/splash.png
 */www/lib
 .tmp
 .sass-cache

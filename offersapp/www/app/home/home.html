@@ -9,8 +9,6 @@
         </button>
     </ion-nav-bar>
     <ion-content class="has-expanded animate-fade-slide-in">
-        <offers data="ctrl.ofertas"></offers>
-        <ion-infinite-scroll class="spinner-white" on-infinite="ctrl.loadMore()" distance="1%" spinner="spiral" ng-if="!ctrl.eof">
-        </ion-infinite-scroll>
+        <offers data="ctrl.ofertas" eof="ctrl.eof" load-more="ctrl.loadMore()"></offers>
     </ion-content>
 </ion-view>

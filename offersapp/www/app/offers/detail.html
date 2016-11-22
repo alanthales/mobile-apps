@@ -6,17 +6,17 @@
     <ion-content>
         <div class="hero material-bg slide-up">
             <div class="content">
-                <div class="avatar" style="background-image: url('{{$root.getImage(ctrl.oferta)}}');"></div>
+                <img class="avatar" ng-src="{{$root.getImage(ctrl.oferta)}}" alt="{{ctrl.oferta.descricao}}">
                 <h3><span class="light">{{ctrl.oferta.descricao}}</span></h3>
                 <h4>{{ctrl.oferta.valor | currency:"R$"}}</h4>
             </div>
         </div>
 
         <div class="button-bar bar-dark">
-            <a class="button button-icon-left ion-at" ng-click="ctrl.changeTab(0)">
+            <a class="button button-icon-left ion-at" ng-click="ctrl.changeTab(0)" ng-class="{'activated':ctrl.tabIndex==0}">
                 Anunciante
             </a>
-            <a class="button button-icon-left ion-location" ng-click="ctrl.changeTab(1)">
+            <a class="button button-icon-left ion-location" ng-click="ctrl.changeTab(1)" ng-class="{'activated':ctrl.tabIndex==1}">
                 Localização
             </a>
         </div>
@@ -30,12 +30,14 @@
                     <i class="icon icon-small ion-location"></i>
                     <p>
                         {{ctrl.oferta.usuario.endereco + ", " + ctrl.oferta.usuario.numero}}
+                    </p>
+                    <p>
                         {{ctrl.oferta.usuario.cidade.nome + " - " + ctrl.oferta.usuario.cidade.estado}}
                     </p>
                 </div>
                 <div class="item item-icon-left">
                     <i class="icon icon-small ion-clock"></i>
-                    <p>Promoção válida até {{ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
+                    <p>Válida até {{ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
                 </div>
             </div>
 
