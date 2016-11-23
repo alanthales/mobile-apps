@@ -1,7 +1,7 @@
 angular.module('offersapp', [
-    'ionic',
-    'ionic-material',
-    'offersapp.home',
+	'ionic',
+	'ionic-material',
+	'offersapp.home',
 	'offersapp.search',
 	'offersapp.dao',
 	'offersapp.category',
@@ -14,144 +14,164 @@ angular.module('offersapp', [
 ])
 
 .constant('urls', {
-    'BACKEND': 'http://' + (location.hostname === "localhost" ? 'localhost:1337' : 'offersapp.herokuapp.com'),
-    'IMAGES': 'https://s3.amazonaws.com/offersapp'
+	'BACKEND': 'http://' + (location.hostname === "localhost" ? 'localhost:1337' : 'offersapp.herokuapp.com'),
+	'IMAGES': 'https://s3.amazonaws.com/offersapp'
 })
 
 .run(function($ionicPlatform, $rootScope, $state, urls, UserStore) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            cordova.plugins.Keyboard.disableScroll(true);
-        }
-        if (window.StatusBar) {
-            StatusBar.styleLightContent();
-            StatusBar.overlaysWebView(false);
-            StatusBar.backgroundColorByHexString("#ff9800");
-            ionic.Platform.fullScreen(true, true);
-        }
-    });
-    
-    $rootScope.getImage = function(oferta) {
-        return oferta.imagem ? urls.IMAGES + '/' + oferta.imagem : 'img/noimage.jpg';
-    };
+	$ionicPlatform.ready(function() {
+		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+		// for form inputs)
+		if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			cordova.plugins.Keyboard.disableScroll(true);
+		}
+		if (window.StatusBar) {
+			StatusBar.styleLightContent();
+			StatusBar.overlaysWebView(false);
+			StatusBar.backgroundColorByHexString("#ff9800");
+			ionic.Platform.fullScreen(true, true);
+		}
+	});
 
-    if (UserStore.getStore().cidade) {
-        $state.transitionTo('app.home');
-    } else {
-        $state.transitionTo('bemvindo');
-    }
+	$rootScope.getImage = function(oferta) {
+		return oferta.imagem ? urls.IMAGES + '/' + oferta.imagem : 'img/noimage.jpg';
+	};
+	
+	$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+		var city = UserStore.getStore().cidade;
+
+		if (toState.requireCity && !city) {
+			event.preventDefault();
+			$state.transitionTo('bemvindo');
+		}
+		
+		return;
+	});
+
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+        event.preventDefault();
+		$state.transitionTo('error');
+    });
 })
 
 .config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
-  $ionicConfigProvider.scrolling.jsScrolling(false);
+	$ionicConfigProvider.scrolling.jsScrolling(false);
 
-  $stateProvider
+	$stateProvider
 
-  .state('bemvindo', {
-    url: '/bemvindo',
-    templateUrl: './app/bemvindo/bemvindo.html',
-    controller: 'BemvindoCtrl as ctrl',
-    resolve: {
-        cidades: function(DaoFact) {
-            return DaoFact.getCidades();
-        }
-    }
-  })
+	.state('bemvindo', {
+		url: '/bemvindo',
+		templateUrl: './app/bemvindo/bemvindo.html',
+		controller: 'BemvindoCtrl as ctrl',
+		resolve: {
+			cidades: function(DaoFact) {
+				return DaoFact.getCidades();
+			}
+		}
+	})
 
-  .state('app', {
-      abstract: true,
-      templateUrl: './app/sidemenu/sidemenu.html',
-      resolve: {
-          categorias: function(DaoFact) {
-              return DaoFact.getCategorias();
-          },
-          lista: function(DaoFact) {
-              return DaoFact.getLista();
-          }
-      },
-      controller: 'SideMenuCtrl as ctrl'
-  })
-  
-  .state('app.home', {
-    url: '/',
-    views: {
-        'pageContent': {
-            templateUrl: './app/home/home.html',
-            controller: 'HomeCtrl as ctrl'
-        }
-    },
-    resolve: {
-        ofertas: function(DaoFact) {
-            return DaoFact.getOfertas();
-        }
-    }
-  })
+	.state('error', {
+		url: '/error',
+		templateUrl: './app/states/error.html'
+	})
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'pageContent': {
-        templateUrl: './app/search/search.html',
-        controller: 'SearchCtrl as ctrl'
-      }
-    }
-  })
+	.state('app', {
+		abstract: true,
+		templateUrl: './app/sidemenu/sidemenu.html',
+		resolve: {
+			categorias: function(DaoFact) {
+				return DaoFact.getCategorias();
+			},
+			lista: function(DaoFact) {
+				return DaoFact.getLista();
+			}
+		},
+		controller: 'SideMenuCtrl as ctrl'
+	})
 
-  .state('app.category', {
-    url: '/category/:id',
-    views: {
-      'pageContent': {
-        templateUrl: './app/category/category.html',
-        controller: 'CategoryCtrl as ctrl'
-      }
-    },
-    resolve: {
-        categoria: function(DaoFact, $stateParams) {
-            return DaoFact.getCategorias().then(function(results) {
-                var index = results.indexOfKey('id', parseInt($stateParams.id));
-                return results[index];
-            });
-        },
-        ofertas: function(DaoFact, $stateParams) {
-            return DaoFact.getOfertas({ categoria: $stateParams.id });
-        }
-    }
-  })
+	.state('app.home', {
+		url: '/',
+		views: {
+			'pageContent': {
+				templateUrl: './app/home/home.html',
+				controller: 'HomeCtrl as ctrl'
+			}
+		},
+		resolve: {
+			ofertas: function(DaoFact) {
+				return DaoFact.getOfertas();
+			}
+		},
+		requireCity: true
+	})
 
-  .state('app.offersdetail', {
-    url: '/offersdetail/:id',
-    views: {
-      'pageContent': {
-        templateUrl: './app/offers/detail.html',
-        controller: 'OffersDetailCtrl as ctrl'
-      }
-    },
-    resolve: {
-        oferta: function(DaoFact, $stateParams) {
-            return DaoFact.getOferta($stateParams.id).then(function(result) {
-                return result.length ? result[0] : {};
-            });
-        },
-        lista: function(DaoFact) {
-            return DaoFact.getLista();
-        }
-    }
-  })
+	.state('app.search', {
+		url: '/search',
+		views: {
+			'pageContent': {
+				templateUrl: './app/search/search.html',
+				controller: 'SearchCtrl as ctrl'
+			}
+		},
+		requireCity: true
+	})
 
-  .state('app.my-list', {
-    url: '/my-list',
-    views: {
-      'pageContent': {
-        templateUrl: './app/my-list/my-list.html',
-        controller: 'MyListCtrl as ctrl'
-      }
-    }
-  })// Yeoman hook. States section. Do not remove this comment.
-  ;
+	.state('app.category', {
+		url: '/category/:id',
+		views: {
+			'pageContent': {
+				templateUrl: './app/category/category.html',
+				controller: 'CategoryCtrl as ctrl'
+			}
+		},
+		resolve: {
+			categoria: function(DaoFact, $stateParams) {
+				return DaoFact.getCategorias().then(function(results) {
+					var index = results.indexOfKey('id', parseInt($stateParams.id));
+					return results[index];
+				});
+			},
+			ofertas: function(DaoFact, $stateParams) {
+				return DaoFact.getOfertas({ categoria: $stateParams.id });
+			}
+		},
+		requireCity: true
+	})
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/notfound');
+	.state('app.offersdetail', {
+		url: '/offersdetail/:id',
+		views: {
+			'pageContent': {
+				templateUrl: './app/offers/detail.html',
+				controller: 'OffersDetailCtrl as ctrl'
+			}
+		},
+		resolve: {
+			oferta: function(DaoFact, $stateParams) {
+				return DaoFact.getOferta($stateParams.id).then(function(result) {
+					return result.length ? result[0] : {};
+				});
+			},
+			lista: function(DaoFact) {
+				return DaoFact.getLista();
+			}
+		},
+		requireCity: true
+	})
+
+	.state('app.my-list', {
+		url: '/my-list',
+		views: {
+			'pageContent': {
+				templateUrl: './app/my-list/my-list.html',
+				controller: 'MyListCtrl as ctrl'
+			}
+		},
+		requireCity: true
+	})// Yeoman hook. States section. Do not remove this comment.
+	;
+
+	// if none of the above states are matched, use this as the fallback
+	$urlRouterProvider.otherwise('/');
 });

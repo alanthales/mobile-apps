@@ -48,7 +48,7 @@ angular.module('offersapp.dao', [])
             opts.cidade = opts.cidade || UserStore.getStore().cidade;
 
             url += 'limit=' + opts.limit + '&';
-            delete opts.limite;
+            delete opts.limit;
 
             if (opts.skip) {
                 url += 'skip=' + opts.skip + '&';
