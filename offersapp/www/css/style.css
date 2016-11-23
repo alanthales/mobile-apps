@@ -142,7 +142,7 @@
 	height: 100%;
 }
 
-.slider-slide {
+.states, .slider-slide {
 	padding: 20px;
 	text-align: center;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
@@ -150,12 +150,12 @@
 	color: #fff;
 }
 
-.slider-slide p {
+.states p, .slider-slide p {
 	font-size: 110%;
 	color: #fff;
 }
 
-.slider-slide h3, .slider-slide a, .slider-pager .slider-pager-page {
+.states h3, .slider-slide h3, .slider-slide a, .slider-pager .slider-pager-page {
 	color: #fff;
 }
 
