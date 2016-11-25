@@ -21,6 +21,10 @@
 	background-color: #f0f0f0;
 }
 
+.energized0-bg {
+	background-color: #ffc900;
+}
+
 .material-bg {
 	background-image: url('../img/app-bg.jpg');
 }
