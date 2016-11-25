@@ -29,7 +29,7 @@ angular.module('offersapp', [
 		if (window.StatusBar) {
 			StatusBar.styleLightContent();
 			StatusBar.overlaysWebView(false);
-			StatusBar.backgroundColorByHexString("#ff9800");
+			StatusBar.backgroundColorByHexString("#ffc900");
 			ionic.Platform.fullScreen(true, true);
 		}
 	});

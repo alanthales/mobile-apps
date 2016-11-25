@@ -21,7 +21,7 @@
 	background-color: #f0f0f0;
 }
 
-.energized0-bg {
+.energized-bg, .energized-bg:hover {
 	background-color: #ffc900;
 }
 
