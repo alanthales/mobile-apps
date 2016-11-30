@@ -10,7 +10,7 @@ angular.module('offersapp.dao', [])
     var qryPromise = function(table, params) {
         var defer = $q.defer();
 
-        if (['cidade','categoria'].indexOf(table) >= 0 && cache[table]) {
+        if (['cidade','subcategoria'].indexOf(table) >= 0 && cache[table]) {
             defer.resolve(cache[table]);
             return defer.promise;
         }
@@ -33,7 +33,7 @@ angular.module('offersapp.dao', [])
         },
         
         getCategorias: function() {
-            return qryPromise('categoria');
+            return qryPromise('subcategoria');
         },
         
         getOferta: function(id) {
