@@ -4,14 +4,14 @@ angular.module('offersapp.home', [])
 		page = 1;
 	
 	this.ofertas = ofertas;
-	this.eof = ofertas.length < 50;
+	this.eof = ofertas.length < 30;
 
 	this.loadMore = function() {
-		var filter = { skip: page * 50 };
+		var filter = { skip: page * 30 };
 		
 		DaoFact.getOfertas(filter).then(function(data) {
 			self.ofertas.putRange(data, true);
-			self.eof = data.length < 50;
+			self.eof = data.length < 30;
 		});
 
 		page++;

@@ -12,7 +12,7 @@ angular.module('offersapp.bemvindo', [])
 	this.next = function() {
 		if (!this.user.cidade) {
 			return $ionicLoading.show({
-				template: 'Selecione uma cidade',
+				template: 'Selecione uma região',
 				duration: 3000
 			});
 		}
