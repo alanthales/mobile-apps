@@ -12,7 +12,7 @@
                 <div class="item" ng-click="ctrl.goTo('app.my-list')">
                     Minha lista <span class="badge badge-assertive">{{ctrl.lista.data.length}}</span>
                 </div>
-                <div class="item" ng-repeat="item in ctrl.categorias track by item.id" ng-click="ctrl.goTo(item)">
+                <div class="item" ng-repeat="item in ctrl.categorias | orderBy:'nome' track by item.id" ng-click="ctrl.goTo(item)">
                     {{::item.nome}}
                 </div>
             </div>

@@ -14,7 +14,7 @@ angular.module('offersapp', [
 ])
 
 .constant('urls', {
-	'BACKEND': 'http://' + (location.hostname === "localhost" ? 'localhost:1337' : 'offersapp.herokuapp.com'),
+	'BACKEND': 'http://' + (location.hostname === 'localhost' ? 'localhost:1337' : 'offersapp.herokuapp.com'),
 	'IMAGES': 'https://s3.amazonaws.com/offersapp'
 })
 
@@ -55,7 +55,8 @@ angular.module('offersapp', [
     });
 })
 
-.config(function($ionicConfigProvider, $stateProvider, $urlRouterProvider) {
+.config(function($compileProvider, $ionicConfigProvider, $stateProvider, $urlRouterProvider) {
+	$compileProvider.debugInfoEnabled(location.hostname === 'localhost');
 	$ionicConfigProvider.scrolling.jsScrolling(false);
 
 	$stateProvider
@@ -91,6 +92,7 @@ angular.module('offersapp', [
 	})
 
 	.state('app.home', {
+		cache: false,
 		url: '/',
 		views: {
 			'pageContent': {
@@ -161,6 +163,7 @@ angular.module('offersapp', [
 	})
 
 	.state('app.my-list', {
+		cache: false,
 		url: '/my-list',
 		views: {
 			'pageContent': {

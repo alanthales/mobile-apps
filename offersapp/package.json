@@ -20,7 +20,14 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "variables": {
+        "XWALK_MODE": "lite"
+      },
+      "locator": "cordova-plugin-crosswalk-webview@1.7.1",
+      "id": "cordova-plugin-crosswalk-webview"
+    }
   ],
   "cordovaPlatforms": [
     "android"
