@@ -1,8 +1,10 @@
 angular.module('offersapp.home', [])
-.controller('HomeCtrl', function($scope, $timeout, ofertas, DaoFact){
+.controller('HomeCtrl', function($scope, $timeout, $ionicHistory, ofertas, DaoFact){
 	var self = this,
 		page = 1;
-	
+
+	$ionicHistory.clearHistory();
+
 	this.ofertas = ofertas;
 	this.eof = ofertas.length < 30;
 

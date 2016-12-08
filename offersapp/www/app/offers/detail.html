@@ -4,11 +4,17 @@
     </ion-nav-bar>
         
     <ion-content>
-        <div class="hero material-bg slide-up">
+        <div class="hero menu-bg slide-up">
             <div class="content">
-                <img class="avatar" ng-src="{{$root.getImage(ctrl.oferta)}}" alt="{{ctrl.oferta.descricao}}">
-                <h3><span class="light">{{ctrl.oferta.descricao}}</span></h3>
-                <h4>{{ctrl.oferta.valor | currency:"R$"}}</h4>
+                <div class="avatar">
+                    <img ng-src="{{$root.getImage(ctrl.oferta)}}" alt="{{ctrl.oferta.descricao}}">
+                </div>
+                <h3>
+                    <span class="light">{{ctrl.oferta.descricao}}</span>
+                </h3>
+                <h4>
+                    {{ctrl.oferta.valor | currency:"R$"}}
+                </h4>
             </div>
         </div>
 
