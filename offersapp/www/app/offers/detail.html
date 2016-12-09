@@ -1,4 +1,4 @@
-<ion-view view-title="Detalhes">
+<ion-view view-title="Detalhes da oferta">
     <ion-nav-bar class="bar-energized" align-title="left">
         <ion-nav-back-button class="no-text"></ion-nav-back-button>
     </ion-nav-bar>
@@ -7,13 +7,13 @@
         <div class="hero menu-bg slide-up">
             <div class="content">
                 <div class="avatar">
-                    <img ng-src="{{$root.getImage(ctrl.oferta)}}" alt="{{ctrl.oferta.descricao}}">
+                    <img ng-src="{{$root.getImage(ctrl.oferta)}}" alt="{{::ctrl.oferta.descricao}}">
                 </div>
                 <h3>
-                    <span class="light">{{ctrl.oferta.descricao}}</span>
+                    <span class="light">{{::ctrl.oferta.descricao}}</span>
                 </h3>
                 <h4>
-                    {{ctrl.oferta.valor | currency:"R$"}}
+                    {{::ctrl.oferta.valor | currency:"R$"}}
                 </h4>
             </div>
         </div>
@@ -30,20 +30,20 @@
         <div ng-hide="ctrl.tabIndex === 1">
             <div class="list list-inset">
                 <div class="item">
-                    <h2>{{ctrl.oferta.usuario.nome}}</h2>
+                    <h2>{{::ctrl.oferta.usuario.nome}}</h2>
                 </div>
                 <div class="item item-icon-left">
                     <i class="icon icon-small ion-location"></i>
                     <p>
-                        {{ctrl.oferta.usuario.endereco + ", " + ctrl.oferta.usuario.numero}}
+                        {{::ctrl.oferta.usuario.endereco + ", " + ctrl.oferta.usuario.numero}}
                     </p>
                     <p>
-                        {{ctrl.oferta.usuario.cidade.nome + " - " + ctrl.oferta.usuario.cidade.estado}}
+                        {{::ctrl.oferta.usuario.cidade.nome + " - " + ctrl.oferta.usuario.cidade.estado}}
                     </p>
                 </div>
                 <div class="item item-icon-left">
                     <i class="icon icon-small ion-clock"></i>
-                    <p>Válida até {{ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
+                    <p>Válida até {{::ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
                 </div>
             </div>
 

@@ -68,5 +68,5 @@ angular.module('offersapp.offersdetail', [])
     
     $timeout(function() {
         ionicMaterialMotion.slideUp({ selector: '.slide-up' });
-    }, 300);
+    }, 250);
 });
