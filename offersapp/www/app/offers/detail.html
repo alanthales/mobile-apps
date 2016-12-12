@@ -42,6 +42,14 @@
                     </p>
                 </div>
                 <div class="item item-icon-left">
+                    <i class="icon icon-small ion-android-call"></i>
+                    <p>
+                        <a ng-href="tel:{{::ctrl.oferta.usuario.telefone}}">
+                            {{::ctrl.oferta.usuario.telefone}}
+                        </a>
+                    </p>
+                </div>
+                <div class="item item-icon-left">
                     <i class="icon icon-small ion-clock"></i>
                     <p>Válida até {{::ctrl.oferta.validade | date:"dd/MM/yyyy"}}</p>
                 </div>
