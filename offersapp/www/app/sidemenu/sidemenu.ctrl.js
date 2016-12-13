@@ -4,12 +4,11 @@ angular.module('offersapp')
 	this.lista = lista;
 	
 	this.goTo = function(opts) {
-		$ionicSideMenuDelegate.toggleLeft();
-
 		if (opts && typeof opts === 'object') {
-			return $state.go('app.category', { id: opts.id });
+			$state.go('app.category', { id: opts.id });
+		} else {
+			$state.go(opts);
 		}
-
-		$state.go(opts);
+		$ionicSideMenuDelegate.toggleLeft();
 	};
 });
