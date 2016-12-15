@@ -13,7 +13,7 @@
                     <span class="light">{{::ctrl.oferta.descricao}}</span>
                 </h3>
                 <h4>
-                    {{::ctrl.oferta.valor | currency:"R$"}}
+                    {{::ctrl.oferta.parcelas || 1}}x {{::ctrl.oferta.valor | currency:"R$"}}
                 </h4>
             </div>
         </div>

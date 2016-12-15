@@ -14,7 +14,7 @@
             <h3>{{::item.usuario.nome}}</h3>
             <p>
                 <span class="item-note item-price">
-                    <strong>{{::item.valor | currency:'R$'}}</strong>
+                    <strong>{{::item.parcelas || 1}}x {{::item.valor | currency:'R$'}}</strong>
                     <i class="icon ion-flame"></i>
                 </span>
             </p>
