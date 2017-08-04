@@ -10,10 +10,10 @@
     </ion-nav-bar>
     <ion-content>
         <div class="list">
-            <div class="item" ng-if="pagamentos.data.length === 0">
+            <div class="item" ng-if="pagamentos.count() === 0">
                 Toque <i class="icon ion-plus-round"></i> para incluir...
             </div>
-            <div class="item" collection-repeat="item in pagamentos.data | orderBy:'-vencimento'" on-double-tap="menu.openMenu(item, $event)">
+            <div class="item" collection-repeat="item in pagamentos.data() | orderBy:'-vencimento'" on-double-tap="menu.openMenu(item, $event)">
                 <h2>
                     {{item.vencimento | date:'dd/MM/yyyy'}}
                     <span class="item-right">{{item.valor | currency:'R$'}}</span>
@@ -21,7 +21,7 @@
                 <div class="item-set">
                     <div class="marcadores">
                         <span class="marcador bg-gray" ng-repeat="mark in item.marcadores track by $index">
-                            {{marcadores.getById(mark).descricao}}
+                            {{marcadores.get(mark).descricao}}
                         </span>
                     </div>
                 </div>

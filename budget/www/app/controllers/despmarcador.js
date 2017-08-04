@@ -1,20 +1,15 @@
 angular.module('budget.despmarc', [])
-.controller('DespMarcadorCtrl', function($scope, $stateParams, daoFactory) {
+.controller('DespMarcadorCtrl', function($scope, $stateParams, marcadores, despesas) {
 //    var limit = 25;
 //    
 //    $scope.limitData = limit;
     
-    daoFactory.getMarcadores(function(results) {
-        var index = results.indexOfKey('id', parseInt($stateParams.marcadorId));
-        $scope.marcador = results[index].descricao;
-    });
+    $scope.marcador = marcadores.get(parseInt($stateParams.marcadorId)).descricao;
     
-    daoFactory.getDespesas(function(results) {
-        $scope.despesas = results
-            .query({ marcadores: { $contain: $stateParams.marcadorId } })
-            .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'dia'])
-            .orderBy({ ano: 'desc', mes: 'desc', dia: 'asc' });
-    });
+    $scope.despesas = despesas
+        .filter({ marcadores: { $contain: $stateParams.marcadorId } })
+        .groupBy({ $sum: 'valor' }, ['ano', 'mes', 'dia'])
+        .orderBy({ ano: 'desc', mes: 'desc', dia: 'asc' });
     
 //    $scope.loadMore = function() {
 //        $scope.limitData += limit;

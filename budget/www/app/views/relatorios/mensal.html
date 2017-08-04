@@ -13,14 +13,14 @@
             </div>
         </div>        
         <div class="list">
-            <div collection-repeat="item in despesas" divider-month-repeat show-year show-total>
+            <div collection-repeat="item in despesas | groupByMonthYear:'mes':'ano':'valor'" divider-month-repeat show-year show-total>
                 <div class="item">
                     <div class="item-right">
                         {{item.valor | currency:"R$"}}
                     </div>
                     <div class="marcadores">
-                        <span class="marcador bg-gray">
-                            {{marcadores.getById(item.marcadorId).descricao}}
+                        <span class="marcador bg-gray" ng-repeat="mark in item.marcadores">
+                            {{marcadores.get(mark).descricao}}
                         </span>
                     </div>                    
                 </div>

@@ -1,13 +1,15 @@
 angular.module('budget.despmensal', [])
-.controller('DespMensalCtrl', function($scope, $stateParams, $rootScope, daoFactory, utils) {
-    $scope.marcadores = daoFactory.getMarcadores();
-    
-    $scope.mes = $rootScope.listaMes[$stateParams.mes];
+.controller('DespMensalCtrl', function($scope, $stateParams, $rootScope, marcadores, despesas, utils) {
+	$scope.mes = $rootScope.listaMes[parseInt($stateParams.mes)];
+	$scope.marcadores = marcadores;
 
-    daoFactory.getDB().query('despesas', { mes: $stateParams.mes }, function(results) {
-        var despesas = utils.reGroup(results, 'marcadores', 'marcadorId', 'valor');
-            
-        $scope.despesas = despesas
-            .groupBy([{ $sum: 'valor' }, { $sum: 'aggregated' }], ['ano', 'marcadorId']);
-    });
+	// var results = despesas.filter({ mes: parseInt($stateParams.mes) });
+
+	// $scope.despesas = utils.reGroup(results, 'marcadores', 'marcadorId', 'valor')
+	// 	.groupBy([{ $sum: 'valor' }, { $sum: 'aggregated' }], ['ano', 'marcadorId']);
+
+	// console.log($scope.despesas);
+	$scope.despesas = despesas.data()
+		.groupBy({ $sum: 'valor' }, ['ano', 'mes', 'marcadores'], { mes: parseInt($stateParams.mes) })
+		.orderBy({ ano: 'desc', mes: 'desc', valor: 'desc' });
 });

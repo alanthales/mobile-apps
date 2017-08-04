@@ -1,6 +1,6 @@
 angular.module('budget.sidemenu', [])
-.controller('SideMenuCtrl', function($scope, daoFactory) {
-    $scope.marcadores = daoFactory.getMarcadores();
+.controller('SideMenuCtrl', function($scope, marcadores) {
+    $scope.marcadores = marcadores;
     $scope.selections = [];
     
     $scope.openSub = function(key) {

@@ -1,8 +1,7 @@
 angular.module('budget.marcadores', [])
-.controller('MarcadoresCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, daoFactory, utils) {
+.controller('MarcadoresCtrl', function($scope, $rootScope, $ionicModal, $ionicPopup, marcadores, utils) {
     $scope.selection = {};
-    
-    $scope.marcadores = daoFactory.getMarcadores();
+    $scope.marcadores = marcadores;
     
     utils.initModal('./app/views/marcadores/cadastro.html', $scope);
     
@@ -34,8 +33,9 @@ angular.module('budget.marcadores', [])
         
         confirmPopup.then(function(res) {
             if (res) {
-                $scope.marcadores.delete($scope.menu.selectedItem);
-                $scope.marcadores.post();
+                $scope.marcadores
+                    .delete($scope.menu.selectedItem)
+                    .post().then();
             }
         });
     }
@@ -44,8 +44,9 @@ angular.module('budget.marcadores', [])
         if (!$scope.formbase.$valid) {
             return;
         }
-        $scope.marcadores.save(item);
-        $scope.marcadores.post();
+        $scope.marcadores
+            .save(item)
+            .post().then();
         $scope.modal.hide();
     }
 });

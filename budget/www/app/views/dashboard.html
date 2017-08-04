@@ -29,7 +29,7 @@
                 <p>Até {{dtFinalPagtos | date:'dd/MM/yyyy'}}</p>
             </div>
 
-            <div class="item" ng-repeat="item in pagamentos track by $index" on-hold="pay(item)">
+            <div class="item" ng-repeat="item in pagamentos track by $index" on-double-tap="pay(item)">
                 <h2>
                     {{item.vencimento | date:'dd/MM/yyyy'}}
                     <span class="item-right">{{item.valor | currency:'R$'}}</span>
@@ -37,7 +37,7 @@
                 <div class="item-set">
                     <div class="marcadores">
                         <span class="marcador bg-gray" ng-repeat="mark in item.marcadores track by $index">
-                            {{marcadores.getById(mark).descricao}}
+                            {{marcadores.get(mark).descricao}}
                         </span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="marcadores">
                         <span class="marcador bg-gray" ng-click="goTo(item.marcadorId)">
-                            {{marcadores.getById(item.marcadorId).descricao}}
+                            {{marcadores.get(item.marcadorId).descricao}}
                         </span>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="marcadores">
                         <span class="marcador bg-gray" ng-click="goTo(item.marcadorId)">
-                            {{marcadores.getById(item.marcadorId).descricao}}
+                            {{marcadores.get(item.marcadorId).descricao}}
                         </span>
                     </div>
                 </div>

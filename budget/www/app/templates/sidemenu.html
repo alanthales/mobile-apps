@@ -31,7 +31,7 @@
                             <i class="icon icon-small ion-calendar"></i>
                             Pagamentos
                         </a>
-                        <a class="item item-icon-left item-icon-right" ng-if="marcadores.data.length" ng-click="openSub('desp')">
+                        <a class="item item-icon-left item-icon-right" ng-if="marcadores.count()" ng-click="openSub('desp')">
                             <i class="icon icon-small ion-ios-calculator"></i>
                             <i class="icon icon-small ion-chevron-right"></i>
                             Despesas
@@ -76,7 +76,7 @@
                     </div>  
                     <div class="slide-right-left" ng-switch-when="marc">
                         <back-button title="Voltar" go-back="goBack()"></back-button>
-                        <markers marks="marcadores.data"></markers>
+                        <markers marks="marcadores.data()"></markers>
                     </div>
                     <div class="slide-right-left" ng-switch-when="dept">
                         <back-button title="Voltar" go-back="goBack()"></back-button>

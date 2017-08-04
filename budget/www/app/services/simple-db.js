@@ -218,10 +218,10 @@ angular.module('budget.syncSDB', ['ionic'])
     };
 
     function CreateSync() {
-        SyncDb.apply(this, arguments);
+        DbSync.apply(this, arguments);
     }
     
-    CreateSync.prototype = Object.create(SyncDb.prototype);
+    CreateSync.prototype = Object.create(DbSync.prototype);
     
     CreateSync.prototype.sendData = function(table, toInsert, toUpdate, toDelete, callback) {
         var self = this,
