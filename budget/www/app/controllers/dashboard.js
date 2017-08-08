@@ -29,6 +29,7 @@ angular.module('budget.dashboard', [])
 	dtAnterior = new Date(ano, mes, dia);
 	
 	$scope.marcadores = marcadores;
+	$scope.despesas = despesas;
 	$scope.pagamentos = pagamentos.filter({ vencimento: { $lte: dtSemana } });
 
 	var results = despesas.filter({
@@ -70,7 +71,6 @@ angular.module('budget.dashboard', [])
 				cancelText: 'Não',
 				template: 'Deseja lançar este pagamento nas despesas?'
 			}),
-			despesas = daoFactory.getDespesas(),
 			item, index;
 		
 		confirmPopup.then(function(res) {
@@ -83,8 +83,8 @@ angular.module('budget.dashboard', [])
 					marcadores: angular.copy(pagamento.marcadores)
 				};
 				
-				despesas
-					.insert(item)
+				$scope.despesas
+					.save(item)
 					.post().then();
 				
 				index = $scope.pagamentos.indexOfKey('id', pagamento.id);

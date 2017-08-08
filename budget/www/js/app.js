@@ -12,30 +12,42 @@ angular.module('budget', [
 ])
 
 .run(function($ionicPlatform, $rootScope, $state, daoFactory, SyncSDB, utils) {
-	var timer;
+	var syncronizing = false,
+		timer;
 	
 	$rootScope.listaMes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
 	function syncData(callback) {
-		var user = $rootScope.user;
+		var user = $rootScope.user,
+			cb = callback && typeof callback === 'function' ? callback : function() {};
 
-		if (!user || !user.registrado) {
+		if (!user || !user.registrado || syncronizing) {
 			return;
 		}
 		
 		console.log('syncronizing data...');
+
+		syncronizing = true;
+
+		function error(err) {
+			console.error(JSON.stringify(err));
+		}
+
 		SyncSDB.updateUser(function() {
-			daoFactory.getMarcadores().then(function(dataset) {
-				return dataset;
-			}).sync();
-
-			daoFactory.getDespesas().then(function(dataset) {
-				return dataset;
-			}).sync();
-
-			if (typeof callback === 'function') {
-				callback();
-			}
+			daoFactory.getMarcadores()
+				.then(function(marcadores) {
+					return marcadores.sync();
+				}, error)
+				.then(function(arg) {
+					return daoFactory.getDespesas();
+				}, error)
+				.then(function(despesas) {
+					return despesas.sync();
+				}, error)
+				.then(function() {
+					syncronizing = false;
+					cb();
+				}, error);
 		}, onDisconnect);
 	};
 	
@@ -48,6 +60,7 @@ angular.module('budget', [
 	};
 	
 	function onDisconnect() {
+		syncronizing = false;
 		if (timer) {
 			clearInterval(timer);
 			timer = null;
