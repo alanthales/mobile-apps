@@ -29,25 +29,24 @@ angular.module('budget', [
 
 		syncronizing = true;
 
-		function error(err) {
-			console.error(JSON.stringify(err));
-		}
-
 		SyncSDB.updateUser(function() {
 			daoFactory.getMarcadores()
 				.then(function(marcadores) {
 					return marcadores.sync();
-				}, error)
+				})
 				.then(function(arg) {
 					return daoFactory.getDespesas();
-				}, error)
+				})
 				.then(function(despesas) {
 					return despesas.sync();
-				}, error)
+				})
 				.then(function() {
 					syncronizing = false;
 					cb();
-				}, error);
+				})
+				.catch(function(err) {
+					console.error(JSON.stringify(err));
+				});
 		}, onDisconnect);
 	};
 	
@@ -80,9 +79,6 @@ angular.module('budget', [
 		}
 		document.addEventListener('online', onConnect, false);
 		document.addEventListener('offline', onDisconnect, false);
-		if (utils.hasConnection()) {
-			$rootScope.syncData();
-		}
 	});
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
