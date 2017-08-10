@@ -13,14 +13,14 @@
             <div class="item" ng-if="despesas.count() === 0">
                 Toque <i class="icon ion-plus-round"></i> para incluir...
             </div>
-            <div class="item" collection-repeat="item in despesas.data() | orderBy:['-ano','-mes','-dia']" on-double-tap="menu.openMenu(item, $event)">
+            <div class="item" collection-repeat="item in despesas.data() | orderBy:['-ano','-mes','-dia'] track by item.id" on-double-tap="menu.openMenu(item, $event)">
                 <h2>
                     {{getDate(item) | date:'dd/MM/yyyy'}}
                     <span class="item-right">{{item.valor | currency:'R$'}}</span>
                 </h2>
                 <div class="item-set">
                     <div class="marcadores">
-                        <span class="marcador bg-gray" ng-repeat="marcador in item.marcadores track by $index">
+                        <span class="marcador bg-gray" ng-repeat="marcador in item.marcadores">
                             {{marcadores.get(marcador).descricao}}
                         </span>
                     </div>

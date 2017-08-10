@@ -13,7 +13,7 @@
             <div class="item" ng-if="marcadores.count() === 0">
                 Toque <i class="icon ion-plus-round"></i> para incluir...
             </div>
-            <div class="item" collection-repeat="item in marcadores.data()" on-double-tap="menu.openMenu(item, $event)">
+            <div class="item" collection-repeat="item in marcadores.data() | orderBy:'descricao' track by item.id" on-double-tap="menu.openMenu(item, $event)">
                 {{item.descricao}}
             </div>
         </div>

@@ -20,7 +20,7 @@
                 Marcadores
             </div>
 
-            <div class="item item-checkbox" ng-repeat="item in marcadores.data() track by $index">
+            <div class="item item-checkbox" ng-repeat="item in marcadores.data() | orderBy:'descricao' track by item.id">
                 <label class="checkbox checkbox-calm">
                     <input type="checkbox" ng-checked="selection.marcadores.indexOf(item.id) >= 0" ng-click="addMark(item)">
                 </label>

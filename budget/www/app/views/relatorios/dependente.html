@@ -1,4 +1,4 @@
-<ion-view view-title="{{dependente.nome}}">
+<ion-view view-title="{{dependente.nome}}" cache-view="false">
     <ion-nav-bar class="bar-calm">
         <ion-nav-back-button></ion-nav-back-button>
         <ion-nav-buttons side="left">
@@ -13,7 +13,7 @@
             </div>
         </div>        
         <div class="list">
-            <div collection-repeat="item in despesas | groupByMonthYear:'mes':'ano':'valor'" divider-month-repeat show-year show-total>
+            <div collection-repeat="item in despesas | groupByMonthYear:'mes':'ano':'valor' track by $index" divider-month-repeat show-year show-total>
                 <div class="item">
                     <div class="item-right">
                         {{item.valor | currency:"R$"}}
